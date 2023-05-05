@@ -1,5 +1,5 @@
 .content--home {
-  width: 90%;
+  width: 95%;
   height: 100%;
   position: relative;
   display: flex;
@@ -8,42 +8,61 @@
   overflow: hidden;
 }
 
-.content__section-bests {
-  width: 2600px;
-  margin-top: 60px;
+/*h-list*/
+.horizon-list {
+  --list-width: calc((var(--card-width) + 5) * 10);
+  --list-height: 120px;
+  --card-width: 170px;
+  --card-height: 110px;
+
+  width: 100%;
+  height: 180px;
+}
+
+.horizon-list__list-title {
+  margin-top: 10px;
+}
+
+.horizon-list__card-container {
+  width: 2000px;
+  height: var(--list-height);
+  margin-top: 10px;
   position: absolute;
   left: 0;
   display: flex;
-  gap: 10px;
+  align-items: center;
+  z-index: 5;
 }
 
-.content__title--home {
-  position: absolute;
-  top: -40px;
+.horizon-list__card-container:hover .horizon-list__card {
+  width: calc(var(--card-width) * 1.01);
+  height: calc(var(--card-height) * 1.01);
 }
+
 /*Card*/
-.card {
-  width: 172px;
-  height: 110px;
+.horizon-list__card {
+  width: var(--card-width);
+  height: var(--card-height);
+  margin-left: 10px;
   position: relative;
   border-radius: 8px;
   overflow: hidden;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
-  transition: 0.3s;
+  transition: 0.4s;
 }
 
-.card:hover {
-  transform: translateY(-10px);
+.horizon-list__card:hover {
+  transform: scale(1.05) translateY(-5px);
 }
 
-.card__img {
+.horizon-list__img {
   width: 100%;
   height: 100%;
   position: absolute;
   object-fit: cover;
 }
 
-.card__title {
+.horizon-list__card-title {
   width: 100%;
   height: 40%;
   position: absolute;
