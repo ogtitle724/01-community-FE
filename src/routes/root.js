@@ -21,7 +21,7 @@ export default function Root() {
 
   if (pageTopic === "HOME") mainContent = <Home />;
   else if (pageTopic === "BEST") mainContent = <Best />;
-  else mainContent = <Others />;
+  else mainContent = <Others title={pageTopic} />;
 
   return (
     <>

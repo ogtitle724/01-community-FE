@@ -1,44 +1,77 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
+
+const initialPost = {
+  id: 123,
+  title:
+    "An overview of the COVID-19 Pandemic Impact on Small Businesses in the U.S",
+  description: "this is sample description for post",
+  date: "2023.5.1",
+  time: "23:52",
+  writer: "samS732",
+  view: 57,
+  like: 30,
+  dislike: 4,
+  category: "유머",
+  comment: [],
+};
 
 export function Home() {
   return (
-    <div onScroll={() => console.log("scroll")} className="content--home">
+    <div className="main__content">
       <HorizontalList />
-      <section className="content__section-curr"></section>
+      <Board
+        title={"Recent Posts"}
+        postData={Array(200).fill("")}
+        postNum={30}
+      />
     </div>
   );
 }
 
 function HorizontalList() {
-  let isMouseDown = false;
-  let startX;
+  const [isMouseDown, startX, container] = [
+    useRef(false),
+    useRef(""),
+    useRef(),
+  ];
 
-  function handleMouseDown(e) {
+  const handleMouseDown = (e) => {
     e.preventDefault();
-    isMouseDown = true;
-    startX = e.clientX;
-  }
+    isMouseDown.current = true;
+    startX.current = e.clientX;
+  };
 
-  function handleMouseUp(e) {
-    isMouseDown = false;
-  }
+  const handleMouseUp = (e) => {
+    isMouseDown.current = false;
+  };
 
-  function handleDrag(e) {
-    if (!isMouseDown) return;
+  const handleDrag = (e) => {
+    if (!isMouseDown.current) {
+      return;
+    } else if (container.current.offsetLeft > 40) {
+      container.current.style.transition = "0.6s";
+      container.current.style.left = `0px`;
+      isMouseDown.current = false;
+      return;
+    } else if (container.current.offsetLeft < -825) {
+      container.current.style.transition = "0.6s";
+      container.current.style.left = `-785px`;
+      isMouseDown.current = false;
+      return;
+    }
 
-    const degree = e.clientX - startX;
-    let container = document.getElementsByClassName(
-      "horizon-list__card-container"
-    )[0];
+    const degree = e.clientX - startX.current;
 
-    container.style.left = `${container.offsetLeft + degree}px`;
-    startX = e.clientX;
-  }
+    startX.current = e.clientX;
+    container.current.style.transition = "0s";
+    container.current.style.left = `${container.current.offsetLeft + degree}px`;
+  };
 
   return (
     <section className="horizon-list">
       <h1 className="horizon-list__list-title">Trendings</h1>
       <div
+        ref={container}
         className="horizon-list__card-container"
         onMouseDown={(e) => handleMouseDown(e)}
         onMouseUp={(e) => handleMouseUp(e)}
@@ -48,30 +81,138 @@ function HorizontalList() {
         {Array(10)
           .fill("post")
           .map((post, idx) => {
-            return <PostCard key={"card_" + idx} />;
+            return <Card key={"card_" + idx} />;
           })}
       </div>
     </section>
   );
 }
 
-function PostCard() {
+function Card() {
   return (
-    <article className="horizon-list__card">
-      <img
-        src="sample.png"
-        className="horizon-list__img"
-        alt="img dosen't supported"
-      />
-      <h2 className="horizon-list__card-title">sample title</h2>
+    <article className="card">
+      <img src="sample.png" className="card__img" alt="img dosen't supported" />
+      <h2 className="card__title">sample title</h2>
     </article>
   );
 }
 
-export function Best() {
-  return;
+function Board({ title, postData, postNum }) {
+  const [pageNum, setPageNum] = useState(0);
+
+  return (
+    <section className="board">
+      <h2 className="board__title">{title}</h2>
+      <ul>
+        {Array(postNum)
+          .fill(initialPost)
+          .map((post, idx) => {
+            return <Post key={"post_" + idx} postData={post} />;
+          })}
+      </ul>
+      <nav className="board__nav">
+        <div className="board__nav-direction center-x">
+          {String.fromCharCode(94)}
+        </div>
+        <li
+          className="board__nav-btn"
+          onClick={() => {
+            let curr = pageNum;
+            setPageNum(curr + 1);
+          }}
+        >
+          {"<"}
+        </li>
+        {Array(postData.length / 25)
+          .fill("")
+          .map((ele, idx) => {
+            return (
+              <li
+                className="board__nav-btn"
+                key={idx}
+                onClick={() => setPageNum(idx + 1)}
+              >
+                {idx + 1}
+              </li>
+            );
+          })}
+        <li
+          className="board__nav-btn"
+          onClick={() => {
+            let curr = pageNum;
+            setPageNum(curr + 1);
+          }}
+        >
+          {">"}
+        </li>
+      </nav>
+    </section>
+  );
 }
 
-export function Others() {
-  return;
+function Post({ postData }) {
+  return (
+    <li className="post">
+      <a className="post__title" href={`/post?id=${postData.id}`}>
+        {postData.title}
+      </a>
+      <div className="post__data-wrapper">
+        <p className="post__data">
+          {postData.category + " | " + postData.view}
+        </p>
+        <p className="post__data">{postData.time} </p>
+      </div>
+    </li>
+  );
+}
+
+export function Best() {
+  return (
+    <div className="main__content">
+      <Board title={"Best Posts"} postData={Array(200).fill("")} postNum={35} />
+    </div>
+  );
+}
+
+export function Others({ title }) {
+  return (
+    <div className="main__content main__content--topic">
+      <Board title={title} postData={Array(200).fill("")} postNum={35} />
+      <section className="hits">
+        <aside className="hits__wrapper">
+          <h2 className="hits__title">{"Hits"}</h2>
+          <Hits postNum={20} />
+          <Hits postNum={10} />
+        </aside>
+      </section>
+    </div>
+  );
+}
+
+function Hits({ postNum }) {
+  return (
+    <ul className="hits-board">
+      {Array(postNum)
+        .fill("")
+        .map((ele, idx) => {
+          return (
+            <li className="hits-board__post">
+              <span
+                className={
+                  "hits-board__order" +
+                  (idx < 3 ? " hits-board__order--best" : "")
+                }
+              >
+                {idx + 1}
+              </span>
+
+              <span className="hits-board__title">
+                {"여기에 따봉수로 컷한글 15개"}
+              </span>
+              <span className="hits-board__like">{12}</span>
+            </li>
+          );
+        })}
+    </ul>
+  );
 }
