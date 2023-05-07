@@ -17,7 +17,7 @@
 .horizon-list {
   --list-width: calc((var(--card-width) + 5) * 10);
   --list-height: 120px;
-  --card-width: 181px;
+  --card-width: 179px;
   --card-height: 110px;
 
   width: 100%;
@@ -25,6 +25,7 @@
 }
 
 .horizon-list__list-title {
+  font-size: var(--font-size-md);
   margin-top: 10px;
 }
 
@@ -84,6 +85,7 @@
 }
 
 .board__title {
+  font-size: var(--font-size-md);
   margin: 10px 0;
 }
 
@@ -136,7 +138,7 @@
 }
 
 .board__nav-btn:hover {
-  background-color: rgb(240, 240, 240);
+  background-color: var(--color-focus);
 }
 /* post */
 
