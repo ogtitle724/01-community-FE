@@ -54,7 +54,7 @@ export function Others({ title }) {
                   {idx + 1}
                 </span>
 
-                <a href="/" className="hits-board__title">
+                <a href="/post?title=" className="hits-board__title">
                   {"여기에 따봉수로 컷한글 15개"}
                 </a>
                 <span className="hits-board__like">{12}</span>

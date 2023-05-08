@@ -113,13 +113,13 @@ function Nav({ pageTopic, setPageTopic }) {
         e.preventDefault();
 
         axios
-          .post("/process_signup", {
+          .post("http://localhost:8080/process_signup", {
             eMail: eMail,
             pwd: pwd,
           })
           .then((res) => {
             /** set userboard data here using res */
-            console.log("sign up data passed to /process_signup!");
+            console.log("sign up data passed to /process_signup! (port: 8080)");
           })
           .catch((err) => {
             console.log(err);
@@ -271,7 +271,7 @@ function Nav({ pageTopic, setPageTopic }) {
         e.preventDefault();
 
         axios
-          .post("/process_login", {
+          .post("http://localhost:8080/process_login", {
             eMail: eMail,
             pwd: pwd,
           })
