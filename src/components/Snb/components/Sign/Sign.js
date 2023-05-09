@@ -7,7 +7,7 @@ import "./style.css";
 export default function Sign({ serverURL, setIsLogIn }) {
   const [eMail, setEMail] = useState("");
   const [pwd, setPwd] = useState("");
-  const [showSignUpForm, setshowSignUpForm] = useState(false);
+  const [showSignUpForm, setShowSignUpForm] = useState(false);
 
   const handleBtnClick = async (e) => {
     e.preventDefault();
@@ -56,13 +56,13 @@ export default function Sign({ serverURL, setIsLogIn }) {
         </button>
         <span
           className="form-login__btn-signup"
-          onClick={() => setshowSignUpForm(true)}
+          onClick={() => setShowSignUpForm(true)}
         >
           Join us!
         </span>
       </form>
       {showSignUpForm && (
-        <SignUp serverURL={serverURL} setIsSignUp={setshowSignUpForm} />
+        <SignUp serverURL={serverURL} setShowSignUpForm={setShowSignUpForm} />
       )}
     </>
   );

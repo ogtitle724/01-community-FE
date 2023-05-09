@@ -52,10 +52,21 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 
 ### GET
 
-Home : /  
-search bar : /search?keyWord=${searchTerm}  
-User detail(my page) : /myPage  
-View Post : /post?id=${POST_ID}
+#### Home
+
+/
+
+#### search bar
+
+/search?keyWord=${searchTerm}
+
+#### User detail(my page)
+
+/myPage
+
+#### View Post
+
+/post?id=${POST_ID}
 
 ### POST
 

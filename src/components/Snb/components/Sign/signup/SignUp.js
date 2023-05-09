@@ -3,7 +3,7 @@ import axios from "axios";
 
 import "./style.css";
 
-export default function SignUp({ serverURL, setshowSignUpForm }) {
+export default function SignUp({ serverURL, setShowSignUpForm }) {
   const [eMail, setEMail] = useState("");
   const [pwd, setPwd] = useState("");
   const [confirmPwd, setConfirmPwd] = useState("");
@@ -44,7 +44,9 @@ export default function SignUp({ serverURL, setshowSignUpForm }) {
         pwd: pwd,
       });
 
-      setshowSignUpForm(false);
+      console.log(res);
+
+      setShowSignUpForm(false);
     } catch (err) {
       alert("Error: " + err);
     }
@@ -54,7 +56,7 @@ export default function SignUp({ serverURL, setshowSignUpForm }) {
     <div className="form-signup__wrapper">
       <div
         className="form-signup__background"
-        onClick={() => setshowSignUpForm(false)}
+        onClick={() => setShowSignUpForm(false)}
       ></div>
       <form className="form-signup">
         <h2 className="form-signup__title">Create Account</h2>
