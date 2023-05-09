@@ -1,0 +1,25 @@
+#root {
+  --header-height: 50px;
+
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 230px 1fr;
+  grid-template-rows: var(--header-height) 1fr;
+}
+
+.main {
+  width: 100%;
+  min-width: 0px;
+  height: calc(100vh - var(--header-height));
+  overflow-y: scroll;
+  background-color: rgb(237, 241, 244);
+}
+
+.main::-webkit-scrollbar {
+  width: 10px;
+}
+
+.main::-webkit-scrollbar-thumb {
+  border-radius: 8px;
+  background-color: rgb(154, 167, 178);
+}

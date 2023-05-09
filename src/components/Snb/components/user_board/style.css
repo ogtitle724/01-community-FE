@@ -1,0 +1,58 @@
+.user-board {
+  width: 184px;
+  height: 160px;
+  bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-top: 1px solid var(--main-color);
+}
+
+.user-board__detail {
+  width: 100%;
+  height: 50px;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.user-board__profile-img {
+  width: 35px;
+  height: 35px;
+  border-radius: 100%;
+  background-color: rgb(237, 241, 244);
+}
+
+.user-board__nickname {
+  width: 60%;
+  font-size: var(--font-size-md);
+  font-weight: bolder;
+}
+
+.user-board__mail {
+  width: 60%;
+  font-size: var(--font-size-vsm);
+}
+
+.user-board__btn-wrapper {
+  width: 100%;
+  height: 65px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.user-board__btn {
+  width: 50px;
+  height: 50px;
+  padding: 10px;
+  border-radius: 3px;
+  border: none;
+  border-bottom: 3px solid rgb(94, 148, 195);
+  background-color: white;
+}
+
+.user-board__btn:hover {
+  filter: brightness(0.93);
+}

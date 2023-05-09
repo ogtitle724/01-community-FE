@@ -1,0 +1,17 @@
+.search-bar {
+  width: max(50%, 300px);
+  height: 30px;
+  background-color: whitesmoke;
+  border-radius: 6px;
+}
+
+.search-bar__input {
+  width: 95%;
+  height: 90%;
+  background-color: transparent;
+  border: none;
+}
+
+.search-bar__input:focus {
+  outline: none;
+}

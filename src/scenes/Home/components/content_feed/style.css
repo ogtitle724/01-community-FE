@@ -1,0 +1,7 @@
+.main__content {
+  width: 88%;
+  height: 1450px;
+  margin: 0 auto;
+  position: relative;
+  overflow-x: hidden;
+}

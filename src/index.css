@@ -1,0 +1,54 @@
+:root {
+  --font-size-title: 1.5rem;
+  --font-size-lg: 1.2rem;
+  --font-size-md: 1rem;
+  --font-size-sm: 0.8rem;
+  --font-size-vsm: 0.5rem;
+  --main-color: rgb(94, 148, 195);
+  --orange: rgb(204, 133, 69);
+  --green: rgb(14, 112, 113);
+  --skyblue: rgb(94, 148, 195);
+  --lavender: rgb(178, 166, 206);
+  --red: rgb(208, 61, 69);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  list-style: none;
+  text-decoration: none;
+  color: black;
+}
+
+body {
+  min-height: 100vh;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
+span,
+p {
+  cursor: default;
+}
+
+.center-xy {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.center-x {
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, 0);
+}

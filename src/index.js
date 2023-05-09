@@ -2,21 +2,17 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
-import Root from "./routes/root";
-import Post from "./routes/post";
-import ErrorPage from "./error-page";
-import "./stylesheet/index.css";
-import "./stylesheet/root.css";
+import Home from "./scenes/Home/Home.js";
+import ErrorPage from "./scenes/error_page/ErrorPage.js";
+import "./index.css";
+
+const serverURL = "http://localhost:8080";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Root />,
+    element: <Home serverURL={serverURL} />,
     errorElement: <ErrorPage />,
-  },
-  {
-    path: "/post",
-    element: <Post />,
   },
 ]);
 
@@ -25,11 +21,3 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     <RouterProvider router={router} />
   </React.StrictMode>
 );
-
-/* color palette
-orange : rgb(204, 133, 69)
-green : rgb(14, 112, 113)
-skyblue : rgb(94, 148, 195)
-lavender : rgb(178, 166, 206)
-red : rgb(208, 61, 69)
-*/
