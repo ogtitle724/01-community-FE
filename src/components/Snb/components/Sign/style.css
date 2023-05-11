@@ -1,6 +1,6 @@
 .form-login {
   width: 80%;
-  padding: 15px 0 30px 0;
+  padding: 20px 0 25px 0;
   position: relative;
   border-top: 1px solid rgb(94, 148, 195);
 }
@@ -26,20 +26,17 @@
   font-weight: 600;
   transition: 0.1s;
 }
-.form-login__btn-signin:hover {
+
+.form-login__btn-login:disabled {
   filter: brightness(0.8);
-}
-.form-login__btn-signin:disabled {
-  background-color: rgb(215, 215, 215);
-  color: var(--main-color);
 }
 
 .form-login__btn-signup {
-  margin-top: 3px;
-  transform: translateX(65px);
+  width: 100%;
+  display: block;
+  text-align: right;
   font-size: 0.7rem;
   font-weight: 500;
-  text-align: right;
   line-height: 20px;
   color: var(--main-color);
   cursor: pointer;

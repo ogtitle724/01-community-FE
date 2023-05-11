@@ -36,7 +36,7 @@ export default function Snb({ serverURL, pageTopic, setPageTopic }) {
         setPageTopic={setPageTopic}
       />
       {isLogIn ? (
-        <UserBoard />
+        <UserBoard setIsLogIn={setIsLogIn} />
       ) : (
         <Sign serverURL={serverURL} setIsLogIn={setIsLogIn} />
       )}

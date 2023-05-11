@@ -26,9 +26,9 @@ export default function HorizontalList() {
       container.current.style.left = `0px`;
       isMouseDown.current = false;
       return;
-    } else if (container.current.offsetLeft < -765) {
+    } else if (container.current.offsetLeft < -745) {
       container.current.style.transition = "0.6s";
-      container.current.style.left = `-725px`;
+      container.current.style.left = `-705px`;
       isMouseDown.current = false;
       return;
     }

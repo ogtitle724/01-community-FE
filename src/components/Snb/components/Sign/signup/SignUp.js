@@ -1,6 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 
+import { checkEmail, checkPwd, isMatch } from "../validation";
 import "./style.css";
 
 export default function SignUp({ serverURL, setShowSignUpForm }) {
@@ -10,29 +11,6 @@ export default function SignUp({ serverURL, setShowSignUpForm }) {
   const [isMailVaild, setIsMailValid] = useState(false);
   const [isPwdValid, setIsPwdValid] = useState(false);
   const [isPwdMatch, setIsPwdMatch] = useState(false);
-
-  /* email, password validation */
-  const checkEmail = (eMail) => {
-    const pattern = /^[0-9a-zA-Z_\.-]+@[0-9a-zA-Z_-]+(\.[0-9a-zA-Z_-]+){1,2}$/i;
-
-    if (pattern.test(eMail)) setIsMailValid(true);
-    else setIsMailValid(false);
-    return;
-  };
-
-  const checkPwd = (pwd) => {
-    const pattern = /^(?!.*\s)(?=.*[A-Za-z])(?=.*[0-9]).{8,16}$/;
-
-    if (pattern.test(pwd)) setIsPwdValid(true);
-    else setIsPwdValid(false);
-    return;
-  };
-
-  const isMatch = (pwdA, pwdB) => {
-    if (pwdA === pwdB) setIsPwdMatch(true);
-    else setIsPwdMatch(false);
-    return;
-  };
 
   /** post signup data to server */
   const handleBtnClick = async (e) => {
@@ -68,8 +46,10 @@ export default function SignUp({ serverURL, setShowSignUpForm }) {
             type="text"
             value={eMail}
             onChange={(e) => {
-              checkEmail(e.target.value);
               setEMail(e.target.value);
+              checkEmail(e.target.value)
+                ? setIsMailValid(true)
+                : setIsMailValid(false);
             }}
           />
           <p className="form-signup-warn">
@@ -83,8 +63,10 @@ export default function SignUp({ serverURL, setShowSignUpForm }) {
             type="text"
             value={pwd}
             onChange={(e) => {
-              checkPwd(e.target.value);
               setPwd(e.target.value);
+              checkPwd(e.target.value)
+                ? setIsPwdValid(true)
+                : setIsPwdValid(false);
             }}
           />
           <p className="form-signup-warn">
@@ -102,7 +84,9 @@ export default function SignUp({ serverURL, setShowSignUpForm }) {
             value={confirmPwd}
             onChange={(e) => {
               setConfirmPwd(e.target.value);
-              isMatch(pwd, e.target.value);
+              isMatch(pwd, e.target.value)
+                ? setIsPwdMatch(true)
+                : setIsPwdMatch(false);
             }}
           />
           <p className="form-signup-warn">

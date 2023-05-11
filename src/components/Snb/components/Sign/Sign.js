@@ -1,12 +1,15 @@
 import { useState } from "react";
 import axios from "axios";
 
+import { checkEmail, checkPwd } from "./validation";
 import SignUp from "./signup/SignUp";
 import "./style.css";
 
 export default function Sign({ serverURL, setIsLogIn }) {
   const [eMail, setEMail] = useState("");
   const [pwd, setPwd] = useState("");
+  const [isMailVaild, setIsMailValid] = useState("");
+  const [isPwdValid, setIsPwdValid] = useState("");
   const [showSignUpForm, setShowSignUpForm] = useState(false);
 
   const handleBtnClick = async (e) => {
@@ -37,7 +40,12 @@ export default function Sign({ serverURL, setIsLogIn }) {
           name="email"
           type="text"
           placeholder="e-mail"
-          onChange={(e) => setEMail(e.target.value)}
+          onChange={(e) => {
+            setEMail(e.target.value);
+            checkEmail(e.target.value)
+              ? setIsMailValid(true)
+              : setIsMailValid(false);
+          }}
         />
         <input
           value={pwd}
@@ -45,15 +53,22 @@ export default function Sign({ serverURL, setIsLogIn }) {
           name="pwd"
           type="text"
           placeholder="password"
-          onChange={(e) => setPwd(e.target.value)}
+          onChange={(e) => {
+            setPwd(e.target.value);
+            checkPwd(e.target.value)
+              ? setIsPwdValid(true)
+              : setIsPwdValid(false);
+          }}
         />
 
         <button
-          className="form-login__btn-login"
+          className={"form-login__btn-login"}
           onClick={(e) => handleBtnClick(e)}
+          disabled={!(isMailVaild && isPwdValid)}
         >
           Log in
         </button>
+
         <span
           className="form-login__btn-signup"
           onClick={() => setShowSignUpForm(true)}

@@ -5,11 +5,11 @@
   --font-size-sm: 0.8rem;
   --font-size-vsm: 0.5rem;
   --main-color: rgb(94, 148, 195);
-  --orange: rgb(204, 133, 69);
-  --green: rgb(14, 112, 113);
-  --skyblue: rgb(94, 148, 195);
-  --lavender: rgb(178, 166, 206);
-  --red: rgb(208, 61, 69);
+  --color-orange: rgb(204, 133, 69);
+  --color-green: rgb(14, 112, 113);
+  --color-skyblue: rgb(94, 148, 195);
+  --color-lavender: rgb(178, 166, 206);
+  --color-red: rgb(208, 61, 69);
 }
 
 * {
@@ -51,4 +51,8 @@ p {
   position: absolute;
   left: 50%;
   transform: translate(-50%, 0);
+}
+
+.hidden {
+  visibility: hidden;
 }
