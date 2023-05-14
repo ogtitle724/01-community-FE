@@ -16,7 +16,7 @@ export default function Home({ serverURL }) {
   else content.current = <ContentTopic title={pageTopic} />;
 
   return (
-    <>
+    <div className="home">
       <Header serverURL={serverURL} />
       <Snb
         serverURL={serverURL}
@@ -26,6 +26,6 @@ export default function Home({ serverURL }) {
       <main ref={main} className="main">
         {content.current}
       </main>
-    </>
+    </div>
   );
 }

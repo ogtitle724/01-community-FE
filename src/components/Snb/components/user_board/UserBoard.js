@@ -1,7 +1,10 @@
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./style.css";
 
 export default function UserBoard({ setIsLogIn }) {
+  const navigate = useNavigate();
+
   const handleClickLogOut = async () => {
     try {
       /* get user detail by verify token
@@ -19,7 +22,9 @@ export default function UserBoard({ setIsLogIn }) {
 
   const handleClickMyPosts = () => {};
 
-  const handleClickWrite = () => {};
+  const handleClickWrite = () => {
+    navigate("/write");
+  };
 
   return (
     <div className="user-board">

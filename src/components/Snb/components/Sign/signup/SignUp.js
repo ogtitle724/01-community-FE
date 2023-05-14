@@ -17,7 +17,7 @@ export default function SignUp({ serverURL, setShowSignUpForm }) {
     e.preventDefault();
 
     try {
-      const res = await axios.post(serverURL + "/process_signup", {
+      const res = await axios.post(serverURL + "/api/auth/register", {
         eMail: eMail,
         pwd: pwd,
       });

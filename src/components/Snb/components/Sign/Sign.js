@@ -12,11 +12,13 @@ export default function Sign({ serverURL, setIsLogIn }) {
   const [isPwdValid, setIsPwdValid] = useState("");
   const [showSignUpForm, setShowSignUpForm] = useState(false);
 
+  // if token is exist directly set login true and eMail, pwd
+
   const handleBtnClick = async (e) => {
     e.preventDefault();
 
     try {
-      const res = await axios.post(serverURL + "/process_login", {
+      const res = await axios.post(serverURL + "/api/auth/authenticate", {
         eMail: eMail,
         password: pwd,
       });
