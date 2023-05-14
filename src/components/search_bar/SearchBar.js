@@ -10,7 +10,7 @@ export default function SearchBar({ serverURL }) {
 
     try {
       const response = await axios.get(
-        serverURL + `/search?keyWord=${searchTerm}`
+        serverURL + `/api/board?id=${searchTerm}`
       );
       /**
        * response로 연관 post데이터 받고

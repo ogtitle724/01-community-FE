@@ -1,11 +1,30 @@
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import "./style.css";
 
-export default function UserBoard() {
+export default function UserBoard({ setIsLogIn }) {
+  const navigate = useNavigate();
+
+  const handleClickLogOut = async () => {
+    try {
+      /* get user detail by verify token
+      const userDetail = await axios.post("/process_verify");
+      token disable
+      const res = axios.post("/process_logout", userDetail);
+ */
+      setIsLogIn(false);
+    } catch (err) {
+      alert("Error:", err);
+    }
+  };
+
   const handleClickMypage = () => {};
 
   const handleClickMyPosts = () => {};
 
-  const handleClickWrite = () => {};
+  const handleClickWrite = () => {
+    navigate("/write");
+  };
 
   return (
     <div className="user-board">
@@ -19,6 +38,14 @@ export default function UserBoard() {
           <p className="user-board__nickname">NickName</p>
           <p className="user-board__mail">sample@example.com</p>
         </div>
+        <button className="user-board__btn-logout">
+          <img
+            src="./icons/close-circle.svg"
+            alt="Log out"
+            className="user-board__img-logout center-xy"
+            onClick={handleClickLogOut}
+          ></img>
+        </button>
       </div>
       <div className="user-board__btn-wrapper">
         <button className="user-board__btn" onClick={handleClickMypage}>

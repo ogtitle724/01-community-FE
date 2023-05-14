@@ -54,24 +54,24 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 
 #### Home
 
-/
+"/"
 
 #### search bar
 
-/search?keyWord=${searchTerm}
+"/search?keyWord=${searchTerm}"
 
 #### User detail(my page)
 
-/myPage
+"/myPage"
 
 #### View Post
 
-/post?id=${POST_ID}
+"/post?id=${POST_ID}"
 
 ### POST
 
-Log in : /process_login --(change state)--> isLogIn  
-Sign up : /process_signup --(change state)--> showSignUpForm
+Log in : "/process_login --(change state)--> isLogIn "
+Sign up : "/process_signup --(change state)--> showSignUpForm"
 
 ## Directory structure
 
