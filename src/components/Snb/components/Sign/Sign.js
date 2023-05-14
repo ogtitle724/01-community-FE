@@ -13,8 +13,8 @@ export default function Sign({ serverURL, setIsLogIn }) {
     e.preventDefault();
 
     try {
-      const res = await axios.post(serverURL + "/process_login", {
-        eMail: eMail,
+      const res = await axios.post(serverURL + "/api/auth/authenticate", {
+        email: eMail,
         password: pwd,
       });
 

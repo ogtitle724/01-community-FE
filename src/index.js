@@ -6,7 +6,7 @@ import Home from "./scenes/Home/Home.js";
 import ErrorPage from "./scenes/error_page/ErrorPage.js";
 import "./index.css";
 
-const serverURL = "http://localhost:8080";
+const serverURL = "http://localhost:8000";
 
 const router = createBrowserRouter([
   {
