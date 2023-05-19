@@ -1,14 +1,14 @@
 import { useState } from "react";
 import axios from "axios";
 
-import { checkEmail, checkPwd } from "./validation";
+import { checkUid, checkPwd } from "./validation";
 import SignUp from "./signup/SignUp";
 import "./style.css";
 
 export default function Sign({ serverURL, setIsLogIn }) {
-  const [eMail, setEMail] = useState("");
+  const [uid, setUid] = useState("");
   const [pwd, setPwd] = useState("");
-  const [isMailVaild, setIsMailValid] = useState("");
+  const [isUidVaild, setIsUidValid] = useState("");
   const [isPwdValid, setIsPwdValid] = useState("");
   const [showSignUpForm, setShowSignUpForm] = useState(false);
 
@@ -19,8 +19,8 @@ export default function Sign({ serverURL, setIsLogIn }) {
 
     try {
       const res = await axios.post(serverURL + "/api/auth/authenticate", {
-        eMail: eMail,
-        password: pwd,
+        uid: uid,
+        pwd: pwd,
       });
 
       /** Store the token received with res in a browser cookie. */
@@ -37,16 +37,16 @@ export default function Sign({ serverURL, setIsLogIn }) {
     <>
       <form className="form-login">
         <input
-          value={eMail}
+          value={uid}
           className="form-login__input"
-          name="email"
+          name="uid"
           type="text"
           placeholder="e-mail"
           onChange={(e) => {
-            setEMail(e.target.value);
-            checkEmail(e.target.value)
-              ? setIsMailValid(true)
-              : setIsMailValid(false);
+            setUid(e.target.value);
+            checkUid(e.target.value)
+              ? setIsUidValid(true)
+              : setIsUidValid(false);
           }}
         />
         <input
@@ -66,7 +66,7 @@ export default function Sign({ serverURL, setIsLogIn }) {
         <button
           className={"form-login__btn-login"}
           onClick={(e) => handleBtnClick(e)}
-          disabled={!(isMailVaild && isPwdValid)}
+          disabled={!(isUidVaild && isPwdValid)}
         >
           Log in
         </button>
