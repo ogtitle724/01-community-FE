@@ -4,13 +4,6 @@ import "./style.css";
 
 export default function ContentHome({serverURL}) {
 
-  const 
-  try{
-    const postData=await axios.get(serverURL+"/post", {params:{page:0}});
-  }catch{
-    //
-  }
-
   return (
     <div className="main__content">
       <HorizontalList />
