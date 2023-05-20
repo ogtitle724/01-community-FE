@@ -1,7 +1,7 @@
 import { useState, useRef } from "react";
 
 import Header from "../../components/header/Header";
-import Snb from "../../components/Snb/Snb";
+import Snb from "../../components/snb/Snb";
 import ContentHome from "./components/content_feed/Content_Home";
 import ContentBest from "./components/content_feed/Content_Best";
 import ContentTopic from "./components/content_topic/Content_Topic";

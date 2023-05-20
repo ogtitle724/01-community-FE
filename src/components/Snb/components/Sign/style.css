@@ -2,7 +2,7 @@
   width: 80%;
   padding: 20px 0 25px 0;
   position: relative;
-  border-top: 1px solid rgb(94, 148, 195);
+  border-top: 1px solid var(--main-color);
 }
 
 .form-login__input {
@@ -11,7 +11,7 @@
   margin: 4px 0;
   padding-left: 5px;
   border: none;
-  border-left: 4px solid rgb(94, 148, 195);
+  border-left: 4px solid var(--main-color);
   background-color: whitesmoke;
 }
 
