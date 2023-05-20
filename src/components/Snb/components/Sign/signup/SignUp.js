@@ -18,15 +18,15 @@ export default function SignUp({ serverURL, setShowSignUpForm }) {
 
     try {
       const res = await axios.post(serverURL + "/api/auth/register", {
-        eMail: eMail,
-        pwd: pwd,
+        uid: eMail,
+        password: pwd,
       });
 
-      console.log(res);
-
-      setShowSignUpForm(false);
+      if (res.data) setShowSignUpForm(false);
+      else throw new Error("singin rejected");
     } catch (err) {
-      alert("Error: " + err);
+      console.log(err);
+      alert("this e-mail already in use");
     }
   };
 

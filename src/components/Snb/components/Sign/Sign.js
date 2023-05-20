@@ -19,7 +19,7 @@ export default function Sign({ serverURL, setIsLogIn }) {
 
     try {
       const res = await axios.post(serverURL + "/api/auth/authenticate", {
-        eMail: eMail,
+        uid: eMail,
         password: pwd,
       });
 
