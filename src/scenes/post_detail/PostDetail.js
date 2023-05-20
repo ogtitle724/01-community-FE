@@ -4,17 +4,13 @@ import Header from "../../components/header/Header";
 import Snb from "../../components/Snb/Snb";
 import "./style.css";
 
-export default function PostDetail({ serverURL }) {
+export default function PostDetail({ domain }) {
   const [pageTopic, setPageTopic] = useState("HOME");
 
   return (
     <div className="home">
-      <Header serverURL={serverURL} />
-      <Snb
-        serverURL={serverURL}
-        pageTopic={pageTopic}
-        setPageTopic={setPageTopic}
-      />
+      <Header domain={domain} />
+      <Snb domain={domain} pageTopic={pageTopic} setPageTopic={setPageTopic} />
     </div>
   );
 }

@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./style.css";
 
-export default function WritePage({ serverURL }) {
+export default function WritePage({ domain }) {
   const [postTitle, setPostTitle] = useState("");
   const [postDescription, setPostDescription] = useState("");
   const [postCategory, setPostCategory] = useState("");
@@ -15,7 +15,7 @@ export default function WritePage({ serverURL }) {
   const handleClickSave = (e) => {
     e.preventDefault();
 
-    axios.post(serverURL + "/api/board/register", {
+    axios.post(domain + "/api/board/register", {
       uid: "token으로부터 뽑을예정",
       title: postTitle,
       category: postCategory,
