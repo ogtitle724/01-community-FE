@@ -33,9 +33,10 @@
 
 .form-login__btn-signup {
   width: 100%;
+  margin-top: 5px;
   display: block;
   text-align: right;
-  font-size: 0.7rem;
+  font-size: var(--font-size-sm);
   font-weight: 500;
   line-height: 20px;
   color: var(--main-color);
