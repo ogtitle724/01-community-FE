@@ -1,0 +1,168 @@
+.comment-board {
+  --font-size-reply: 0.7rem;
+
+  width: 350px;
+  height: 96%;
+  position: relative;
+}
+
+.comment-board__comment-wrapper {
+  width: 100%;
+  height: 100%;
+  border: 2.5px solid;
+  border-radius: 8px;
+  border-color: var(--color-orange) transparent var(--color-orange) transparent;
+  overflow-y: scroll;
+}
+
+.comment-board__comment {
+  width: 94%;
+  height: auto;
+  margin: 7px auto;
+}
+
+.comment-board__btn-add {
+  width: 35px;
+  height: 35px;
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  border-radius: 100%;
+  border: none;
+  background-color: white;
+  transform: rotateZ(45deg);
+}
+
+.comment-board__btn-add img {
+  opacity: 0.5;
+  transition: 0.2s;
+}
+
+.comment-board__form {
+  position: absolute;
+  bottom: 15px;
+  left: 50%;
+  transform: translateX(-56%);
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.comment-board__input {
+  width: 270px;
+  height: 150px;
+  padding: 7px;
+  resize: none;
+  border-radius: 4px;
+  border: none;
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
+  font-size: var(--font-size-reply);
+  font-weight: 600;
+}
+
+.comment-board__input:focus {
+  outline: none;
+}
+
+.comment-board__btn {
+  width: 40px;
+  height: 20px;
+  position: absolute;
+  right: 5px;
+  bottom: 5px;
+  border: none;
+  border-radius: 4px;
+  background-color: var(--color-orange);
+  font-size: var(--font-size-reply);
+  font-weight: 550;
+  color: white;
+}
+
+.comment__default {
+  width: 100%;
+  min-height: 50px;
+}
+
+.comment__reply {
+  width: 96%;
+  margin-left: 13px;
+  position: relative;
+}
+
+.comment__reply::before {
+  content: "";
+  width: 5px;
+  height: 5px;
+  position: absolute;
+  left: -12px;
+  top: 2px;
+  border: 2px solid;
+  border-radius: 3px;
+  border-color: transparent transparent var(--main-color) var(--main-color);
+}
+
+.comment__reply::after {
+  content: "";
+  width: 3px;
+  height: 3px;
+  position: absolute;
+  top: 6.3px;
+  left: -11px;
+  border: 2px solid;
+  border-radius: 3px;
+  border-color: transparent transparent var(--main-color) var(--main-color);
+  transform: rotateZ(-135deg);
+}
+
+.comment__info {
+  margin: 4px 2px;
+  font-size: var(--font-size-vsm);
+  display: flex;
+  align-items: flex-end;
+  gap: 4px;
+}
+
+.comment__img {
+  width: 18px;
+  height: 18px;
+  border-radius: 4px;
+  background-color: whitesmoke;
+}
+
+.comment__nickname {
+  font-weight: 600;
+}
+
+.comment__detail {
+  font-size: var(--font-size-reply);
+}
+
+.comment__btn-wrapper {
+  margin: 3px 0 6px 0;
+  position: relative;
+}
+
+.comment__btn {
+  width: 13px;
+  height: 13px;
+  margin: 0 5px;
+  border-radius: 100%;
+  border: none;
+  background-color: white;
+  opacity: 0.2;
+  font-size: var(--font-size-vsm);
+  transition: 0.2s;
+}
+
+.comment__btn:hover {
+  opacity: 0.6;
+}
+
+.comment__btn-dislike {
+  transform: translateY(2px);
+}
+
+.comment__btn-reply {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+}

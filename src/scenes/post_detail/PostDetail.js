@@ -1,20 +1,20 @@
-import { useState, useRef } from "react";
-
 import Header from "../../components/header/Header";
-import Snb from "../../components/Snb/Snb";
+import Gnb from "../../components/gnb/Gnb";
+import ContentBoard from "./components/content/Content";
+import CommentBoard from "./components/comment/Comment";
 import "./style.css";
 
-export default function PostDetail({ serverURL }) {
-  const [pageTopic, setPageTopic] = useState("HOME");
-
+export default function PostDetail({ domain }) {
   return (
-    <div className="home">
-      <Header serverURL={serverURL} />
-      <Snb
-        serverURL={serverURL}
-        pageTopic={pageTopic}
-        setPageTopic={setPageTopic}
-      />
+    <div className="post-detail">
+      <Header domain={domain} />
+      <Gnb />
+      <main className="post-detail__main">
+        <div className="post-detail__wrapper">
+          <ContentBoard />
+          <CommentBoard />
+        </div>
+      </main>
     </div>
   );
 }

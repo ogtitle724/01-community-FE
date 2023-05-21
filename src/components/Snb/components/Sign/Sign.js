@@ -5,7 +5,7 @@ import { checkUid, checkPwd } from "./validation";
 import SignUp from "./signup/SignUp";
 import "./style.css";
 
-export default function Sign({ serverURL, setIsLogIn }) {
+export default function Sign({ domain, setIsLogIn }) {
   const [uid, setUid] = useState("");
   const [pwd, setPwd] = useState("");
   const [isUidVaild, setIsUidValid] = useState("");
@@ -18,7 +18,7 @@ export default function Sign({ serverURL, setIsLogIn }) {
     e.preventDefault();
 
     try {
-      const res = await axios.post(serverURL + "/api/auth/authenticate", {
+      const res = await axios.post(domain + "/api/auth/authenticate", {
         uid: uid,
         pwd: pwd,
       });
@@ -79,7 +79,7 @@ export default function Sign({ serverURL, setIsLogIn }) {
         </span>
       </form>
       {showSignUpForm && (
-        <SignUp serverURL={serverURL} setShowSignUpForm={setShowSignUpForm} />
+        <SignUp domain={domain} setShowSignUpForm={setShowSignUpForm} />
       )}
     </>
   );

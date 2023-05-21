@@ -1,0 +1,22 @@
+.post-detail {
+  min-height: 100vh;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.post-detail__main {
+  width: 100vw;
+  height: calc(100vh - 80px);
+  overflow-y: hidden;
+}
+
+.post-detail__wrapper {
+  width: 1050px;
+  height: 100%;
+  margin: 0px auto;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}

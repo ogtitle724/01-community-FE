@@ -1,10 +1,16 @@
 import { useState } from "react";
 import axios from "axios";
 
-import { checkUid, checkNick, checkEmail, checkPwd, isMatch } from "../validation";
+import {
+  checkUid,
+  checkNick,
+  checkEmail,
+  checkPwd,
+  isMatch,
+} from "../validation";
 import "./style.css";
 
-export default function SignUp({ serverURL, setShowSignUpForm }) {
+export default function SignUp({ domain, setShowSignUpForm }) {
   const [uid, setUid] = useState("");
   const [nick, setNick] = useState("");
   const [email, setEmail] = useState("");
@@ -21,19 +27,19 @@ export default function SignUp({ serverURL, setShowSignUpForm }) {
     e.preventDefault();
 
     try {
-      const res = await axios.post(serverURL + "/api/auth/register", {
+      const res = await axios.post(domain + "/api/auth/register", {
         uid: uid,
         nick: nick,
         email: email,
         pwd: pwd,
-        emailReceive: "true"
+        emailReceive: "true",
       });
 
-      console.log(res);
-
-      setShowSignUpForm(false);
+      if (res.data) setShowSignUpForm(false);
+      else throw new Error("singin rejected");
     } catch (err) {
-      alert("Error: " + err);
+      console.log(err);
+      alert("this e-mail already in use");
     }
   };
 
@@ -59,7 +65,10 @@ export default function SignUp({ serverURL, setShowSignUpForm }) {
             }}
           />
           <p className="form-signup-warn">
-            {uid && (isUidVaild ? "" : "사용자 ID는 3~20자 사이의 영문+숫자로 이루어져야 하며 영문으로 시작되어야 합니다.")}
+            {uid &&
+              (isUidVaild
+                ? ""
+                : "사용자 ID는 3~20자 사이의 영문+숫자로 이루어져야 하며 영문으로 시작되어야 합니다.")}
           </p>
         </section>
         <section className="form-signup__section">
@@ -76,7 +85,8 @@ export default function SignUp({ serverURL, setShowSignUpForm }) {
             }}
           />
           <p className="form-signup-warn">
-            {nick && (isNickVaild ? "" : "닉네임은 2~8자 이내여야 합니다.")} {/*정치 관련, 특정 사이트 언급, 반사회적, 성적, 욕설 닉네임은 금지합니다.*/}
+            {nick && (isNickVaild ? "" : "닉네임은 2~8자 이내여야 합니다.")}{" "}
+            {/*정치 관련, 특정 사이트 언급, 반사회적, 성적, 욕설 닉네임은 금지합니다.*/}
           </p>
         </section>
         <section className="form-signup__section">

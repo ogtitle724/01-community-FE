@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 import UserBoard from "./components/user_board/UserBoard";
-import Sign from "./components/Sign/Sign";
+import Sign from "./components/sign/Sign";
 import "./style.css";
 
 const category = {
@@ -17,7 +17,7 @@ const category = {
   ],
 };
 
-export default function Snb({ serverURL, pageTopic, setPageTopic }) {
+export default function Snb({ domain, pageTopic, setPageTopic }) {
   /**TODO: change */
   const [isLogIn, setIsLogIn] = useState(false);
 
@@ -38,7 +38,7 @@ export default function Snb({ serverURL, pageTopic, setPageTopic }) {
       {isLogIn ? (
         <UserBoard setIsLogIn={setIsLogIn} />
       ) : (
-        <Sign serverURL={serverURL} setIsLogIn={setIsLogIn} />
+        <Sign domain={domain} setIsLogIn={setIsLogIn} />
       )}
     </nav>
   );
