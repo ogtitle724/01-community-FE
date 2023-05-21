@@ -5,11 +5,16 @@ import HorizontalList from "../component/horizontal_list/Horizontal_List";
 import Board from "../component/board/Board";
 import "./style.css";
 
-export default function ContentHome({ domain, postData }) {
+export default function ContentHome({ domain, postData, pageNum, setPageNum }) {
   return (
     <div className="main__content">
       <HorizontalList />
-      <Board title={"Recent Posts"} postData={postData} />
+      <Board
+        title={"Recent Posts"}
+        postData={postData}
+        pageNum={pageNum}
+        setPageNum={setPageNum}
+      />
     </div>
   );
 }

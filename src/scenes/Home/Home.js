@@ -11,7 +11,12 @@ import "./style.css";
 export default function Home({ domain }) {
   const [pageTopic, setPageTopic] = useState("HOME");
   const [content, main] = [useRef(""), useRef()];
-  const [postData, setPostData] = useState([]);
+  const [pageNum, setPageNum] = useState(1);
+  const [postData, setPostData] = useState({
+    content: [],
+    totalPages: 0,
+    size: 20,
+  });
 
   useEffect(() => {
     const converter = {
@@ -29,10 +34,10 @@ export default function Home({ domain }) {
     const getPosts = async () => {
       try {
         const res = await axios.get(
-          domain + `/api/board/post?topic=${converter[pageTopic]}`
+          domain +
+            `/api/board/post?category=${converter[pageTopic]}&page=${pageNum}&size=20`
         );
-        const posts = JSON.parse(res).content;
-
+        const posts = JSON.parse(res.data);
         setPostData(posts);
       } catch (err) {
         console.log(err);
@@ -40,15 +45,37 @@ export default function Home({ domain }) {
     };
 
     getPosts();
-  }, [pageTopic, domain]);
+  }, [pageTopic, pageNum, domain]);
+
+  console.log("rendered");
 
   if (pageTopic === "HOME")
-    content.current = <ContentHome domain={domain} postData={postData} />;
+    content.current = (
+      <ContentHome
+        domain={domain}
+        postData={postData}
+        pageNum={pageNum}
+        setPageNum={setPageNum}
+      />
+    );
   else if (pageTopic === "BEST")
-    content.current = <ContentBest domain={domain} postData={postData} />;
+    content.current = (
+      <ContentBest
+        domain={domain}
+        postData={postData}
+        pageNum={pageNum}
+        setPageNum={setPageNum}
+      />
+    );
   else
     content.current = (
-      <ContentTopic title={pageTopic} domain={domain} postData={postData} />
+      <ContentTopic
+        title={pageTopic}
+        domain={domain}
+        postData={postData}
+        pageNum={pageNum}
+        setPageNum={setPageNum}
+      />
     );
 
   return (

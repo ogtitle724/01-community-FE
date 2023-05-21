@@ -29,6 +29,7 @@
   font-weight: 700;
   color: #afafaf;
   transition: 0.1s;
+  cursor: default;
 }
 
 .board__nav-btn {
