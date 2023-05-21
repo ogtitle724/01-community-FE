@@ -12,7 +12,7 @@ export default function ContentHome({ domain }) {
     const getPosts = async () => {
       try {
         const res = await axios.get(domain + "/api/board/post");
-        const posts = JSON.stringify(res).content;
+        const posts = JSON.parse(res).content;
 
         setPostData(posts);
       } catch (err) {
