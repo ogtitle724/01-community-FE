@@ -1,10 +1,10 @@
 import Board from "../component/board/Board";
 import "./style.css";
 
-export default function Others({ title }) {
+export default function Others({ title, postData }) {
   return (
     <div className="main__content main__content--topic">
-      <Board title={title} postData={Array(200).fill("")} postNum={35} />
+      <Board title={title} postData={postData} postNum={35} />
       <section className="hits">
         <aside className="hits__wrapper">
           <h2 className="hits__title">{"Hits"}</h2>
