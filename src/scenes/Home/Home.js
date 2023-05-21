@@ -37,8 +37,7 @@ export default function Home({ domain }) {
           domain +
             `/api/board/post?category=${converter[pageTopic]}&page=${pageNum}&size=20`
         );
-        const posts = JSON.parse(res.data);
-        setPostData(posts);
+        setPostData(res.data);
       } catch (err) {
         console.log(err);
       }
