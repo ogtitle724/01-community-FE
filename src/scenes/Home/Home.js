@@ -11,7 +11,7 @@ export default function Home({ domain }) {
   const [pageTopic, setPageTopic] = useState("HOME");
   const [content, main] = [useRef(""), useRef()];
 
-  if (pageTopic === "HOME") content.current = <ContentHome />;
+  if (pageTopic === "HOME") content.current = <ContentHome domain={domain} />;
   else if (pageTopic === "BEST") content.current = <ContentBest />;
   else content.current = <ContentTopic title={pageTopic} />;
 
