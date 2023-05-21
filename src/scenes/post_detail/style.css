@@ -1,95 +1,22 @@
 .post-detail {
-  position: relative;
   min-height: 100vh;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .post-detail__main {
   width: 100vw;
   height: calc(100vh - 80px);
-  display: flex;
-  align-items: stretch;
+  overflow-y: hidden;
 }
 
-.post-detail__section-content {
-  flex-basis: 65%;
+.post-detail__wrapper {
+  width: 1050px;
   height: 100%;
-  position: relative;
-  border-right: 1px solid var(--main-color);
-  overflow-y: scroll;
-}
-
-.post-detail__article-content {
-  width: 700px;
-  padding: 10px 20px;
-  height: auto;
-  position: absolute;
-  right: 0;
-}
-
-.post-detail__title {
-  padding: 5px 10px;
-  border-bottom: 1px solid black;
-  font-size: var(--font-size-title);
-}
-
-.post-detail__info-wrapper {
-  margin: 5px;
+  margin: 0px auto;
   display: flex;
-  justify-content: space-between;
-  font-size: var(--font-size-sm);
-}
-
-.post-detail__content {
-  margin: 20px 0;
-  font-size: var(--font-size-lg);
-}
-
-.post-detail__section-comment {
-  flex-basis: 35%;
-  height: 100%;
-  background-color: var(--color-background);
-  filter: brightness(1.06);
-  overflow-y: scroll;
-}
-
-.post-detail__comment-wrapper {
-  width: 400px;
-  height: auto;
-  margin: 10px 0 10px 25px;
-}
-
-.comment {
-  width: 400px;
-  min-height: 50px;
-  margin-top: 7px;
-  border: 1px solid var(--main-color);
-  background-color: white;
-}
-
-.comment__info {
-}
-
-.comment__img {
-  width: 20px;
-  height: 20px;
-  display: inline-block;
-  border-radius: 2px;
-  background-color: var(--color-skyblue);
-}
-
-.comment__nickname {
-  margin: 0 5px;
-}
-
-.comment__date {
-  font-size: var(--font-size-vsm);
-}
-
-.comment__reply {
-  width: 400px;
-  min-height: 50px;
-  margin: 7px;
-  margin-left: 20px;
-  border: 1px solid var(--main-color);
-  background-color: white;
+  align-items: center;
+  gap: 10px;
 }

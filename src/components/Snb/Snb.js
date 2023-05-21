@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 import UserBoard from "./components/user_board/UserBoard";
-import Sign from "./components/Sign/Sign";
+import Sign from "./components/sign/Sign";
 import "./style.css";
 
 const category = {

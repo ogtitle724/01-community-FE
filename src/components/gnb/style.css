@@ -12,6 +12,7 @@
 .gnb__a {
   position: relative;
   cursor: pointer;
+  font-size: var(--font-size-sm);
   font-weight: 600;
   background-color: var(--color-background);
   color: black;
