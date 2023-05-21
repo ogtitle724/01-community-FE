@@ -2,7 +2,7 @@ import HorizontalList from "../component/horizontal_list/Horizontal_List";
 import Board from "../component/board/Board";
 import "./style.css";
 
-export default function ContentHome({serverURL}) {
+export default function ContentHome({domain}) {
 
   return (
     <div className="main__content">
