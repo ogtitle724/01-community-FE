@@ -6,6 +6,7 @@ import Home from "./scenes/home/Home.js";
 import WritePage from "./scenes/write_page/WritePage.js";
 import ErrorPage from "./scenes/error_page/ErrorPage.js";
 import PostDetail from "./scenes/post_detail/PostDetail.js";
+import SearchResult from "./scenes/search_result/SearchResult.js";
 import "./index.css";
 
 const domain = "http://localhost:8000";
@@ -23,6 +24,10 @@ const router = createBrowserRouter([
   {
     path: "/post",
     element: <PostDetail domain={domain} />,
+  },
+  {
+    path: "/search",
+    element: <SearchResult />,
   },
 ]);
 

@@ -7,12 +7,13 @@ export default function ErrorPage() {
   console.error(error);
 
   return (
-    <div id="error-page">
-      <h1>Oops!</h1>
-      <p>Sorry, an unexpected error has occurred.</p>
-      <p>
-        <i>{error.statusText || error.message}</i>
-      </p>
-    </div>
+    <main className="error-page">
+      <section className="error-page__wrapper">
+        <h1 className="error-page__title">404 Not Found :(</h1>
+        <a className="error-page__btn-home" href="/">
+          Home
+        </a>
+      </section>
+    </main>
   );
 }

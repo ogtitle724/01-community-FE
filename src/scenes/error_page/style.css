@@ -1,0 +1,26 @@
+.error-page {
+  width: 100%;
+  min-height: 100vh;
+  background-color: var(--color-background);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.error-page__title {
+  font-size: 3rem;
+}
+
+.error-page__btn-home {
+  width: 50%;
+  height: 50px;
+  margin: 20px auto;
+  display: block;
+  border-radius: 6px;
+  background-color: var(--main-color);
+  color: white;
+  font-size: var(--font-size-lg);
+  font-weight: 700;
+  text-align: center;
+  line-height: 45px;
+}
