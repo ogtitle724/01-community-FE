@@ -1,19 +1,16 @@
-import { useState, useEffect } from "react";
-import axios from "axios";
-
-import HorizontalList from "../component/horizontal_list/Horizontal_List";
-import Board from "../component/board/Board";
+import HorizontalList from "../horizontal_list/Horizontal_List";
+import Board from "../board/Board";
 import "./style.css";
 
-export default function ContentHome({ domain, postData, pageNum, setPageNum }) {
+export default function ContentHome({ domain, postData, page, setPage }) {
   return (
     <div className="main__content">
       <HorizontalList />
       <Board
         title={"Recent Posts"}
         postData={postData}
-        pageNum={pageNum}
-        setPageNum={setPageNum}
+        page={page}
+        setPage={setPage}
       />
     </div>
   );

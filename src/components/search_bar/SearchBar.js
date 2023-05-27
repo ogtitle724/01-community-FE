@@ -1,23 +1,16 @@
 import { useState } from "react";
-import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import "./style.css";
 
 export default function SearchBar({ domain }) {
   const [searchTerm, setsearchTerm] = useState("");
+  const navigate = useNavigate();
 
-  async function handleOnSubmit(e) {
+  const handleOnSubmit = (e) => {
     e.preventDefault();
 
-    try {
-      const response = await axios.get(domain + `/api/board?id=${searchTerm}`);
-      /**
-       * response로 연관 post데이터 받고
-       * 해당 데이터와 함께 post 페이지로 리다이렉션
-       */
-    } catch (err) {
-      alert("ERROR:", err);
-    }
-  }
+    if (searchTerm) navigate(`/search`, { state: { term: searchTerm } });
+  };
 
   return (
     <form onSubmit={(e) => handleOnSubmit(e)} className="search-bar center-xy">

@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import axios from "axios";
 
 import Header from "../../components/header/Header";
-import Snb from "../../components/Snb/Snb";
+import Snb from "../../components/snb/Snb";
 import ContentHome from "./components/content_feed/Content_Home";
 import ContentBest from "./components/content_feed/Content_Best";
 import ContentTopic from "./components/content_topic/Content_Topic";
@@ -10,8 +10,8 @@ import "./style.css";
 
 export default function Home({ domain }) {
   const [pageTopic, setPageTopic] = useState("HOME");
-  const [content, main] = [useRef(""), useRef()];
-  const [pageNum, setPageNum] = useState(0);
+  const [content, mainEle] = [useRef(""), useRef()];
+  const [page, setPage] = useState(1);
   const [postData, setPostData] = useState({
     content: [],
     totalPages: 0,
@@ -35,7 +35,9 @@ export default function Home({ domain }) {
       try {
         const res = await axios.get(
           domain +
-            `/api/board/post?category=${converter[pageTopic]}&page=${pageNum}&size=20`
+            `/api/board/post?category=${converter[pageTopic]}&page=${
+              page - 1
+            }&size=20`
         );
         setPostData(res.data);
       } catch (err) {
@@ -44,17 +46,15 @@ export default function Home({ domain }) {
     };
 
     getPosts();
-  }, [pageTopic, pageNum, domain]);
-
-  console.log("rendered");
+  }, [pageTopic, page, domain]);
 
   if (pageTopic === "HOME")
     content.current = (
       <ContentHome
         domain={domain}
         postData={postData}
-        pageNum={pageNum}
-        setPageNum={setPageNum}
+        page={page}
+        setPage={setPage}
       />
     );
   else if (pageTopic === "BEST")
@@ -62,8 +62,8 @@ export default function Home({ domain }) {
       <ContentBest
         domain={domain}
         postData={postData}
-        pageNum={pageNum}
-        setPageNum={setPageNum}
+        page={page}
+        setPage={setPage}
       />
     );
   else
@@ -72,8 +72,8 @@ export default function Home({ domain }) {
         title={pageTopic}
         domain={domain}
         postData={postData}
-        pageNum={pageNum}
-        setPageNum={setPageNum}
+        page={page}
+        setPage={setPage}
       />
     );
 
@@ -81,7 +81,7 @@ export default function Home({ domain }) {
     <div className="home">
       <Header domain={domain} />
       <Snb domain={domain} pageTopic={pageTopic} setPageTopic={setPageTopic} />
-      <main ref={main} className="main">
+      <main ref={mainEle} className="main">
         {content.current}
       </main>
     </div>

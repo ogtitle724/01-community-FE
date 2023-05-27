@@ -1,15 +1,15 @@
-import Board from "../component/board/Board";
+import Board from "../board/Board";
 import "./style.css";
 
-export default function Others({ title, postData, pageNum, setPageNum }) {
+export default function Others({ title, postData, page, setPage }) {
   return (
     <div className="main__content main__content--topic">
       <Board
         title={title}
         postData={postData}
         postNum={35}
-        pageNum={pageNum}
-        setPageNum={setPageNum}
+        page={page}
+        setPage={setPage}
       />
       <section className="hits">
         <aside className="hits__wrapper">

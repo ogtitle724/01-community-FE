@@ -21,7 +21,12 @@ export default function Gnb() {
     <nav className="gnb">
       {category.map((item, idx) => {
         return (
-          <a href="/" className="gnb__a" onClick={(e) => handleClick(e)}>
+          <a
+            key={"gnb-a_" + idx}
+            href="/"
+            className="gnb__a"
+            onClick={(e) => handleClick(e)}
+          >
             {item}
           </a>
         );

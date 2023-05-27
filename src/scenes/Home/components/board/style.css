@@ -24,6 +24,10 @@
   transition: 0.3s;
 }
 
+.board__nav:hover {
+  bottom: 0px;
+}
+
 .board__nav-direction {
   top: -2px;
   font-weight: 700;
@@ -32,12 +36,17 @@
   cursor: default;
 }
 
+.board__nav:hover .board__nav-direction {
+  color: white;
+}
+
 .board__nav-btn {
   width: 23px;
   height: 23px;
   margin: 0 3px;
   border-radius: 100%;
   color: white;
+  background-color: white;
   font-size: var(--font-size-md);
   font-weight: 600;
   text-align: center;
@@ -45,12 +54,8 @@
   transition: 0.3s;
 }
 
-.board__nav:hover {
-  bottom: 0px;
-}
-
-.board__nav:hover .board__nav-direction {
-  color: white;
+.board__nav:hover .board__nav-btn--focus {
+  filter: brightness(0.9);
 }
 
 .board__nav:hover .board__nav-btn {
@@ -58,7 +63,7 @@
 }
 
 .board__nav-btn:hover {
-  background-color: var(--color-focus);
+  filter: brightness(0.9);
 }
 
 .post {

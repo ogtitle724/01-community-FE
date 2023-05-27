@@ -1,14 +1,14 @@
-import Board from "../component/board/Board";
+import Board from "../board/Board";
 import "./style.css";
 
-export default function Best({ postData, pageNum, setPageNum }) {
+export default function Best({ postData, page, setPage }) {
   return (
     <div className="main__content">
       <Board
         title={"Best Posts"}
         postData={postData}
-        pageNum={pageNum}
-        setPageNum={setPageNum}
+        page={page}
+        setPage={setPage}
       />
     </div>
   );
