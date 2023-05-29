@@ -5,14 +5,14 @@
   gap: 20px;
 }
 
-.main__hits {
+.main__hit {
   flex-basis: 230px;
   width: 230px;
   height: 100%;
 }
 
-/* hits */
-.hits__wrapper {
+/* hit */
+.hit__wrapper {
   width: 230px;
   height: calc(100vh - var(--header-height));
   position: fixed;
@@ -23,13 +23,13 @@
   overflow: hidden;
 }
 
-.hits__title {
+.hit__title {
   position: relative;
   margin: 10px 0 0 5px;
   font-size: var(--font-size-md);
 }
 
-.hits__title::before {
+.hit__title::before {
   content: "";
   width: 20px;
   height: 20px;
@@ -39,7 +39,7 @@
   background-image: url("../../../../../public/icons/trending-up.svg");
 }
 
-.hits-board {
+.hit-board {
   width: 100%;
   padding: 7px 0;
   display: flex;
@@ -51,7 +51,7 @@
   background-color: rgb(255, 255, 255);
 }
 
-.hits-board__li {
+.hit-board__li {
   flex: 1;
   width: 90%;
   display: flex;
@@ -60,7 +60,7 @@
   font-size: var(--font-size-vsm);
 }
 
-.hits-board__li:hover .hits-board__a-title {
+.hit-board__li:hover .hit-board__a-title {
   animation: moveLeft 2.8s ease-in-out infinite;
 }
 
@@ -76,7 +76,7 @@
   }
 }
 
-.hits-board__order {
+.hit-board__order {
   width: 20px;
   background-color: rgb(94, 148, 195);
   border-radius: 3px;
@@ -85,18 +85,18 @@
   color: white;
 }
 
-.hits-board__order--best {
+.hit-board__order--best {
   background-color: rgb(204, 133, 69);
 }
 
-.hits-board__like {
+.hit-board__like {
   width: 20px;
   text-align: center;
   font-weight: 600;
   color: var(--color-grey);
 }
 
-.hits-board__a {
+.hit-board__a {
   width: 75%;
   height: 100%;
   position: relative;
@@ -104,21 +104,50 @@
   cursor: pointer;
 }
 
-.hits-board__a-title {
+.hit-board__a-title {
   position: absolute;
   white-space: nowrap;
   transition: 2s;
   cursor: pointer;
 }
 
-/* hitTitles */
+/* hitPost */
 
-.hits-board--posts {
+.hit-board--post {
   flex: 1 1 calc((100% - 21.5px) * 0.6);
 }
 
-/* hitComments */
-.hits-board--comments {
+/* hitComment */
+.hit-board--comment {
   flex: 1 1 calc((100% - 21.5px) * 0.3);
   margin-bottom: 20px;
+}
+
+.hit-board__a-title--comment {
+  padding-left: 13px;
+}
+
+.hit-board__a-title--comment::before {
+  content: "";
+  width: 5px;
+  height: 5px;
+  left: 0;
+  top: 0.5px;
+  position: absolute;
+  border: 2px solid;
+  border-radius: 3px;
+  border-color: transparent transparent var(--color-grey) var(--color-grey);
+}
+
+.hit-board__a-title--comment::after {
+  content: "";
+  width: 3px;
+  height: 3px;
+  left: 2px;
+  top: 5px;
+  position: absolute;
+  border: 2px solid;
+  border-radius: 3px;
+  border-color: transparent transparent var(--color-grey) var(--color-grey);
+  transform: rotateZ(-135deg);
 }

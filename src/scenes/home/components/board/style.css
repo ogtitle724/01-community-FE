@@ -22,6 +22,7 @@
   background-color: rgb(255, 255, 255);
   box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.1);
   transition: 0.3s;
+  z-index: 10;
 }
 
 .board__nav:hover {
@@ -37,7 +38,7 @@
 }
 
 .board__nav:hover .board__nav-direction {
-  color: white;
+  color: transparent;
 }
 
 .board__nav-btn {
