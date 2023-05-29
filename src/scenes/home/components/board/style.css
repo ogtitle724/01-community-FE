@@ -31,7 +31,7 @@
 .board__nav-direction {
   top: -2px;
   font-weight: 700;
-  color: #afafaf;
+  color: var(--color-grey);
   transition: 0.1s;
   cursor: default;
 }
@@ -99,5 +99,5 @@
 .post__data {
   font-size: var(--font-size-vsm);
   font-weight: 600;
-  color: #afafaf;
+  color: var(--color-grey);
 }

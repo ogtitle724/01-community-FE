@@ -1,7 +1,7 @@
 .content-board {
   width: 700px;
   height: 100%;
-  margin: 10px 0;
+  margin: 10px 0px;
   overflow-y: scroll;
 }
 
@@ -9,6 +9,7 @@
   width: 100%;
   height: auto;
   padding: 10px;
+  padding-right: 30px;
 }
 
 .content-board__title {

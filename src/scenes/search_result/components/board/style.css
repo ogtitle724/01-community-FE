@@ -28,13 +28,13 @@
 .search-board__category {
   font-size: var(--font-size-vsm);
   font-weight: 600;
-  color: #afafaf;
+  color: var(--color-grey);
 }
 
 .search-board__date {
   font-size: var(--font-size-vsm);
   font-weight: 600;
-  color: #afafaf;
+  color: var(--color-grey);
 }
 
 .search-board__nav {
