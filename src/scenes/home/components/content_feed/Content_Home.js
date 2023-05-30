@@ -2,13 +2,13 @@ import HorizontalList from "../horizontal_list/Horizontal_List";
 import Board from "../board/Board";
 import "./style.css";
 
-export default function ContentHome({ domain, postData, page, setPage }) {
+export default function ContentHome({ domain, posts, page, setPage }) {
   return (
     <div className="main__content">
       <HorizontalList />
       <Board
         title={"Recent Posts"}
-        postData={postData}
+        posts={posts}
         page={page}
         setPage={setPage}
       />
