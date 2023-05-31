@@ -1,35 +1,50 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import "./style.css";
 
-export default function Board({ title, postData, page, setPage }) {
+export default function Board({ title, posts, page, setPage }) {
   return (
     <section className="board">
       <h2 className="board__title">{title}</h2>
       <ul>
-        {postData.content.map((post, idx) => {
+        {posts.content.map((post, idx) => {
           return <Post key={"post_" + idx} post={post} />;
         })}
       </ul>
-      <Nav postData={postData} page={page} setPage={setPage} />
+      <Nav posts={posts} page={page} setPage={setPage} />
     </section>
   );
 }
 
 function Post({ post }) {
+  const navigate = useNavigate();
+
+  const handleClickPost = async (e) => {
+    e.preventDefault();
+
+    navigate(`/post`, { state: post });
+  };
+
   return (
     <li className="post">
-      <a className="post__title" href={`/post?id=${post.id}`}>
+      <a
+        className="post__title"
+        href="#"
+        id={post.id}
+        onClick={(e) => handleClickPost(e)}
+      >
         {post.title}
       </a>
       <div className="post__data-wrapper">
         <p className="post__data">{post.category + " | " + post.view_cnt}</p>
-        <p className="post__data">{post.wr_date.slice(11, 16)} </p>
+        <p className="post__data">{post.wr_date} </p>
       </div>
     </li>
   );
 }
 
-function Nav({ postData, page, setPage }) {
+function Nav({ posts, page, setPage }) {
   return (
     <nav className="board__nav">
       <div className="board__nav-direction center-x">
@@ -45,7 +60,7 @@ function Nav({ postData, page, setPage }) {
       >
         {"<"}
       </li>
-      {Array(postData.totalPages)
+      {Array(posts.totalPages)
         .fill("")
         .map((ele, idx) => {
           return (
@@ -64,7 +79,7 @@ function Nav({ postData, page, setPage }) {
       <li
         className="board__nav-btn"
         onClick={() => {
-          if (page < postData.totalPages + 1) {
+          if (page < posts.totalPages + 1) {
             setPage(page + 1);
           }
         }}

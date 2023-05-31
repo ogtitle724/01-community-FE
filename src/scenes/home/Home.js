@@ -12,7 +12,7 @@ export default function Home({ domain }) {
   const [pageTopic, setPageTopic] = useState("HOME");
   const [content, mainEle] = [useRef(""), useRef()];
   const [page, setPage] = useState(1);
-  const [postData, setPostData] = useState({
+  const [posts, setPosts] = useState({
     content: [],
     totalPages: 0,
     size: 20,
@@ -37,9 +37,9 @@ export default function Home({ domain }) {
           domain +
             `/api/board/post?category=${converter[pageTopic]}&page=${
               page - 1
-            }&size=20`
+            }&size=30`
         );
-        setPostData(res.data);
+        setPosts(res.data);
       } catch (err) {
         console.log(err);
       }
@@ -52,7 +52,7 @@ export default function Home({ domain }) {
     content.current = (
       <ContentHome
         domain={domain}
-        postData={postData}
+        posts={posts}
         page={page}
         setPage={setPage}
       />
@@ -61,7 +61,7 @@ export default function Home({ domain }) {
     content.current = (
       <ContentBest
         domain={domain}
-        postData={postData}
+        posts={posts}
         page={page}
         setPage={setPage}
       />
@@ -71,7 +71,7 @@ export default function Home({ domain }) {
       <ContentTopic
         title={pageTopic}
         domain={domain}
-        postData={postData}
+        posts={posts}
         page={page}
         setPage={setPage}
       />

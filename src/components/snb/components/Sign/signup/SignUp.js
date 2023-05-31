@@ -22,7 +22,6 @@ export default function SignUp({ domain, setShowSignUpForm }) {
   const [isPwdValid, setIsPwdValid] = useState(false);
   const [isPwdMatch, setIsPwdMatch] = useState(false);
 
-  /** post signup data to server */
   const handleBtnClick = async (e) => {
     e.preventDefault();
 
@@ -39,7 +38,7 @@ export default function SignUp({ domain, setShowSignUpForm }) {
       else throw new Error("singin rejected");
     } catch (err) {
       console.log(err);
-      alert("this e-mail already in use");
+      alert("ERROR:", err);
     }
   };
 
@@ -147,7 +146,15 @@ export default function SignUp({ domain, setShowSignUpForm }) {
         <button
           type="submit"
           className="form-signup__btn"
-          disabled={!(isEmailVaild && isPwdValid && isPwdMatch)}
+          disabled={
+            !(
+              isUidVaild &&
+              isNickVaild &&
+              isEmailVaild &&
+              isPwdValid &&
+              isPwdMatch
+            )
+          }
           onClick={(e) => handleBtnClick(e)}
         >
           Sign up
