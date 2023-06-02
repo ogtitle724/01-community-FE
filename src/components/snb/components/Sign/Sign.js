@@ -1,33 +1,33 @@
-import { useState } from "react";
 import axios from "axios";
+import { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { login, logout, selectSign } from "../../../../redux/slice/signSlice";
 
 import { checkUid, checkPwd } from "./validation";
 import SignUp from "./signup/SignUp";
 import "./style.css";
 
-export default function Sign({ domain, setIsLogIn }) {
+export default function Sign() {
   const [uid, setUid] = useState("");
   const [pwd, setPwd] = useState("");
   const [isUidVaild, setIsUidValid] = useState("");
   const [isPwdValid, setIsPwdValid] = useState("");
   const [showSignUpForm, setShowSignUpForm] = useState(false);
 
-  // if token is exist directly set login true and eMail, pwd
+  const dispatch = useDispatch();
+  const ls = useSelector(selectSign);
 
   const handleBtnClick = async (e) => {
     e.preventDefault();
 
     try {
-      const res = await axios.post(domain + "/api/auth/authenticate", {
+      const res = await axios.post("/api/auth/authenticate", {
         uid: uid,
         pwd: pwd,
       });
-
-      /** Store the token received with res in a browser cookie. */
-      /** If the email and password are invalid, a notification is displayed.
-       * if they are valid, the isLogIn state is set to true. */
-
-      setIsLogIn(true);
+      const { accessToken } = JSON.parse(res.data);
+      axios.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
+      dispatch(login());
     } catch (err) {
       alert("Log in failed!");
     }
@@ -78,9 +78,7 @@ export default function Sign({ domain, setIsLogIn }) {
           Join us!
         </span>
       </form>
-      {showSignUpForm && (
-        <SignUp domain={domain} setShowSignUpForm={setShowSignUpForm} />
-      )}
+      {showSignUpForm && <SignUp setShowSignUpForm={setShowSignUpForm} />}
     </>
   );
 }

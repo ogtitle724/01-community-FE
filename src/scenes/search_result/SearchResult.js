@@ -7,7 +7,7 @@ import Gnb from "../../components/gnb/Gnb";
 import Board from "./components/board/Board";
 import "./style.css";
 
-export default function SearchResult({ domain }) {
+export default function SearchResult() {
   const [page, setPage] = useState(1);
   const [postData, setPostData] = useState();
   const location = useLocation();
@@ -18,7 +18,7 @@ export default function SearchResult({ domain }) {
       try {
         console.log("await");
         const res = await axios.get(
-          domain + `/api/search?page=${page - 1}&size=20&term=${term}`
+          `/api/search?page=${page - 1}&size=20&term=${term}`
         );
         setPostData(res.data);
       } catch (err) {
@@ -31,7 +31,7 @@ export default function SearchResult({ domain }) {
 
   return (
     <div className="search-result">
-      <Header domain={domain} />
+      <Header />
       <Gnb />
       <main className="search-result__main">
         <article className="search-result__board">

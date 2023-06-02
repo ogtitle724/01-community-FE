@@ -8,7 +8,7 @@ import ContentBest from "./components/content_feed/Content_Best";
 import ContentTopic from "./components/content_topic/Content_Topic";
 import "./style.css";
 
-export default function Home({ domain }) {
+export default function Home() {
   const [pageTopic, setPageTopic] = useState("HOME");
   const [content, mainEle] = [useRef(""), useRef()];
   const [page, setPage] = useState(1);
@@ -34,10 +34,9 @@ export default function Home({ domain }) {
     const getPosts = async () => {
       try {
         const res = await axios.get(
-          domain +
-            `/api/board/post?category=${converter[pageTopic]}&page=${
-              page - 1
-            }&size=30`
+          `/api/board/post?category=${converter[pageTopic]}&page=${
+            page - 1
+          }&size=30`
         );
         setPosts(res.data);
       } catch (err) {
@@ -46,31 +45,20 @@ export default function Home({ domain }) {
     };
 
     getPosts();
-  }, [pageTopic, page, domain]);
+  }, [pageTopic, page]);
 
   if (pageTopic === "HOME")
     content.current = (
-      <ContentHome
-        domain={domain}
-        posts={posts}
-        page={page}
-        setPage={setPage}
-      />
+      <ContentHome posts={posts} page={page} setPage={setPage} />
     );
   else if (pageTopic === "BEST")
     content.current = (
-      <ContentBest
-        domain={domain}
-        posts={posts}
-        page={page}
-        setPage={setPage}
-      />
+      <ContentBest posts={posts} page={page} setPage={setPage} />
     );
   else
     content.current = (
       <ContentTopic
         title={pageTopic}
-        domain={domain}
         posts={posts}
         page={page}
         setPage={setPage}
@@ -79,8 +67,8 @@ export default function Home({ domain }) {
 
   return (
     <div className="home">
-      <Header domain={domain} />
-      <Snb domain={domain} pageTopic={pageTopic} setPageTopic={setPageTopic} />
+      <Header />
+      <Snb pageTopic={pageTopic} setPageTopic={setPageTopic} />
       <main ref={mainEle} className="main">
         {content.current}
       </main>

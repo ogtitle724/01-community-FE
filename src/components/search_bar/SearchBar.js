@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./style.css";
 
-export default function SearchBar({ domain }) {
+export default function SearchBar() {
   const [searchTerm, setsearchTerm] = useState("");
   const navigate = useNavigate();
 

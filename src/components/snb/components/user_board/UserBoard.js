@@ -1,9 +1,13 @@
 import { useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { logout, selectSign } from "../../../../redux/slice/signSlice";
 import axios from "axios";
 import "./style.css";
 
 export default function UserBoard({ setIsLogIn }) {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const isLogIn = useSelector(selectSign);
 
   const handleClickLogOut = async () => {
     try {
@@ -12,7 +16,7 @@ export default function UserBoard({ setIsLogIn }) {
       token disable
       const res = axios.post("/process_logout", userDetail);
  */
-      setIsLogIn(false);
+      dispatch(logout());
     } catch (err) {
       alert("Error:", err);
     }

@@ -10,7 +10,7 @@ import {
 } from "../validation";
 import "./style.css";
 
-export default function SignUp({ domain, setShowSignUpForm }) {
+export default function SignUp({ setShowSignUpForm }) {
   const [uid, setUid] = useState("");
   const [nick, setNick] = useState("");
   const [email, setEmail] = useState("");
@@ -26,7 +26,7 @@ export default function SignUp({ domain, setShowSignUpForm }) {
     e.preventDefault();
 
     try {
-      const res = await axios.post(domain + "/api/auth/register", {
+      const res = await axios.post("/api/auth/register", {
         uid: uid,
         nick: nick,
         email: email,

@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { useSelector } from "react-redux";
+import { selectSign } from "../../redux/slice/signSlice";
 
 import UserBoard from "./components/user_board/UserBoard";
 import Sign from "./components/sign/Sign";
@@ -17,9 +19,10 @@ const category = {
   ],
 };
 
-export default function Snb({ domain, pageTopic, setPageTopic }) {
-  /**TODO: change */
-  const [isLogIn, setIsLogIn] = useState(false);
+export default function Snb({ pageTopic, setPageTopic }) {
+  const isLogIn = useSelector(selectSign);
+
+  console.log(isLogIn);
 
   return (
     <nav className="snb">
@@ -35,11 +38,7 @@ export default function Snb({ domain, pageTopic, setPageTopic }) {
         pageTopic={pageTopic}
         setPageTopic={setPageTopic}
       />
-      {isLogIn ? (
-        <UserBoard setIsLogIn={setIsLogIn} />
-      ) : (
-        <Sign domain={domain} setIsLogIn={setIsLogIn} />
-      )}
+      {isLogIn ? <UserBoard /> : <Sign />}
     </nav>
   );
 }

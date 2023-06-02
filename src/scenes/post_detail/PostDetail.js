@@ -7,7 +7,7 @@ import ContentBoard from "./components/content/Content";
 import CommentBoard from "./components/comment/Comment";
 import "./style.css";
 
-export default function PostDetail({ domain }) {
+export default function PostDetail() {
   const location = useLocation();
   const post = location.state;
 
@@ -26,7 +26,7 @@ export default function PostDetail({ domain }) {
 
   return (
     <div className="post-detail">
-      <Header domain={domain} />
+      <Header />
       <Gnb />
       <main className="post-detail__main">
         <div className="post-detail__wrapper">
