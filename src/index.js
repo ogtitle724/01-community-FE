@@ -12,22 +12,14 @@ import SearchResult from "./scenes/search_result/SearchResult.js";
 import store from "./redux/store.js";
 import "./index.css";
 
-const local = "http://localhost:8080";
+const local = "http://localhost:8000";
 const cloud = "http://3.34.80.12:8080";
 
 const domain = local;
 
 axios.defaults.baseURL = domain;
 axios.defaults.withCredentials = true;
-/* axios.interceptors.request.use(callBack, (err) => {
-  console.error(err);
-  return Promise.reject(err)
-})
-axios.interceptors.response.use(callBack, (err) => {
-  console.error(err);
-  return Promise.reject(err)
-})
- */
+
 const router = createBrowserRouter([
   {
     path: "/",

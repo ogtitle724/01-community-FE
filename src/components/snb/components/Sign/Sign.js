@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { login, logout, selectSign } from "../../../../redux/slice/signSlice";
+import { useDispatch } from "react-redux";
+import { login } from "../../../../redux/slice/signSlice";
 
 import { checkUid, checkPwd } from "./validation";
 import SignUp from "./signup/SignUp";
@@ -15,7 +15,6 @@ export default function Sign() {
   const [showSignUpForm, setShowSignUpForm] = useState(false);
 
   const dispatch = useDispatch();
-  const ls = useSelector(selectSign);
 
   const handleBtnClick = async (e) => {
     e.preventDefault();

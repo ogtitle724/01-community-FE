@@ -40,6 +40,7 @@ export default function Home() {
         );
         setPosts(res.data);
       } catch (err) {
+        console.log("일로");
         console.log(err);
       }
     };
