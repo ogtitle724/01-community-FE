@@ -9,7 +9,7 @@ import PostDetail from "./scenes/post_detail/PostDetail.js";
 import SearchResult from "./scenes/search_result/SearchResult.js";
 import "./index.css";
 
-const local = "http://localhost:8000";
+const local = "http://localhost:8080";
 const cloud = "http://3.34.80.12:8080";
 
 const domain = local;
