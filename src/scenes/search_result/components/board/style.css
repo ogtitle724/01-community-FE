@@ -1,5 +1,11 @@
+.search-board__notfound {
+  color: var(--color-grey);
+  font-size: var(--font-size-md);
+  font-weight: 600;
+}
+
 .search-board__a {
-  flex-grow: 1;
+  height: 4.545%;
   width: 100%;
   padding: 0 10px;
   display: flex;
@@ -45,6 +51,8 @@
   justify-content: center;
   align-items: center;
   gap: 10px;
+  position: absolute;
+  bottom: 0;
 }
 
 .search-board__nav-btn {

@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { login } from "../../../../redux/slice/signSlice";
+import { login, logout } from "../../../../redux/slice/signSlice";
 
 import { checkUid, checkPwd } from "./validation";
 import SignUp from "./signup/SignUp";
@@ -20,15 +20,28 @@ export default function Sign() {
     e.preventDefault();
 
     try {
-      const res = await axios.post("/api/auth/authenticate", {
+      await axios.post("/api/auth/authenticate", {
         uid: uid,
         pwd: pwd,
       });
-      const { accessToken } = JSON.parse(res.data);
-      axios.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
       dispatch(login());
+
+      setTimeout(silentRefresh, process.env.REACT_APP_REGENERATE_TIME);
     } catch (err) {
       alert("Log in failed!");
+    }
+  };
+
+  const silentRefresh = async () => {
+    console.log("regenerate time:", process.env.REACT_APP_REGENERATE_TIME);
+
+    try {
+      await axios.post("/api/auth/silentRefresh", null);
+      console.log("silent refresh executed!");
+      setTimeout(silentRefresh, process.env.REACT_APP_REGENERATE_TIME);
+    } catch (err) {
+      dispatch(logout());
+      console.log(err);
     }
   };
 

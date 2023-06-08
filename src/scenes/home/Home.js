@@ -38,7 +38,7 @@ export default function Home() {
             page - 1
           }&size=30`
         );
-        setPosts(res.data);
+        setPosts(JSON.parse(res.data));
       } catch (err) {
         console.log("일로");
         console.log(err);
@@ -69,7 +69,11 @@ export default function Home() {
   return (
     <div className="home">
       <Header />
-      <Snb pageTopic={pageTopic} setPageTopic={setPageTopic} />
+      <Snb
+        setPage={setPage}
+        pageTopic={pageTopic}
+        setPageTopic={setPageTopic}
+      />
       <main ref={mainEle} className="main">
         {content.current}
       </main>

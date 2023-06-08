@@ -1,5 +1,6 @@
-import { useSelector } from "react-redux";
-import { selectSign } from "../../redux/slice/signSlice";
+import axios from "axios";
+import { useSelector, useDispatch } from "react-redux";
+import { selectSign, login, logout } from "../../redux/slice/signSlice";
 
 import UserBoard from "./components/user_board/UserBoard";
 import Sign from "./components/sign/Sign";
@@ -18,37 +19,51 @@ const category = {
   ],
 };
 
-export default function Snb({ pageTopic, setPageTopic }) {
+export default function Snb({ setPage, pageTopic, setPageTopic }) {
   const isLogIn = useSelector(selectSign);
+  const dispatch = useDispatch();
+  const accessToken = axios.defaults.headers.common["Authorization"];
 
-  console.log(isLogIn);
+  /*   if (accessToken) {
+    dispatch(login());
+  } else {
+    dispatch(logout());
+  }
+ */
 
   return (
     <nav className="snb">
       <SnbMenu
+        setPage={setPage}
         items={category.feeds}
         optionClass={"snb__item--feed"}
         pageTopic={pageTopic}
         setPageTopic={setPageTopic}
       />
       <SnbMenu
+        setPage={setPage}
         items={category.topics}
         optionClass={"snb__item--topic"}
         pageTopic={pageTopic}
         setPageTopic={setPageTopic}
       />
-      {isLogIn ? <UserBoard /> : <Sign />}
+      {accessToken ? <UserBoard /> : <Sign />}
     </nav>
   );
 }
 
-function SnbMenu({ items, optionClass, pageTopic, setPageTopic }) {
+function SnbMenu({ setPage, items, optionClass, pageTopic, setPageTopic }) {
+  const handleClickItem = (e) => {
+    setPageTopic(e.target.innerHTML);
+    setPage(1);
+  };
+
   return (
     <ul className={"snb__menu " + optionClass}>
       {items.map((item, idx) => {
         return (
           <li
-            onClick={(e) => setPageTopic(e.target.innerHTML)}
+            onClick={(e) => handleClickItem(e)}
             className={
               "snb__item" + (item === pageTopic ? " snb__item--focus" : "")
             }

@@ -30,6 +30,10 @@
   bottom: 0px;
 }
 
+.board__nav:hover .board__nav-btn {
+  display: block;
+}
+
 .board__nav-direction {
   top: -2px;
   font-weight: 700;

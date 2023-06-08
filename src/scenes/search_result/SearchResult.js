@@ -12,22 +12,29 @@ export default function SearchResult() {
   const [postData, setPostData] = useState();
   const location = useLocation();
   const term = location.state.term;
+  console.log("rendering");
+
+  const getSearchData = async (term, page) => {
+    try {
+      console.log("await");
+      const res = await axios.get(
+        `/api/board/search?page=${page - 1}&size=20&term=${term}`
+      );
+      setPostData(JSON.parse(res.data));
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  useEffect(() => {
+    getSearchData(term, page);
+    setPage(1);
+    console.log("eff 2");
+  }, [term]);
 
   useEffect(() => {
-    const getSearchData = async () => {
-      try {
-        console.log("await");
-        const res = await axios.get(
-          `/api/search?page=${page - 1}&size=20&term=${term}`
-        );
-        setPostData(res.data);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-
-    getSearchData();
-  }, [page, term]);
+    getSearchData(term, page);
+    console.log("eff 1");
+  }, [page]);
 
   return (
     <div className="search-result">

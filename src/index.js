@@ -2,7 +2,8 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import axios from "axios";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { Provider } from "react-redux";
+import { Provider, useDispatch } from "react-redux";
+import { login } from "./redux/slice/signSlice.js";
 
 import Home from "./scenes/home/Home.js";
 import WritePage from "./scenes/write_page/WritePage.js";
@@ -19,6 +20,17 @@ const domain = local;
 
 axios.defaults.baseURL = domain;
 axios.defaults.withCredentials = true;
+axios.interceptors.response.use((res) => {
+  const authHeader = res.headers["authorization"];
+  const accessToken = authHeader && authHeader.split(" ")[1];
+
+  if (accessToken) {
+    console.log("axios default auth header setted");
+    axios.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
+  }
+
+  return res;
+});
 
 const router = createBrowserRouter([
   {

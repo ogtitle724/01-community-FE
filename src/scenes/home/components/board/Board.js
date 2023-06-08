@@ -1,6 +1,5 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import "./style.css";
 
 export default function Board({ title, posts, page, setPage }) {
@@ -22,7 +21,6 @@ function Post({ post }) {
 
   const handleClickPost = async (e) => {
     e.preventDefault();
-
     navigate(`/post`, { state: post });
   };
 
@@ -30,7 +28,7 @@ function Post({ post }) {
     <li className="post">
       <a
         className="post__title"
-        href="#"
+        href="/post"
         id={post.id}
         onClick={(e) => handleClickPost(e)}
       >
@@ -45,6 +43,12 @@ function Post({ post }) {
 }
 
 function Nav({ posts, page, setPage }) {
+  const [navPage, setNavPage] = useState(0);
+  const navItems = useRef();
+  navItems.current = Array(posts.totalPages)
+    .fill(1)
+    .map((ele, idx) => ele + idx);
+
   return (
     <nav className="board__nav">
       <div className="board__nav-direction center-x">
@@ -53,35 +57,31 @@ function Nav({ posts, page, setPage }) {
       <li
         className="board__nav-btn"
         onClick={() => {
-          if (page > 1) {
-            setPage(page + 1);
-          }
+          if (navPage > 0) setNavPage(navPage - 1);
         }}
       >
         {"<"}
       </li>
-      {Array(posts.totalPages)
-        .fill("")
+      {navItems.current
+        .slice(navPage * 10, navPage * 10 + 10)
         .map((ele, idx) => {
           return (
             <li
               className={
                 "board__nav-btn" +
-                (page === idx + 1 ? " board__nav-btn--focus" : "")
+                (page === ele ? " board__nav-btn--focus" : "")
               }
-              key={idx}
-              onClick={(e) => setPage(Number(e.target.innerText))}
+              key={"navItem_" + idx}
+              onClick={() => setPage(ele)}
             >
-              {idx + 1}
+              {ele}
             </li>
           );
         })}
       <li
         className="board__nav-btn"
         onClick={() => {
-          if (page < posts.totalPages + 1) {
-            setPage(page + 1);
-          }
+          if (navPage < ~~(posts.totalPages / 10)) setNavPage(navPage + 1);
         }}
       >
         {">"}
