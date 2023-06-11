@@ -1,4 +1,10 @@
 .themetoggle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.themetoggle__btn-wrapper {
   width: 47px;
   height: 26px;
   position: relative;
@@ -18,9 +24,26 @@
 }
 
 .themetoggle__btn--light {
-  left: 3px;
+  left: 2px;
 }
 
 .themetoggle__btn--dark {
   left: 22px;
+}
+
+.themetoggle__icon {
+  width: 24px;
+  height: 24px;
+  border-radius: 100%;
+  background-size: 50;
+}
+
+.themetoggle__icon--light {
+  filter: invert(60%);
+  background: url(../../../../asset/icons/light.svg);
+}
+
+.themetoggle__icon--dark {
+  filter: invert(60%);
+  background: url(../../../../asset/icons/dark.svg);
 }

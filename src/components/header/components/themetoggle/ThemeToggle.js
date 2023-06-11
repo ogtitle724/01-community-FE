@@ -15,13 +15,25 @@ export default function ThemeToggle() {
     root.setAttribute("color-theme", isDarkMode ? "light" : "dark");
   };
   return (
-    <div className="themetoggle" onClick={handleClickBtn}>
+    <section className="themetoggle">
       <div
         className={
-          "themetoggle__btn" +
-          (isDarkMode ? " themetoggle__btn--dark" : " themetoggle__btn--light")
+          "themetoggle__icon" +
+          (isDarkMode
+            ? " themetoggle__icon--dark"
+            : " themetoggle__icon--light")
         }
       ></div>
-    </div>
+      <div className="themetoggle__btn-wrapper" onClick={handleClickBtn}>
+        <div
+          className={
+            "themetoggle__btn" +
+            (isDarkMode
+              ? " themetoggle__btn--dark"
+              : " themetoggle__btn--light")
+          }
+        ></div>
+      </div>
+    </section>
   );
 }
