@@ -4,13 +4,14 @@ import axios from "axios";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { Provider, useDispatch } from "react-redux";
 import { login } from "./redux/slice/signSlice.js";
+import { PersistGate } from "redux-persist/integration/react";
 
 import Home from "./scenes/home/Home.js";
 import WritePage from "./scenes/write_page/WritePage.js";
 import ErrorPage from "./scenes/error_page/ErrorPage.js";
 import PostDetail from "./scenes/post_detail/PostDetail.js";
 import SearchResult from "./scenes/search_result/SearchResult.js";
-import store from "./redux/store.js";
+import { store, persistor } from "./redux/store.js";
 import "./index.css";
 
 const local = "http://localhost:8000";
@@ -25,7 +26,7 @@ axios.interceptors.response.use((res) => {
   const accessToken = authHeader && authHeader.split(" ")[1];
 
   if (accessToken) {
-    console.log("axios default auth header setted");
+    console.log("receive access Token");
     axios.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
   }
 
@@ -55,7 +56,9 @@ const router = createBrowserRouter([
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <Provider store={store}>
-      <RouterProvider router={router} />
+      <PersistGate loading={null} persistor={persistor}>
+        <RouterProvider router={router} />
+      </PersistGate>
     </Provider>
   </React.StrictMode>
 );

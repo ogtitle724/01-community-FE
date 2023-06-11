@@ -11,61 +11,40 @@
 
 .board__nav {
   height: 30px;
-  position: fixed;
-  bottom: -15px;
-  left: 50%;
-  transform: translateX(-50%);
+  margin-top: 7px;
   display: flex;
   justify-content: center;
   align-items: center;
   border-radius: 6px;
-  border: 1px solid rgb(218, 218, 218);
-  background-color: rgb(255, 255, 255);
-  box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.1);
   transition: 0.3s;
   z-index: 10;
-}
-
-.board__nav:hover {
-  bottom: 0px;
-}
-
-.board__nav:hover .board__nav-btn {
-  display: block;
-}
-
-.board__nav-direction {
-  top: -2px;
-  font-weight: 700;
-  color: var(--color-grey);
-  transition: 0.1s;
-  cursor: default;
-}
-
-.board__nav:hover .board__nav-direction {
-  color: transparent;
 }
 
 .board__nav-btn {
   width: 23px;
   height: 23px;
   margin: 0 3px;
-  border-radius: 100%;
-  color: white;
+  border-radius: 6px;
+  color: black;
   background-color: white;
   font-size: var(--font-size-md);
-  font-weight: 600;
   text-align: center;
   cursor: pointer;
   transition: 0.3s;
 }
 
-.board__nav:hover .board__nav-btn--focus {
-  filter: brightness(0.9);
+.board__nav-btn-direction {
+  background-color: transparent;
 }
 
-.board__nav:hover .board__nav-btn {
-  color: black;
+.board__nav-btn-direction:hover {
+  background-color: rgb(230, 230, 230);
+}
+
+.board__nav-btn--focus {
+  background-color: var(--main-color);
+  color: white;
+  font-weight: 600;
 }
 
 .board__nav-btn:hover {

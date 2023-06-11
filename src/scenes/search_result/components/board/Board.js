@@ -1,8 +1,13 @@
+import {
+  selectSearchPage,
+  setSearchPage,
+} from "../../../../redux/slice/pageSlice";
+import { useSelector, useDispatch } from "react-redux";
 import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./style.css";
 
-export default function Board({ postData, page, setPage }) {
+export default function Board({ postData }) {
   const posts = postData.content;
   const navigate = useNavigate();
 
@@ -13,7 +18,7 @@ export default function Board({ postData, page, setPage }) {
 
   return (
     <>
-      {posts ? (
+      {posts.length ? (
         posts.map((post, idx) => {
           return (
             <a
@@ -37,27 +42,41 @@ export default function Board({ postData, page, setPage }) {
           {"일치하는 게시물이 없습니다 :("}
         </span>
       )}
-      <Nav postData={postData} page={page} setPage={setPage} />
+      <Nav postData={postData} />
     </>
   );
 }
 
-function Nav({ postData, page, setPage }) {
+function Nav({ postData }) {
   const [navPage, setNavPage] = useState(0);
+  const page = useSelector(selectSearchPage);
+  const dispatch = useDispatch();
   const navItems = useRef();
-  console.log(navPage, page);
   navItems.current = Array(postData.totalPages)
     .fill(1)
     .map((ele, idx) => ele + idx);
 
+  const handleClickPrev = () => {
+    if (navPage > 0) {
+      setNavPage((prevNavPage) => prevNavPage - 1);
+    }
+  };
+
+  const handleClickNext = () => {
+    const totalPages = ~~(postData.totalPages / 10);
+    if (navPage < totalPages) {
+      setNavPage((prevNavPage) => prevNavPage + 1);
+    }
+  };
+
+  const handleClickNav = (pageNum) => {
+    sessionStorage.setItem("searchPage", pageNum);
+    dispatch(setSearchPage({ nextPage: pageNum }));
+  };
+
   return (
     <nav className="search-board__nav">
-      <li
-        className="search-board__nav-btn"
-        onClick={() => {
-          if (navPage > 0) setNavPage(navPage - 1);
-        }}
-      >
+      <li className="search-board__nav-btn" onClick={handleClickPrev}>
         {"<"}
       </li>
       {navItems.current
@@ -70,18 +89,13 @@ function Nav({ postData, page, setPage }) {
                 (page === ele ? " search-board__nav-btn--focus" : "")
               }
               key={idx}
-              onClick={(e) => setPage(ele)}
+              onClick={() => handleClickNav(ele)}
             >
               {ele}
             </li>
           );
         })}
-      <li
-        className="search-board__nav-btn"
-        onClick={() => {
-          if (navPage < ~~(postData.totalPages / 10)) setNavPage(navPage + 1);
-        }}
-      >
+      <li className="search-board__nav-btn" onClick={handleClickNext}>
         {">"}
       </li>
     </nav>

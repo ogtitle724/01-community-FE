@@ -7,7 +7,7 @@ import {
   checkEmail,
   checkPwd,
   isMatch,
-} from "../validation";
+} from "../util/validation";
 import "./style.css";
 
 export default function SignUp({ setShowSignUpForm }) {

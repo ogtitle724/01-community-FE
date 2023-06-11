@@ -1,9 +1,9 @@
-import axios from "axios";
-import { useSelector, useDispatch } from "react-redux";
-import { selectSign, login, logout } from "../../redux/slice/signSlice";
-
-import UserBoard from "./components/user_board/UserBoard";
-import Sign from "./components/sign/Sign";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  selectCategory,
+  setPage,
+  setCategory,
+} from "../../redux/slice/pageSlice";
 import "./style.css";
 
 const category = {
@@ -19,43 +19,22 @@ const category = {
   ],
 };
 
-export default function Snb({ setPage, pageTopic, setPageTopic }) {
-  const isLogIn = useSelector(selectSign);
-  const dispatch = useDispatch();
-  const accessToken = axios.defaults.headers.common["Authorization"];
-
-  /*   if (accessToken) {
-    dispatch(login());
-  } else {
-    dispatch(logout());
-  }
- */
-
+export default function Snb() {
   return (
     <nav className="snb">
-      <SnbMenu
-        setPage={setPage}
-        items={category.feeds}
-        optionClass={"snb__item--feed"}
-        pageTopic={pageTopic}
-        setPageTopic={setPageTopic}
-      />
-      <SnbMenu
-        setPage={setPage}
-        items={category.topics}
-        optionClass={"snb__item--topic"}
-        pageTopic={pageTopic}
-        setPageTopic={setPageTopic}
-      />
-      {accessToken ? <UserBoard /> : <Sign />}
+      <SnbMenu items={category.feeds} optionClass={"snb__item--feed"} />
+      <SnbMenu items={category.topics} optionClass={"snb__item--topic"} />
     </nav>
   );
 }
 
-function SnbMenu({ setPage, items, optionClass, pageTopic, setPageTopic }) {
+function SnbMenu({ items, optionClass }) {
+  const dispatch = useDispatch();
+  const category = useSelector(selectCategory);
+
   const handleClickItem = (e) => {
-    setPageTopic(e.target.innerHTML);
-    setPage(1);
+    dispatch(setCategory({ category: e.target.innerHTML }));
+    dispatch(setPage({ nextPage: 1 }));
   };
 
   return (
@@ -65,7 +44,7 @@ function SnbMenu({ setPage, items, optionClass, pageTopic, setPageTopic }) {
           <li
             onClick={(e) => handleClickItem(e)}
             className={
-              "snb__item" + (item === pageTopic ? " snb__item--focus" : "")
+              "snb__item" + (item === category ? " snb__item--focus" : "")
             }
             key={idx + `-${item.slice(0, 2)}`}
           >

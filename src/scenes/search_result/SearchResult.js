@@ -1,5 +1,7 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
+import { selectSearchPage, setSearchPage } from "../../redux/slice/pageSlice";
+import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 
 import Header from "../../components/header/Header";
@@ -8,7 +10,9 @@ import Board from "./components/board/Board";
 import "./style.css";
 
 export default function SearchResult() {
-  const [page, setPage] = useState(1);
+  const page = useSelector(selectSearchPage);
+  const dispatch = useDispatch();
+
   const [postData, setPostData] = useState();
   const location = useLocation();
   const term = location.state.term;
@@ -16,7 +20,6 @@ export default function SearchResult() {
 
   const getSearchData = async (term, page) => {
     try {
-      console.log("await");
       const res = await axios.get(
         `/api/board/search?page=${page - 1}&size=20&term=${term}`
       );
@@ -25,15 +28,13 @@ export default function SearchResult() {
       console.log(err);
     }
   };
+
   useEffect(() => {
     getSearchData(term, page);
-    setPage(1);
-    console.log("eff 2");
   }, [term]);
 
   useEffect(() => {
     getSearchData(term, page);
-    console.log("eff 1");
   }, [page]);
 
   return (
@@ -45,11 +46,7 @@ export default function SearchResult() {
           <h2 className="search-result__title">
             {"'" + term + "' 관련 포스팅"}
           </h2>
-          {postData ? (
-            <Board postData={postData} page={page} setPage={setPage} />
-          ) : (
-            <div className="loading"></div>
-          )}
+          {postData ? <Board postData={postData} /> : ""}
         </article>
       </main>
     </div>

@@ -1,0 +1,48 @@
+.user-board {
+  height: 38px;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  gap: 20px;
+  border-radius: 6px;
+}
+
+.user-board__detail {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  gap: 8px;
+}
+
+.user-board__profile-img {
+  width: 30px;
+  height: 30px;
+  border-radius: 100%;
+  background-color: whitesmoke;
+}
+
+.user-board__nickname {
+  font-size: var(--font-size-vsm);
+  font-weight: 700;
+}
+
+.user-board__email {
+  font-size: var(--font-size-vsm);
+}
+
+.user-board__btn-logout {
+  width: 18px;
+  height: 18px;
+  border: none;
+  border-radius: 4px;
+  background-size: contain;
+  color: black;
+  line-height: 15px;
+  font-size: var(--font-size-vsm);
+  font-weight: 600;
+  transition: 0.2s;
+}
+
+.user-board__btn-logout:active {
+  filter: brightness(0.9);
+}

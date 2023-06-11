@@ -1,5 +1,9 @@
 import { useState, useRef, useEffect } from "react";
 import "./style.css";
+import thumbsUp from "../../../../asset/icons/thumbs-up.svg";
+import thumbsDown from "../../../../asset/icons/thumbs-down.svg";
+import chatBox from "../../../../asset/icons/chatbox.svg";
+import closeCircle from "../../../../asset/icons/close-circle.svg";
 
 export default function CommentBoard() {
   const [isAddComment, setIsAddComment] = useState(false);
@@ -54,7 +58,7 @@ export default function CommentBoard() {
         className="comment-board__btn-add"
         onClick={(e) => handleClickBtnAdd(e)}
       >
-        <img ref={btnAdd} src="./icons/close-circle.svg" alt="x" />
+        <img ref={btnAdd} src={closeCircle} alt="x" />
       </button>
       <form
         className="comment-board__form"
@@ -78,13 +82,13 @@ function Comment({ writer, date, detail, className }) {
       <div className="comment__detail">{detail}</div>
       <div className="comment__btn-wrapper">
         <button className="comment__btn comment__btn-like">
-          <img src="./icons/thumbs-up.svg" alt="x"></img>
+          <img src={thumbsUp} alt="x"></img>
         </button>
         <button className="comment__btn comment__btn-dislike">
-          <img src="./icons/thumbs-down.svg" alt="x"></img>
+          <img src={thumbsDown} alt="x"></img>
         </button>
         <button className="comment__btn comment__btn-reply">
-          <img src="./icons/chatbox.svg" alt="x"></img>
+          <img src={chatBox} alt="x"></img>
         </button>
       </div>
     </div>

@@ -1,6 +1,7 @@
 .search-bar {
-  width: max(50%, 300px);
+  width: max(35%, 300px);
   height: 30px;
+  padding-left: 13px;
   background-color: whitesmoke;
   border-radius: 6px;
 }

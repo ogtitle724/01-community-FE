@@ -1,4 +1,5 @@
 import { useRef } from "react";
+import sampleImg from "../../../../asset/sample.png";
 import "./style.css";
 
 export default function HorizontalList() {
@@ -44,7 +45,7 @@ export default function HorizontalList() {
     return (
       <article className="card">
         <img
-          src="sample.png"
+          src={sampleImg}
           className="card__img"
           alt="img dosen't supported"
         />

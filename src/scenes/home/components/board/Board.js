@@ -1,8 +1,16 @@
 import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  selectCategory,
+  selectPage,
+  setPage,
+} from "../../../../redux/slice/pageSlice";
 import "./style.css";
 
-export default function Board({ title, posts, page, setPage }) {
+export default function Board({ posts }) {
+  const title = useSelector(selectCategory);
+
   return (
     <section className="board">
       <h2 className="board__title">{title}</h2>
@@ -11,7 +19,7 @@ export default function Board({ title, posts, page, setPage }) {
           return <Post key={"post_" + idx} post={post} />;
         })}
       </ul>
-      <Nav posts={posts} page={page} setPage={setPage} />
+      <Nav posts={posts} />
     </section>
   );
 }
@@ -42,25 +50,36 @@ function Post({ post }) {
   );
 }
 
-function Nav({ posts, page, setPage }) {
+function Nav({ posts }) {
   const [navPage, setNavPage] = useState(0);
+  const page = useSelector(selectPage);
   const navItems = useRef();
+  const dispatch = useDispatch();
+
   navItems.current = Array(posts.totalPages)
     .fill(1)
     .map((ele, idx) => ele + idx);
 
+  const handleClickPrev = () => {
+    if (navPage > 0) setNavPage(navPage - 1);
+  };
+
+  const handleClickNext = () => {
+    if (navPage < ~~(posts.totalPages / 10)) setNavPage(navPage + 1);
+  };
+
+  const handleClickNav = (pageNum) => {
+    sessionStorage.setItem("searchPage", pageNum);
+    dispatch(setPage({ nextPage: pageNum }));
+  };
+
   return (
     <nav className="board__nav">
-      <div className="board__nav-direction center-x">
-        {String.fromCharCode(94)}
-      </div>
       <li
-        className="board__nav-btn"
-        onClick={() => {
-          if (navPage > 0) setNavPage(navPage - 1);
-        }}
+        className="board__nav-btn board__nav-btn-direction"
+        onClick={handleClickPrev}
       >
-        {"<"}
+        {"❮"}
       </li>
       {navItems.current
         .slice(navPage * 10, navPage * 10 + 10)
@@ -72,19 +91,17 @@ function Nav({ posts, page, setPage }) {
                 (page === ele ? " board__nav-btn--focus" : "")
               }
               key={"navItem_" + idx}
-              onClick={() => setPage(ele)}
+              onClick={() => handleClickNav(ele)}
             >
               {ele}
             </li>
           );
         })}
       <li
-        className="board__nav-btn"
-        onClick={() => {
-          if (navPage < ~~(posts.totalPages / 10)) setNavPage(navPage + 1);
-        }}
+        className="board__nav-btn board__nav-btn-direction"
+        onClick={handleClickNext}
       >
-        {">"}
+        {"❯"}
       </li>
     </nav>
   );

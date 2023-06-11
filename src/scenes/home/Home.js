@@ -1,4 +1,10 @@
 import { useState, useRef, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  selectCategory,
+  selectPage,
+  setPage,
+} from "../../redux/slice/pageSlice";
 import axios from "axios";
 
 import Header from "../../components/header/Header";
@@ -9,9 +15,9 @@ import ContentTopic from "./components/content_topic/Content_Topic";
 import "./style.css";
 
 export default function Home() {
-  const [pageTopic, setPageTopic] = useState("HOME");
+  const category = useSelector(selectCategory);
+  const page = useSelector(selectPage);
   const [content, mainEle] = [useRef(""), useRef()];
-  const [page, setPage] = useState(1);
   const [posts, setPosts] = useState({
     content: [],
     totalPages: 0,
@@ -34,7 +40,7 @@ export default function Home() {
     const getPosts = async () => {
       try {
         const res = await axios.get(
-          `/api/board/post?category=${converter[pageTopic]}&page=${
+          `/api/board/post?category=${converter[category]}&page=${
             page - 1
           }&size=30`
         );
@@ -46,34 +52,16 @@ export default function Home() {
     };
 
     getPosts();
-  }, [pageTopic, page]);
+  }, [category, page]);
 
-  if (pageTopic === "HOME")
-    content.current = (
-      <ContentHome posts={posts} page={page} setPage={setPage} />
-    );
-  else if (pageTopic === "BEST")
-    content.current = (
-      <ContentBest posts={posts} page={page} setPage={setPage} />
-    );
-  else
-    content.current = (
-      <ContentTopic
-        title={pageTopic}
-        posts={posts}
-        page={page}
-        setPage={setPage}
-      />
-    );
+  if (category === "HOME") content.current = <ContentHome posts={posts} />;
+  else if (category === "BEST") content.current = <ContentBest posts={posts} />;
+  else content.current = <ContentTopic posts={posts} />;
 
   return (
     <div className="home">
       <Header />
-      <Snb
-        setPage={setPage}
-        pageTopic={pageTopic}
-        setPageTopic={setPageTopic}
-      />
+      <Snb />
       <main ref={mainEle} className="main">
         {content.current}
       </main>

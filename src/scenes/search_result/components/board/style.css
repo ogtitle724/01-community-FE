@@ -1,4 +1,7 @@
 .search-board__notfound {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
   color: var(--color-grey);
   font-size: var(--font-size-md);
   font-weight: 600;
