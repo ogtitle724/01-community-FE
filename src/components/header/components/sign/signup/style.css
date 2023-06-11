@@ -38,8 +38,8 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: white;
-  border-top: 15px solid rgb(94, 148, 195);
+  background-color: var(--font-color-light);
+  border-top: 15px solid var(--main-color);
   border-radius: 6px;
   z-index: 3;
   box-shadow: 0 0 50px rgba(0, 0, 0, 0.3);
@@ -82,7 +82,7 @@
 
 .form-signup-warn {
   height: 30px;
-  color: rgb(208, 61, 69);
+  color: var(--color-red);
   font-size: var(--font-size-vsm);
 }
 
@@ -90,9 +90,9 @@
   width: 85%;
   height: 40px;
   margin-top: 30px;
-  background-color: rgb(94, 148, 195);
-  border: 1px solid rgb(94, 148, 195);
-  color: white;
+  background-color: var(--main-color);
+  border: 1px solid var(--main-color);
+  color: var(--font-color-light);
   font-size: var(--font-size-lg);
   font-weight: 550;
   transition: 0.1s;

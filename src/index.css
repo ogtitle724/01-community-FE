@@ -7,6 +7,8 @@
   --font-size-md: 1rem;
   --font-size-sm: 0.8rem;
   --font-size-vsm: 0.5rem;
+  --font-color-light: white;
+  --font-color-dark: black;
 
   --main-color: rgb(94, 148, 195);
   --post-color: rgb(214, 220, 233);
@@ -17,6 +19,64 @@
   --color-red: rgb(208, 61, 69);
   --color-background: rgb(237, 241, 244);
   --color-grey: #afafaf;
+  --color-body: white;
+  --color-whitesmoke: whitesmoke;
+  --color-thumb: rgb(151, 182, 209);
+  --color-placeholder: grey;
+}
+
+:root[color-theme="light"] {
+  --header-height: 50px;
+  --gnb-height: 30px;
+
+  --font-size-title: 1.5rem;
+  --font-size-lg: 1.2rem;
+  --font-size-md: 1rem;
+  --font-size-sm: 0.8rem;
+  --font-size-vsm: 0.5rem;
+  --font-color-light: white;
+  --font-color-dark: black;
+
+  --main-color: rgb(94, 148, 195);
+  --post-color: rgb(214, 220, 233);
+  --color-orange: rgb(204, 133, 69);
+  --color-green: rgb(14, 112, 113);
+  --color-skyblue: rgb(94, 148, 195);
+  --color-lavender: rgb(178, 166, 206);
+  --color-red: rgb(208, 61, 69);
+  --color-background: rgb(237, 241, 244);
+  --color-grey: #afafaf;
+  --color-body: white;
+  --color-whitesmoke: whitesmoke;
+  --color-thumb: rgb(151, 182, 209);
+  --color-placeholder: grey;
+}
+
+:root[color-theme="dark"] {
+  --header-height: 50px;
+  --gnb-height: 30px;
+
+  --font-size-title: 1.5rem;
+  --font-size-lg: 1.2rem;
+  --font-size-md: 1rem;
+  --font-size-sm: 0.8rem;
+  --font-size-vsm: 0.5rem;
+  --font-color-light: black;
+  --font-color-dark: rgb(195, 195, 195);
+
+  --main-color: rgb(155, 107, 62);
+  --post-color: rgb(155, 107, 62);
+  --color-orange: rgb(70, 116, 156);
+  --color-green: rgb(14, 112, 113);
+  --color-skyblue: rgb(94, 148, 195);
+  --color-lavender: rgb(178, 166, 206);
+  --color-red: rgb(208, 61, 69);
+  --color-background: rgb(46, 46, 46);
+  --color-grey: #afafaf;
+  --color-body: rgb(24, 24, 24);
+  --color-whitesmoke: rgb(82, 82, 82);
+  --color-thumb: rgb(155, 107, 62);
+  --color-placeholder: rgb(199, 199, 199);
 }
 
 * {
@@ -25,16 +85,17 @@
   box-sizing: border-box;
   list-style: none;
   text-decoration: none;
-  color: black;
+  color: var(--font-color-dark);
+  transition: 0.3s;
 }
 
 *::-webkit-scrollbar {
   width: 1px;
-  background-color: aliceblue;
+  background-color: var(--color-whitesmoke);
 }
 
 *::-webkit-scrollbar-thumb {
-  background-color: var(--post-color);
+  background-color: var(--color-thumb);
 }
 
 body {

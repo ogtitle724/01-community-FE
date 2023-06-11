@@ -1,6 +1,4 @@
 .home {
-  --header-height: 50px;
-
   min-height: 100vh;
   display: grid;
   grid-template-columns: 200px 1fr;
@@ -16,10 +14,10 @@
 }
 
 .main::-webkit-scrollbar {
-  width: 10px;
+  width: 5px;
 }
 
 .main::-webkit-scrollbar-thumb {
   border-radius: 8px;
-  background-color: rgb(154, 167, 178);
+  background-color: var(--color-thumb);
 }

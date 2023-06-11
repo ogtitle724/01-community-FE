@@ -25,8 +25,7 @@
   height: 23px;
   margin: 0 3px;
   border-radius: 6px;
-  color: black;
-  background-color: white;
+  background-color: var(--color-body);
   font-size: var(--font-size-md);
   text-align: center;
   cursor: pointer;
@@ -38,17 +37,17 @@
 }
 
 .board__nav-btn-direction:hover {
-  background-color: rgb(230, 230, 230);
+  background-color: var(--color-whitesmoke);
 }
 
 .board__nav-btn--focus {
   background-color: var(--main-color);
-  color: white;
+  color: var(--font-color-light);
   font-weight: 600;
 }
 
 .board__nav-btn:hover {
-  filter: brightness(0.9);
+  background-color: var(--color-whitesmoke);
 }
 
 .post {
@@ -59,13 +58,13 @@
   align-items: center;
   justify-content: space-between;
   position: relative;
-  background-color: rgb(255, 255, 255);
+  background-color: var(--color-body);
   border-radius: 6px;
   border-left: 10px solid var(--post-color);
 }
 
 .post:hover {
-  background-color: rgb(247, 247, 247);
+  background-color: var(--color-whitesmoke);
 }
 
 .post__title {

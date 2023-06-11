@@ -48,7 +48,7 @@
   align-items: center;
   gap: 3px;
   border-radius: 6px;
-  background-color: rgb(255, 255, 255);
+  background-color: var(--color-body);
 }
 
 .hit-board__li {
@@ -78,15 +78,15 @@
 
 .hit-board__order {
   width: 20px;
-  background-color: rgb(94, 148, 195);
+  background-color: var(--main-color);
   border-radius: 3px;
   text-align: center;
   line-height: var(--font-size-sm);
-  color: white;
+  color: var(--font-color-light);
 }
 
 .hit-board__order--best {
-  background-color: rgb(204, 133, 69);
+  background-color: var(--color-orange);
 }
 
 .hit-board__like {

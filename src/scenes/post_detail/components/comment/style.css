@@ -30,7 +30,7 @@
   bottom: 10px;
   border-radius: 100%;
   border: none;
-  background-color: white;
+  background-color: var(--color-body);
   transform: rotateZ(45deg);
 }
 
@@ -75,7 +75,7 @@
   background-color: var(--color-orange);
   font-size: var(--font-size-reply);
   font-weight: 550;
-  color: white;
+  color: var(--font-color-light);
 }
 
 .comment__default {
@@ -126,7 +126,7 @@
   width: 18px;
   height: 18px;
   border-radius: 4px;
-  background-color: whitesmoke;
+  background-color: var(--color-whitesmoke);
 }
 
 .comment__nickname {
@@ -148,7 +148,7 @@
   margin: 0 5px;
   border-radius: 100%;
   border: none;
-  background-color: white;
+  background-color: var(--color-body);
   opacity: 0.2;
   font-size: var(--font-size-vsm);
   transition: 0.2s;

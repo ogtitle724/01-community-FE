@@ -14,6 +14,7 @@
   align-items: center;
   justify-content: center;
   overflow-y: hidden;
+  background-color: var(--color-body);
 }
 
 .search-result__board {
@@ -27,9 +28,10 @@
   position: relative;
   border: 2.5px solid black;
   border-radius: 8px;
-  border-color: var(--color-orange) white var(--color-orange) white;
+  border-color: var(--color-orange) var(--color-body) var(--color-orange)
+    var(--color-body);
   overflow-y: hidden;
-  background-color: whitesmoke;
+  background-color: var(--color-whitesmoke);
 }
 
 .search-result__title {

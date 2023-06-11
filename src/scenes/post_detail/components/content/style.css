@@ -41,10 +41,10 @@
   width: 70px;
   height: 25px;
   border: none;
-  background-color: white;
+  background-color: var(--color-body);
   font-size: var(--font-size-sm);
   font-weight: 600;
-  color: white;
+  color: var(--font-color-light);
 }
 
 .content-board__btn--good {
@@ -62,7 +62,8 @@
   margin: 50px 0 3px 0;
   border: 2.5px solid;
   border-radius: 8px;
-  border-color: var(--main-color) white var(--main-color) white;
+  border-color: var(--main-color) var(--color-body) var(--main-color)
+    var(--color-body);
 }
 
 .content-board__title-related {
@@ -75,5 +76,5 @@
 .content-board__best {
   width: 100%;
   height: 130px;
-  background-color: whitesmoke;
+  background-color: var(--color-whitesmoke);
 }

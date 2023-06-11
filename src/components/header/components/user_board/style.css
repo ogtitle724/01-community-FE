@@ -18,7 +18,7 @@
   width: 30px;
   height: 30px;
   border-radius: 100%;
-  background-color: whitesmoke;
+  background-color: var(--color-whitesmoke);
 }
 
 .user-board__nickname {
@@ -36,11 +36,11 @@
   border: none;
   border-radius: 4px;
   background-size: contain;
-  color: black;
   line-height: 15px;
   font-size: var(--font-size-vsm);
   font-weight: 600;
   transition: 0.2s;
+  background-color: var(--color-whitesmoke);
 }
 
 .user-board__btn-logout:active {

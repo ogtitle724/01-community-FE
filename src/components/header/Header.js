@@ -5,6 +5,7 @@ import { selectSign } from "../../redux/slice/signSlice";
 import SearchBar from "../search_bar/SearchBar";
 import Sign from "./components/sign/Sign";
 import UserBoard from "./components/user_board/UserBoard";
+import ThemeToggle from "./components/themetoggle/ThemeToggle";
 import "./style.css";
 
 export default function Header() {
@@ -31,6 +32,7 @@ export default function Header() {
           SwapSpot
         </a>
         <SearchBar />
+        <ThemeToggle />
         <section className="sign">{isLogIn ? <UserBoard /> : <Sign />}</section>
       </header>
     </>

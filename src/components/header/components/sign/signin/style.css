@@ -6,14 +6,37 @@
   align-items: center;
   gap: 5px;
   border-radius: 4px;
-  border: 1px solid white;
-  background-color: whitesmoke;
+  border: 1px solid var(--color-body);
+  background-color: var(--color-whitesmoke);
   transition: 0.5s;
 }
 
 .form-login--fail {
   border: 1px solid var(--color-red);
   animation: fail linear 0.8s 1;
+}
+
+.form-login__input {
+  width: 100px;
+  height: 20px;
+  padding-left: 8px;
+  border: none;
+  border-radius: 3px;
+  background-color: var(--color-body);
+}
+
+.form-login__input:focus {
+  outline: none;
+}
+
+.form-login__btn-login {
+  width: 18px;
+  height: 18px;
+  border-radius: 4px;
+  border: none;
+  background-color: var(--main-color);
+  color: whitesmoke;
+  font-size: var(--font-size-vsm);
 }
 
 @keyframes fail {
@@ -95,27 +118,4 @@
   27% {
     transform: translate(0px, 0px) rotate(0deg);
   }
-}
-
-.form-login__input {
-  width: 100px;
-  height: 20px;
-  padding-left: 8px;
-  border: none;
-  border-radius: 3px;
-  background-color: white;
-}
-
-.form-login__input:focus {
-  outline: none;
-}
-
-.form-login__btn-login {
-  width: 18px;
-  height: 18px;
-  border-radius: 4px;
-  border: none;
-  background-color: var(--main-color);
-  color: whitesmoke;
-  font-size: var(--font-size-vsm);
 }
