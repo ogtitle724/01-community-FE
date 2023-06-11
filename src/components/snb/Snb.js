@@ -3,6 +3,7 @@ import {
   selectCategory,
   setPage,
   setCategory,
+  setScrollY,
 } from "../../redux/slice/pageSlice";
 import "./style.css";
 
@@ -33,6 +34,7 @@ function SnbMenu({ items, optionClass }) {
   const category = useSelector(selectCategory);
 
   const handleClickItem = (e) => {
+    dispatch(setScrollY({ scrollY: 0 }));
     dispatch(setCategory({ category: e.target.innerHTML }));
     dispatch(setPage({ nextPage: 1 }));
   };

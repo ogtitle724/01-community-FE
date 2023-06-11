@@ -1,10 +1,10 @@
 import Board from "../board/Board";
 import "./style.css";
 
-export default function Others({ posts }) {
+export default function Others({ posts, mainEle }) {
   return (
     <div className="main__content main__content--topic">
-      <Board posts={posts} postNum={35} />
+      <Board posts={posts} postNum={35} mainEle={mainEle} />
       <section className="main__hit">
         <Hit />
       </section>

@@ -1,9 +1,9 @@
 import { useState, useRef, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import {
   selectCategory,
   selectPage,
-  setPage,
+  selectScrollY,
 } from "../../redux/slice/pageSlice";
 import axios from "axios";
 
@@ -17,12 +17,9 @@ import "./style.css";
 export default function Home() {
   const category = useSelector(selectCategory);
   const page = useSelector(selectPage);
-  const [content, mainEle] = [useRef(""), useRef()];
-  const [posts, setPosts] = useState({
-    content: [],
-    totalPages: 0,
-    size: 20,
-  });
+  const scrollY = useSelector(selectScrollY);
+  const [content, mainEle] = [useRef(), useRef()];
+  const [posts, setPosts] = useState();
 
   useEffect(() => {
     const converter = {
@@ -46,24 +43,31 @@ export default function Home() {
         );
         setPosts(JSON.parse(res.data));
       } catch (err) {
-        console.log("일로");
         console.log(err);
       }
     };
+    console.log(scrollY);
+    console.log("here:", mainEle.current.scrollTop);
 
     getPosts();
   }, [category, page]);
 
-  if (category === "HOME") content.current = <ContentHome posts={posts} />;
-  else if (category === "BEST") content.current = <ContentBest posts={posts} />;
-  else content.current = <ContentTopic posts={posts} />;
+  if (mainEle.current) {
+    if (category === "HOME")
+      content.current = <ContentHome posts={posts} mainEle={mainEle} />;
+    else if (category === "BEST")
+      content.current = <ContentBest posts={posts} mainEle={mainEle} />;
+    else content.current = <ContentTopic posts={posts} mainEle={mainEle} />;
+
+    mainEle.current.scrollTop = scrollY;
+  }
 
   return (
     <div className="home">
       <Header />
       <Snb />
       <main ref={mainEle} className="main">
-        {content.current}
+        {posts && content.current}
       </main>
     </div>
   );

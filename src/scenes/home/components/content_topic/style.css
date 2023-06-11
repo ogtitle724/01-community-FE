@@ -36,7 +36,7 @@
   position: absolute;
   right: 5px;
   bottom: -1px;
-  background-image: url("../../../../../public/icons/trending-up.svg");
+  background-image: url(../../../../asset/icons/trending-up.svg);
 }
 
 .hit-board {

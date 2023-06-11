@@ -1,7 +1,6 @@
 import "./style.css";
 
 export default function ContentBoard({ post, sanitize }) {
-  console.log(sanitize(post.content));
   return (
     <section className="content-board">
       <article className="content-board__content">

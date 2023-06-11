@@ -1,7 +1,7 @@
 .horizon-list {
   --list-width: calc((var(--card-width) + 5) * 10);
   --list-height: 120px;
-  --card-width: 165px;
+  --card-width: 170px;
   --card-height: 110px;
 
   width: 100%;

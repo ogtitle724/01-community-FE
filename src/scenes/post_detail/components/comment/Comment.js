@@ -24,17 +24,19 @@ export default function CommentBoard() {
     <section className="comment-board">
       <section className="comment-board__comment-wrapper">
         <div className="comment-board__comment">
-          {samplePost.comment.map((comment) => {
+          {samplePost.comment.map((comment, idx1) => {
             if (comment.reply) {
               return (
                 <>
                   <Comment
+                    key={"hit-comment__" + idx1}
                     writer={comment.writer}
                     date={comment.date}
                     detail={comment.detail}
                   />
-                  {comment.reply.map((reply) => (
+                  {comment.reply.map((reply, idx2) => (
                     <Comment
+                      key={"hit-comment__" + idx1 + "-" + idx2}
                       writer={reply.writer}
                       date={reply.date}
                       detail={reply.detail}
@@ -46,6 +48,7 @@ export default function CommentBoard() {
             }
             return (
               <Comment
+                key={"hit-comment__" + idx1}
                 writer={comment.writer}
                 date={comment.date}
                 detail={comment.detail}

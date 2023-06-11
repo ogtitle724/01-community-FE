@@ -5,18 +5,19 @@ import {
   selectCategory,
   selectPage,
   setPage,
+  setScrollY,
 } from "../../../../redux/slice/pageSlice";
 import "./style.css";
 
-export default function Board({ posts }) {
+export default function Board({ posts, mainEle }) {
   const title = useSelector(selectCategory);
 
   return (
     <section className="board">
-      <h2 className="board__title">{title}</h2>
+      <h2 className="board__title">{title === "HOME" ? "BEST" : title}</h2>
       <ul>
         {posts.content.map((post, idx) => {
-          return <Post key={"post_" + idx} post={post} />;
+          return <Post key={"post_" + idx} post={post} mainEle={mainEle} />;
         })}
       </ul>
       <Nav posts={posts} />
@@ -24,11 +25,13 @@ export default function Board({ posts }) {
   );
 }
 
-function Post({ post }) {
+function Post({ post, mainEle }) {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleClickPost = async (e) => {
     e.preventDefault();
+    dispatch(setScrollY({ scrollY: mainEle.current.scrollTop }));
     navigate(`/post`, { state: post });
   };
 
@@ -69,7 +72,7 @@ function Nav({ posts }) {
   };
 
   const handleClickNav = (pageNum) => {
-    sessionStorage.setItem("searchPage", pageNum);
+    dispatch(setScrollY({ scrollY: 0 }));
     dispatch(setPage({ nextPage: pageNum }));
   };
 
