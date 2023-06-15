@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import { selectSearchPage, setSearchPage } from "../../redux/slice/pageSlice";
-import { useSelector, useDispatch } from "react-redux";
+import { selectSearchPage } from "../../redux/slice/pageSlice";
+import { useSelector } from "react-redux";
 import axios from "axios";
 
 import Header from "../../components/header/Header";
@@ -11,7 +11,6 @@ import "./style.css";
 
 export default function SearchResult() {
   const page = useSelector(selectSearchPage);
-  const dispatch = useDispatch();
 
   const [postData, setPostData] = useState();
   const location = useLocation();
@@ -23,7 +22,7 @@ export default function SearchResult() {
       const res = await axios.get(
         `/api/board/search?page=${page - 1}&size=20&term=${term}`
       );
-      setPostData(JSON.parse(res.data));
+      setPostData(res.data);
     } catch (err) {
       console.log(err);
     }

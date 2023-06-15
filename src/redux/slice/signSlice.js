@@ -14,7 +14,8 @@ export const signSlice = createSlice({
       state.isLogIn = false;
     },
     clickModeBtn: (state) => {
-      state.isDarkMode = !state.isDarkMode;
+      let sign = !state.isDarkMode;
+      state.isDarkMode = sign;
     },
   },
 });

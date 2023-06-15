@@ -41,13 +41,11 @@ export default function Home() {
             page - 1
           }&size=30`
         );
-        setPosts(JSON.parse(res.data));
+        setPosts(res.data);
       } catch (err) {
         console.log(err);
       }
     };
-    console.log(scrollY);
-    console.log("here:", mainEle.current.scrollTop);
 
     getPosts();
   }, [category, page]);

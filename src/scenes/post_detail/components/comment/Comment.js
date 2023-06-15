@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
 import "./style.css";
 import thumbsUp from "../../../../asset/icons/thumbs-up.svg";
 import thumbsDown from "../../../../asset/icons/thumbs-down.svg";

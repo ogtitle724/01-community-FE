@@ -14,7 +14,7 @@ import { store, persistor } from "./redux/store.js";
 import "./index.css";
 
 const local = "http://localhost:8000";
-const cloud = "http://3.34.80.12:8080";
+const cloud = "https://d3peui63u3s8co.cloudfront.net";
 
 const domain = local;
 
@@ -31,6 +31,14 @@ axios.interceptors.response.use((res) => {
 
   return res;
 });
+
+//css color-theme setting => using redux state makes an mismatch error when initial rendering
+const handleInitialSetting = () => {
+  const root = document.documentElement;
+  const isDarkMode =
+    JSON.parse(localStorage.getItem("persist:local")).isDarkMode === "true";
+  root.setAttribute("color-theme", isDarkMode ? "dark" : "light");
+};
 
 const router = createBrowserRouter([
   {
@@ -55,7 +63,11 @@ const router = createBrowserRouter([
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <Provider store={store}>
-      <PersistGate loading={null} persistor={persistor}>
+      <PersistGate
+        loading={null}
+        persistor={persistor}
+        onBeforeLift={handleInitialSetting}
+      >
         <RouterProvider router={router} />
       </PersistGate>
     </Provider>

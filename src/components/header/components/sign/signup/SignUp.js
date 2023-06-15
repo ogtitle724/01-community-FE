@@ -1,6 +1,5 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
-
 import {
   checkUid,
   checkNick,
@@ -16,11 +15,51 @@ export default function SignUp({ setShowSignUpForm }) {
   const [email, setEmail] = useState("");
   const [pwd, setPwd] = useState("");
   const [confirmPwd, setConfirmPwd] = useState("");
+  const [authCode, setAuthCode] = useState("");
+
   const [isUidVaild, setIsUidValid] = useState(false);
   const [isNickVaild, setIsNickValid] = useState(false);
   const [isEmailVaild, setIsEmailValid] = useState(false);
   const [isPwdValid, setIsPwdValid] = useState(false);
   const [isPwdMatch, setIsPwdMatch] = useState(false);
+  const [isCodeValid, setIsCodeVaild] = useState(false);
+
+  const [isAuthBtnClick, setIsAuthBtnClick] = useState(false);
+  const [count, setCount] = useState();
+  const [isAuthBtnDisabled, setIsAuthBtnDisabled] = useState(false);
+  const [isFail, setIsFail] = useState(false);
+
+  const handleAuthBtnClick = async () => {
+    setIsAuthBtnClick(true);
+    setIsAuthBtnDisabled(true);
+    setCount(240);
+
+    try {
+      await axios.get("/api/auth/creatAuthCode");
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const handleConfirmBtnClick = async () => {
+    try {
+      await axios.post("/api/auth/emailAuth");
+      setIsCodeVaild(true);
+    } catch (err) {
+      console.log(err);
+      setIsFail(true);
+      setTimeout(() => setIsFail(false), 3000);
+    }
+  };
+
+  useEffect(() => {
+    if (isAuthBtnClick && count > 0) {
+      setTimeout(() => setCount(count - 1), 1000);
+    }
+    if (count === 0) {
+      setIsAuthBtnDisabled(false);
+    }
+  }, [count]);
 
   const handleBtnClick = async (e) => {
     e.preventDefault();
@@ -54,6 +93,7 @@ export default function SignUp({ setShowSignUpForm }) {
           <h3 className="form-signup__h3">아이디</h3>
           <input
             id="form-signup__uid"
+            className="form-signup__input"
             type="text"
             value={uid}
             onChange={(e) => {
@@ -74,6 +114,7 @@ export default function SignUp({ setShowSignUpForm }) {
           <h3 className="form-signup__h3">닉네임</h3>
           <input
             id="form-signup__nick"
+            className="form-signup__input"
             type="text"
             value={nick}
             onChange={(e) => {
@@ -85,30 +126,66 @@ export default function SignUp({ setShowSignUpForm }) {
           />
           <p className="form-signup-warn">
             {nick && (isNickVaild ? "" : "닉네임은 2~8자 이내여야 합니다.")}{" "}
-            {/*정치 관련, 특정 사이트 언급, 반사회적, 성적, 욕설 닉네임은 금지합니다.*/}
           </p>
         </section>
         <section className="form-signup__section">
           <h3 className="form-signup__h3">이메일 주소</h3>
-          <input
-            id="form-signup__email"
-            type="text"
-            value={email}
-            onChange={(e) => {
-              setEmail(e.target.value);
-              checkEmail(e.target.value)
-                ? setIsEmailValid(true)
-                : setIsEmailValid(false);
-            }}
-          />
-          <p className="form-signup-warn">
-            {email && (isEmailVaild ? "" : "Invalid e-mail format.")}
-          </p>
+          <div className="form-signup__wrapper-email">
+            <input
+              id="form-signup__email"
+              className="form-signup__input"
+              type="text"
+              value={email}
+              onChange={(e) => {
+                setEmail(e.target.value);
+                checkEmail(e.target.value)
+                  ? setIsEmailValid(true)
+                  : setIsEmailValid(false);
+              }}
+            />
+            <button
+              className={"form-signup__btn-auth"}
+              onClick={handleAuthBtnClick}
+              disabled={isAuthBtnDisabled}
+            >
+              {count ? `${~~(count / 60)} : ${count % 60}` : "인증"}
+            </button>
+          </div>
+          <section className="form-signup__section-auth">
+            <input
+              type="text"
+              className={
+                "form-signup__input-auth" +
+                (isAuthBtnClick
+                  ? " form-signup__input-auth--active"
+                  : " form-signup__input-auth--disable") +
+                (isAuthBtnClick && isFail
+                  ? " form-signup__input-auth--fail"
+                  : "")
+              }
+              value={authCode}
+              onChange={(e) => setAuthCode(e.target.value)}
+            ></input>
+            <button
+              className={
+                "form-signup__btn-auth" +
+                (isAuthBtnClick
+                  ? " form-signup__btn-auth--active"
+                  : " form-signup__btn-auth--disable")
+              }
+              onClick={() => handleConfirmBtnClick()}
+              type="button"
+              disabled={isCodeValid}
+            >
+              {isCodeValid ? "✔" : "확인"}
+            </button>
+          </section>
         </section>
         <section className="form-signup__section">
           <h3 className="form-signup__h3">비밀번호</h3>
           <input
             id="form-signup__pwd"
+            className="form-signup__input"
             type="text"
             value={pwd}
             onChange={(e) => {
@@ -129,6 +206,7 @@ export default function SignUp({ setShowSignUpForm }) {
           <h3 className="form-signup__h3">비밀번호 확인</h3>
           <input
             id="form-signup__pwd-confirm"
+            className="form-signup__input"
             type="text"
             value={confirmPwd}
             onChange={(e) => {
@@ -152,7 +230,8 @@ export default function SignUp({ setShowSignUpForm }) {
               isNickVaild &&
               isEmailVaild &&
               isPwdValid &&
-              isPwdMatch
+              isPwdMatch &&
+              isCodeValid
             )
           }
           onClick={(e) => handleBtnClick(e)}

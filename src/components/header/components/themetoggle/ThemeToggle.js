@@ -14,6 +14,7 @@ export default function ThemeToggle() {
     const root = document.documentElement;
     root.setAttribute("color-theme", isDarkMode ? "light" : "dark");
   };
+
   return (
     <section className="themetoggle">
       <div
