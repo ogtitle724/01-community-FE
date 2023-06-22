@@ -49,6 +49,14 @@ export default function WritePage() {
   };
 
   const handleClickBtnComplete = async () => {
+    if (!title) {
+      alert("제목을 입력해주세요");
+      return;
+    } else if (!body) {
+      alert("내용을 입력해주세요");
+      return;
+    }
+
     try {
       await axios.post("/api/board/register", {
         title,

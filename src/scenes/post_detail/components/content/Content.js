@@ -1,12 +1,14 @@
 import "./style.css";
 
 export default function ContentBoard({ post, sanitize }) {
+  const writer = post.author;
+
   return (
     <section className="content-board">
       <article className="content-board__content">
         <h2 className="content-board__title">{post.title}</h2>
         <div className="content-board__info-wrapper">
-          <span className="content-board__date">{post.date}</span>
+          <span className="content-board__date">{post.wr_date}</span>
           <div>
             <span className="content-board__category">{post.category}</span>
             <span> | </span>
