@@ -12,14 +12,15 @@ import Snb from "../../components/snb/Snb";
 import ContentHome from "./components/content_feed/Content_Home";
 import ContentBest from "./components/content_feed/Content_Best";
 import ContentTopic from "./components/content_topic/Content_Topic";
+import MenuBtn from "../../components/menu_btn/Menu_Btn";
 import "./style.css";
 
 export default function Home() {
   const category = useSelector(selectCategory);
   const page = useSelector(selectPage);
   const scrollY = useSelector(selectScrollY);
-  const [content, mainEle] = [useRef(), useRef()];
   const [posts, setPosts] = useState();
+  const [content, mainEle] = [useRef(), useRef()];
 
   useEffect(() => {
     const converter = {
@@ -57,16 +58,27 @@ export default function Home() {
       content.current = <ContentBest posts={posts} mainEle={mainEle} />;
     else content.current = <ContentTopic posts={posts} mainEle={mainEle} />;
 
-    mainEle.current.scrollTop = scrollY;
+    if (scrollY) {
+      mainEle.current.scrollTo({
+        top: scrollY,
+        behavior: "smooth",
+      });
+    } else {
+      mainEle.current.scrollTo({
+        top: scrollY,
+        behavior: "auto",
+      });
+    }
   }
 
   return (
-    <div className="home">
+    <main className="home">
       <Header />
       <Snb />
-      <main ref={mainEle} className="main">
+      <section ref={mainEle} className="main">
         {posts && content.current}
-      </main>
-    </div>
+      </section>
+      <MenuBtn mainEle={mainEle} />
+    </main>
   );
 }

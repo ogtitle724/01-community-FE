@@ -48,7 +48,7 @@
 }
 
 .content-board__btn--good {
-  background-color: var(--color-skyblue);
+  background-color: var(--main-color);
 }
 
 .content-board__btn--bad {

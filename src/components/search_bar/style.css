@@ -15,6 +15,7 @@
 
 .search-bar__input:focus {
   outline: none;
+  background-color: var(--color-whitesmoke);
 }
 
 .search-bar__input::placeholder {

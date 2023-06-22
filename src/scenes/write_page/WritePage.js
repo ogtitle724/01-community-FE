@@ -1,154 +1,223 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { CKEditor } from "@ckeditor/ckeditor5-react";
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import axios from "axios";
+
+import noImg from "../../asset/icons/image.svg";
 import "./style.css";
 
 export default function WritePage() {
-  const [postTitle, setPostTitle] = useState("");
-  const [postDescription, setPostDescription] = useState("");
-  const [postCategory, setPostCategory] = useState("");
-
+  const [title, setTitle] = useState("");
+  const [body, setBody] = useState("");
+  const [category, setCategory] = useState("");
+  const [thumbnail, setThumbnail] = useState("");
+  const [isThumbShow, setIsThumbShow] = useState(false);
+  const [imgSrc, setImgSrc] = useState("");
   const navigate = useNavigate();
 
-  console.log(postTitle, postDescription, postCategory);
-
-  const handleClickSave = (e) => {
-    e.preventDefault();
-
-    axios.post("/api/board/register", {
-      uid: "token으로부터 뽑을예정",
-      title: postTitle,
-      category: postCategory,
-      content: postDescription,
+  //prevent "resizeobserver loop limit exceeded" error appearing
+  useEffect(() => {
+    window.addEventListener("error", (e) => {
+      if (e.message === "ResizeObserver loop limit exceeded") {
+        const resizeObserverErrDiv = document.getElementById(
+          "webpack-dev-server-client-overlay-div"
+        );
+        const resizeObserverErr = document.getElementById(
+          "webpack-dev-server-client-overlay"
+        );
+        if (resizeObserverErr) {
+          resizeObserverErr.setAttribute("style", "display: none");
+        }
+        if (resizeObserverErrDiv) {
+          resizeObserverErrDiv.setAttribute("style", "display: none");
+        }
+      }
     });
+  }, []);
+
+  const handleSelectCategory = (e) => {
+    setCategory(e.target.value);
   };
 
-  const handleClickDelete = (e) => {
-    e.preventDefault(e);
+  const handleThumbShow = () => {
+    setIsThumbShow(true);
+  };
 
-    // eslint-disable-next-line no-restricted-globals
-    const isOk = confirm("저장하지 않고 나가시겠습니까?");
+  const handleThumbHide = () => {
+    if (isThumbShow) setIsThumbShow(false);
+  };
 
-    if (isOk === true) {
+  const handleClickBtnComplete = async () => {
+    try {
+      await axios.post("/api/board/register", {
+        title,
+        category,
+        content: body,
+        thumbnail,
+        wr_date: new Date(),
+      });
       navigate(-1);
-    } else {
-      return;
+    } catch (err) {
+      console.log(err);
+      alert("게시글 작성을 실패했습니다.");
     }
   };
 
   return (
     <>
-      <form className="write">
-        <header className="write__header">
-          <h1 className="write__h1">WON editor</h1>
-          <EditorPannel setPostCategory={setPostCategory} />
-          <div className="write__btn-submit-wrapper">
-            <button
-              className="write__btn-submit"
-              onClick={(e) => handleClickSave(e)}
-            >
-              저장
-            </button>
-            <button
-              className="write__btn-submit"
-              onClick={(e) => handleClickDelete(e)}
-            >
-              삭제
-            </button>
-            <div className="write__btn-border"></div>
-            <button className="write__btn-submit">임시저장</button>
-          </div>
-        </header>
-        <main className="write__main">
-          <div className="write__text-wrapper">
-            <input
-              className="write__title"
-              type="text"
-              placeholder="title"
-              value={postTitle}
-              onChange={(e) => setPostTitle(e.target.value)}
-            ></input>
-            <textarea
-              className="write__description"
-              placeholder="description"
-              value={postDescription}
-              onChange={(e) => setPostDescription(e.target.value)}
-            ></textarea>
-          </div>
-        </main>
-      </form>
+      <main className="write-page" onClick={handleThumbHide}>
+        <input
+          className="write-page__title"
+          type="text"
+          placeholder="제목을 입력하세요."
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+        ></input>
+        <CKEditor
+          editor={ClassicEditor}
+          config={{
+            placeholder: "내용을 입력하세요.",
+            toolbar: {
+              items: [
+                "undo",
+                "redo",
+                "bold",
+                "italic",
+                "blockQuote",
+                "ckfinder",
+                "imageTextAlternative",
+                "imageUpload",
+                "heading",
+                "imageStyle:full",
+                "imageStyle:side",
+                "link",
+                "numberedList",
+                "bulletedList",
+                "mediaEmbed",
+                "insertTable",
+                "tableColumn",
+                "tableRow",
+                "mergeTableCells",
+              ],
+            },
+          }}
+          data=""
+          onReady={(editor) => {
+            // You can store the "editor" and use when it is needed.
+            console.log("Editor is ready to use!", editor);
+          }}
+          onChange={(event, editor) => {
+            const data = editor.getData();
+            setBody(data);
+            console.log({ event, editor, data });
+          }}
+          onBlur={(event, editor) => {
+            console.log("Blur.", editor);
+          }}
+          onFocus={(event, editor) => {
+            console.log("Focus.", editor);
+          }}
+        />
+        <section className="write-page__board">
+          <button
+            className="write-page__btn-thumbnail"
+            onClick={handleThumbShow}
+          >
+            {"thumbnail"}
+          </button>
+          {isThumbShow ? (
+            <ThumbnailDropbox
+              imgSrc={imgSrc}
+              thumbnail={thumbnail}
+              setThumbnail={setThumbnail}
+              setImgSrc={setImgSrc}
+            />
+          ) : (
+            ""
+          )}
+          <select
+            name="category"
+            className="write-page__select"
+            onChange={(e) => handleSelectCategory(e)}
+          >
+            <option value="없음">카테고리</option>
+            <option value="유머">유머</option>
+            <option value="게임/스포츠">게임/스포츠</option>
+            <option value="연예/방송">연예/방송</option>
+            <option value="여행">여행</option>
+            <option value="취미">취미</option>
+            <option value="경제/금융">경제/금융</option>
+            <option value="시사/이슈">시사/이슈</option>
+          </select>
+          <button
+            className="write-page__btn-complete"
+            onClick={handleClickBtnComplete}
+          >
+            완료
+          </button>
+        </section>
+      </main>
     </>
   );
 }
 
-function EditorPannel({ setPostCategory }) {
+function ThumbnailDropbox({ thumbnail, setThumbnail, imgSrc, setImgSrc }) {
+  const handleChangeImgSrc = (e) => {
+    setImgSrc(e.target.value);
+  };
+
+  const handleClickApplyBtn = () => {
+    setThumbnail(imgSrc);
+  };
+
+  const handleClickUploadBtn = (e) => {
+    const file = e.target.files[0];
+    const reader = new FileReader();
+
+    reader.addEventListener("load", (event) => {
+      setThumbnail(event.target.result);
+    });
+
+    if (file) {
+      reader.readAsDataURL(file);
+    }
+  };
+
   return (
-    <section
-      className="write__board"
-      onChange={(e) => setPostCategory(e.target.value)}
-    >
-      <select name="category" className="write__select">
-        <option value="">카테고리</option>
-        <option value="유머">유머</option>
-        <option value="게임/스포츠">게임/스포츠</option>
-        <option value="연예/방송">연예/방송</option>
-        <option value="여행">여행</option>
-        <option value="취미">취미</option>
-        <option value="경제/금융">경제/금융</option>
-        <option value="시사/이슈">시사/이슈</option>
-      </select>
-      <select name="본문2" className="write__select">
-        <option value="">본문2</option>
-        <option value="제목1">제목1</option>
-        <option value="제목2">제목2</option>
-        <option value="제목3">제목3</option>
-        <option value="본문1">본문1</option>
-        <option value="본문2">본문2</option>
-        <option value="본문3">본문3</option>
-      </select>
-      <div className="write__grid">
-        <button className="write__btn-text-align write__btn-text-align--default">
-          <img src="./align-just.png" alt="default"></img>
-        </button>
-        <button className="write__btn-text-align write__btn-text-align--left">
-          <img src="./align-left.png" alt="left"></img>
-        </button>
-        <button className="write__btn-text-align write__btn-text-align--center">
-          <img src="./align-center.png" alt="center"></img>
-        </button>
-        <button className="write__btn-text-align write__btn-text-align--right">
-          <img src="./align-right.png" alt="right"></img>
-        </button>
-        <button className="write__btn-text-deco" style={{ fontWeight: 700 }}>
-          B
-        </button>
+    <section className="th-dropdown" onClick={(e) => e.stopPropagation()}>
+      <img
+        className={
+          "th-dropdown__img-preview" +
+          (thumbnail ? " th-dropdown__img-preview--show" : "")
+        }
+        src={thumbnail ? thumbnail : noImg}
+        alt=""
+      />
+      <div className="th-dropdown-input-wrapper">
+        <input
+          className="th-dropdown__input-src"
+          type="text"
+          placeholder="이미지 주소를 입력하세요."
+          value={imgSrc}
+          onChange={(e) => handleChangeImgSrc(e)}
+        />
         <button
-          className="write__btn-text-deco"
-          style={{ fontStyle: "italic" }}
+          className="th-dropdown__btn-apply"
+          onClick={handleClickApplyBtn}
         >
-          I
+          등록
         </button>
-        <button
-          className="write__btn-text-deco"
-          style={{ textDecoration: "underline" }}
-        >
-          U
-        </button>
-        <button
-          className="write__btn-text-deco"
-          style={{ textDecoration: "line-through" }}
-        >
-          T
-        </button>
-        <button className="write__btn-text-deco" style={{ color: "red" }}>
-          C
-        </button>
-        <button
-          className="write__btn-text-deco"
-          style={{ backgroundColor: "rgb(232, 255, 74)" }}
-        >
-          BC
-        </button>
+        <span style={{ fontSize: "0.5rem" }}>or</span>
+        <input
+          type="file"
+          className="th-dropdown__input-file"
+          id="th-dropdown__file"
+          onChange={(e) => handleClickUploadBtn(e)}
+        />
+        <label for="th-dropdown__file" className="th-dropdown__label-file">
+          업로드
+        </label>
       </div>
     </section>
   );

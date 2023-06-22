@@ -1,4 +1,7 @@
+import { useNavigate } from "react-router-dom";
 import "./style.css";
+import { useDispatch } from "react-redux";
+import { setCategory, setScrollY } from "../../redux/slice/pageSlice";
 
 const category = [
   "HOME",
@@ -13,8 +16,16 @@ const category = [
 ];
 
 export default function Gnb() {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const handleClick = (e) => {
     e.preventDefault();
+
+    const category = e.target.innerHTML;
+    dispatch(setCategory({ category }));
+    dispatch(setScrollY({ scrollY: 0 }));
+    navigate("/");
   };
 
   return (

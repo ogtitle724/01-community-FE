@@ -24,13 +24,13 @@ export default function SignUp({ setShowSignUpForm }) {
   const [isPwdMatch, setIsPwdMatch] = useState(false);
   const [isCodeValid, setIsCodeVaild] = useState(false);
 
-  const [isAuthBtnClick, setIsAuthBtnClick] = useState(false);
+  const [isClickAuthBtn, setIsClickAuthBtn] = useState(false);
   const [count, setCount] = useState();
   const [isAuthBtnDisabled, setIsAuthBtnDisabled] = useState(false);
   const [isFail, setIsFail] = useState(false);
 
-  const handleAuthBtnClick = async () => {
-    setIsAuthBtnClick(true);
+  const handleClickAuthBtn = async () => {
+    setIsClickAuthBtn(true);
     setIsAuthBtnDisabled(true);
     setCount(240);
 
@@ -53,7 +53,7 @@ export default function SignUp({ setShowSignUpForm }) {
   };
 
   useEffect(() => {
-    if (isAuthBtnClick && count > 0) {
+    if (isClickAuthBtn && count > 0) {
       setTimeout(() => setCount(count - 1), 1000);
     }
     if (count === 0) {
@@ -145,7 +145,7 @@ export default function SignUp({ setShowSignUpForm }) {
             />
             <button
               className={"form-signup__btn-auth"}
-              onClick={handleAuthBtnClick}
+              onClick={handleClickAuthBtn}
               disabled={isAuthBtnDisabled}
             >
               {count ? `${~~(count / 60)} : ${count % 60}` : "인증"}
@@ -156,10 +156,10 @@ export default function SignUp({ setShowSignUpForm }) {
               type="text"
               className={
                 "form-signup__input-auth" +
-                (isAuthBtnClick
+                (isClickAuthBtn
                   ? " form-signup__input-auth--active"
                   : " form-signup__input-auth--disable") +
-                (isAuthBtnClick && isFail
+                (isClickAuthBtn && isFail
                   ? " form-signup__input-auth--fail"
                   : "")
               }
@@ -169,7 +169,7 @@ export default function SignUp({ setShowSignUpForm }) {
             <button
               className={
                 "form-signup__btn-auth" +
-                (isAuthBtnClick
+                (isClickAuthBtn
                   ? " form-signup__btn-auth--active"
                   : " form-signup__btn-auth--disable")
               }

@@ -28,6 +28,7 @@
   font-weight: 500;
   transition: 0.2s;
   cursor: default;
+  list-style: none;
 }
 
 .snb__item--focus {
@@ -36,6 +37,6 @@
   font-weight: 700;
 }
 
-.snb__item:hover {
-  font-weight: 700;
+.snb__item:hover:not(.snb__item--focus) {
+  filter: brightness(1.5);
 }

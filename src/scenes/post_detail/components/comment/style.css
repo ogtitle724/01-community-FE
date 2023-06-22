@@ -39,6 +39,10 @@
   transition: 0.2s;
 }
 
+.comment-board__btn-add--dark img {
+  filter: invert(100%);
+}
+
 .comment-board__form {
   position: absolute;
   bottom: 15px;
@@ -140,6 +144,10 @@
 .comment__btn-wrapper {
   margin: 3px 0 6px 0;
   position: relative;
+}
+
+.comment__btn-wrapper--dark img {
+  filter: invert(100%);
 }
 
 .comment__btn {

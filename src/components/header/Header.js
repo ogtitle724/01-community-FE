@@ -29,7 +29,7 @@ export default function Header() {
           href="/"
           onClick={(e) => handleClickLogo(e)}
         >
-          SwapSpot
+          BayClip
         </a>
         <SearchBar />
         <ThemeToggle />

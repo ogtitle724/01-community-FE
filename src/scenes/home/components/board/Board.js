@@ -77,7 +77,7 @@ function Nav({ posts }) {
   };
 
   return (
-    <nav className="board__nav">
+    <ul className="board__nav">
       <li
         className="board__nav-btn board__nav-btn-direction"
         onClick={handleClickPrev}
@@ -106,6 +106,6 @@ function Nav({ posts }) {
       >
         {"❯"}
       </li>
-    </nav>
+    </ul>
   );
 }

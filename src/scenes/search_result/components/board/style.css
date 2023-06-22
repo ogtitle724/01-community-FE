@@ -68,6 +68,7 @@
   font-weight: 600;
   cursor: pointer;
   transition: 0.2s;
+  list-style: none;
 }
 
 .search-board__nav-btn--focus {

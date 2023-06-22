@@ -4,10 +4,13 @@ import thumbsUp from "../../../../asset/icons/thumbs-up.svg";
 import thumbsDown from "../../../../asset/icons/thumbs-down.svg";
 import chatBox from "../../../../asset/icons/chatbox.svg";
 import closeCircle from "../../../../asset/icons/close-circle.svg";
+import { useSelector } from "react-redux";
+import { selectIsDarkMode } from "../../../../redux/slice/signSlice";
 
 export default function CommentBoard() {
   const [isAddComment, setIsAddComment] = useState(false);
   const btnAdd = useRef();
+  const isDarkMode = useSelector(selectIsDarkMode);
 
   const handleClickBtnAdd = (e) => {
     e.preventDefault();
@@ -58,7 +61,10 @@ export default function CommentBoard() {
         </div>
       </section>
       <button
-        className="comment-board__btn-add"
+        className={
+          "comment-board__btn-add" +
+          (isDarkMode ? " comment-board__btn-add--dark" : "")
+        }
         onClick={(e) => handleClickBtnAdd(e)}
       >
         <img ref={btnAdd} src={closeCircle} alt="x" />
@@ -75,6 +81,8 @@ export default function CommentBoard() {
 }
 
 function Comment({ writer, date, detail, className }) {
+  const isDarkMode = useSelector(selectIsDarkMode);
+
   return (
     <div className={"comment__default " + className}>
       <span className="comment__info">
@@ -83,7 +91,12 @@ function Comment({ writer, date, detail, className }) {
         <span className="comment__date">{date}</span>
       </span>
       <div className="comment__detail">{detail}</div>
-      <div className="comment__btn-wrapper">
+      <div
+        className={
+          "comment__btn-wrapper" +
+          (isDarkMode ? " comment__btn-wrapper--dark" : "")
+        }
+      >
         <button className="comment__btn comment__btn-like">
           <img src={thumbsUp} alt="x"></img>
         </button>
