@@ -1,0 +1,188 @@
+.mypage {
+  min-height: 100vh;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.mypage__main {
+  width: 100vw;
+  height: calc(100vh - 80px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow-y: scroll;
+  background-color: var(--color-body);
+}
+
+.mypage__grid-container {
+  width: 765px;
+  margin: 20px 0;
+  position: relative;
+  display: grid;
+  grid-template-areas:
+    "profile write mycomment lv"
+    "swap swap swap swap"
+    "visit visit visit visit"
+    "comment comment comment comment";
+  justify-content: center;
+  justify-items: center;
+  align-content: start;
+  align-items: center;
+}
+
+.mypage__profile {
+  grid-area: profile;
+  width: 180px;
+  padding: 10px 0px 10px 80px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.mypage__img-wrapper {
+  width: 100px;
+  height: 100px;
+  position: relative;
+  border-radius: 12%;
+  overflow: hidden;
+  background-color: var(--color-whitesmoke);
+}
+
+.mypage__profile-img {
+  width: 100%;
+  height: 100%;
+}
+
+.mypage__nick {
+  width: 100%;
+  height: 28px;
+  position: absolute;
+  left: 50%;
+  bottom: 0px;
+  transform: translateX(-50%);
+  border-radius: 0px;
+  background-color: var(--main-color);
+  font-size: var(--font-size-md);
+  text-align: center;
+  color: whitesmoke;
+  line-height: 24px;
+}
+
+.mypage__email {
+  font-size: var(--font-size-sm);
+  color: var(--color-dark);
+}
+
+.mypage__exp {
+  width: 150px;
+  height: 180px;
+  padding-bottom: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 80px;
+}
+.mypage__exp p:first-child {
+  font-size: 40px;
+  font-weight: 600;
+}
+.mypage__exp p:last-child {
+  font-size: 16px;
+  font-weight: 550;
+}
+
+.mypage__my-write {
+  grid-area: write;
+  padding-left: 50px;
+}
+
+.mypage__my-comment {
+  grid-area: mycomment;
+}
+
+.mypage__grade {
+  grid-area: lv;
+  padding-right: 50px;
+}
+
+.mypage__swap {
+  grid-area: swap;
+  width: 100%;
+  height: 150px;
+  margin: 10px 0 30px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 6px;
+}
+
+.swapspot__item {
+  width: 48%;
+  height: 90%;
+  position: relative;
+  border-radius: 6px;
+  border: 1px solid;
+  border-color: var(--main-color) var(--color-body) var(--main-color)
+    var(--color-body);
+  background-color: var(--color-background);
+}
+
+.swapspot__info {
+  position: absolute;
+  left: 50%;
+  bottom: -33px;
+  transform: translateX(-50%);
+  font-size: var(--font-size-md);
+  font-weight: 550;
+}
+
+.mypage__visit {
+  grid-area: visit;
+  width: 100%;
+  margin: 80px 0 10px 0;
+}
+
+.mypage__visit h3 {
+  text-align: start;
+  font-size: var(--font-size-md);
+  font-weight: 600;
+}
+
+.mypage__visit-board {
+  width: 100%;
+  height: 200px;
+  margin: 13px 0;
+  border-radius: 6px;
+  border: 1px solid;
+  border-color: var(--main-color) var(--color-body) var(--main-color)
+    var(--color-body);
+  background-color: var(--color-background);
+}
+
+.mypage__comment {
+  grid-area: comment;
+  width: 100%;
+  margin: 80px 0 10px 0;
+}
+
+.mypage__comment h3 {
+  text-align: start;
+  font-size: var(--font-size-md);
+  font-weight: 600;
+}
+
+.mypage__comment-board {
+  width: 100%;
+  height: 580px;
+  margin: 13px 0;
+  border-radius: 6px;
+  border: 1px solid;
+  border-color: var(--main-color) var(--color-body) var(--main-color)
+    var(--color-body);
+  background-color: var(--color-background);
+}

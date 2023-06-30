@@ -156,7 +156,7 @@
   margin-bottom: 20px;
   border: 1px solid rgb(218, 218, 218);
   border-radius: 4px;
-  object-fit: contain;
+  object-fit: scale-down;
   background-color: rgb(236, 236, 236);
 }
 
@@ -176,8 +176,9 @@
   height: 22px;
   padding-left: 3px;
   display: inline-block;
-  border: 1px solid #666;
-  border-radius: 2px;
+  border: 1px solid rgb(218, 218, 218);
+  border-radius: 4px;
+  background-color: rgb(236, 236, 236);
   font-size: var(--font-size-vsm);
 }
 
@@ -193,21 +194,23 @@
 .th-dropdown__label-file {
   width: 40px;
   height: 22px;
-  border: 1px solid #666;
-  border-radius: 2px;
-  background-color: whitesmoke;
-  font-size: var(--font-size-sm);
+  border: 1px solid rgb(218, 218, 218);
+  border-radius: 4px;
+  background-color: rgb(255, 255, 255);
+  color: #666;
+  font-size: var(--font-size-vsm);
+  font-weight: 550;
   line-height: 20px;
   text-align: center;
-  color: black;
-  font-size: var(--font-size-vsm);
 }
 
 .th-dropdown__btn-apply {
   width: 32px;
   height: 22px;
-  border: 1px solid #666;
-  border-radius: 2px;
-  color: black;
+  border: 1px solid rgb(218, 218, 218);
+  border-radius: 4px;
+  background-color: rgb(255, 255, 255);
+  color: #666;
   font-size: var(--font-size-vsm);
+  font-weight: 550;
 }

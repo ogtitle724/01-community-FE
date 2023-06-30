@@ -10,6 +10,7 @@ import WritePage from "./scenes/write_page/WritePage.js";
 import ErrorPage from "./scenes/error_page/ErrorPage.js";
 import PostDetail from "./scenes/post_detail/PostDetail.js";
 import SearchResult from "./scenes/search_result/SearchResult.js";
+import MyPage from "./scenes/mypage/MyPage.js";
 import { store, persistor } from "./redux/store.js";
 import "./index.css";
 
@@ -57,6 +58,10 @@ const router = createBrowserRouter([
   {
     path: "/search",
     element: <SearchResult />,
+  },
+  {
+    path: "/mypage",
+    element: <MyPage />,
   },
 ]);
 

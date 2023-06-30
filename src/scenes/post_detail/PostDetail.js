@@ -1,5 +1,5 @@
-import sanitizeHtml from "sanitize-html-react";
 import { useLocation } from "react-router-dom";
+import sanitizeHtml from "sanitize-html-react";
 
 import Header from "../../components/header/Header";
 import Gnb from "../../components/gnb/Gnb";
@@ -13,11 +13,7 @@ export default function PostDetail() {
 
   const sanitize = (content) =>
     sanitizeHtml(content, {
-      allowedTags: sanitizeHtml.defaults.allowedTags.concat([
-        "div",
-        "span",
-        "img",
-      ]),
+      allowedTags: sanitizeHtml.defaults.allowedTags.concat(["span", "img"]),
       allowedAttributes: {
         ...sanitizeHtml.defaults.allowedAttributes,
         img: ["src", "alt"],
@@ -31,7 +27,7 @@ export default function PostDetail() {
       <main className="post-detail__main">
         <div className="post-detail__wrapper">
           <ContentBoard post={post} sanitize={sanitize} />
-          <CommentBoard />
+          <CommentBoard sanitize={sanitize} />
         </div>
       </main>
     </div>

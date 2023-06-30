@@ -19,11 +19,13 @@
   height: 30px;
   border-radius: 100%;
   background-color: var(--color-whitesmoke);
+  cursor: pointer;
 }
 
 .user-board__nickname {
   font-size: var(--font-size-vsm);
   font-weight: 700;
+  cursor: pointer;
 }
 
 .user-board__email {

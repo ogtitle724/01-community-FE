@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { login, logout } from "../../../../../redux/slice/signSlice";
+import { login, logout, setId } from "../../../../../redux/slice/signSlice";
 import "./style.css";
 
 export default function SignIn() {
@@ -14,12 +14,13 @@ export default function SignIn() {
     e.preventDefault();
 
     try {
-      await axios.post("/api/auth/authenticate", {
+      const id = await axios.post("/api/auth/authenticate", {
         uid: uid,
         pwd: pwd,
       });
 
       dispatch(login());
+      dispatch(setId({ id }));
       setTimeout(silentRefresh, process.env.REACT_APP_REGENERATE_TIME);
     } catch (err) {
       setIsFail(true);
@@ -39,6 +40,7 @@ export default function SignIn() {
       console.log("silent refresh executed!");
     } catch (err) {
       dispatch(logout());
+      dispatch(setId({ id: null }));
       console.log(err);
     }
   };

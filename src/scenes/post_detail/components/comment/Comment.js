@@ -7,7 +7,7 @@ import closeCircle from "../../../../asset/icons/close-circle.svg";
 import { useSelector } from "react-redux";
 import { selectIsDarkMode } from "../../../../redux/slice/signSlice";
 
-export default function CommentBoard() {
+export default function CommentBoard({ sanitize }) {
   const [isAddComment, setIsAddComment] = useState(false);
   const btnAdd = useRef();
   const isDarkMode = useSelector(selectIsDarkMode);
