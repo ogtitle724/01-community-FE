@@ -37,7 +37,7 @@ export default function MyPage() {
           </div>
           <div className="mypage__grade mypage__exp">
             <p>72</p>
-            <p>Lv</p>
+            <p>등급</p>
           </div>
           <section className="mypage__swap">
             <h3 hidden>swap spot</h3>

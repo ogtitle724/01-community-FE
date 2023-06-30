@@ -6,13 +6,13 @@ import { selectId } from "../../../../redux/slice/signSlice";
 import "./style.css";
 
 export default function ContentBoard({ post, sanitize }) {
-  const [isWriter, setIsWriter] = useState(true);
+  const [isWriter, setIsWriter] = useState(false);
   const id = useSelector(selectId);
 
-  /* useEffect(() => {
+  useEffect(() => {
     if (id === post.author) setIsWriter(true);
     else setIsWriter(false);
-  }, [id, post.author]); */
+  }, [id, post.author]);
 
   return (
     <section className="content-board">
