@@ -20,7 +20,8 @@ export default function SearchResult() {
   const getSearchData = async (term, page) => {
     try {
       const res = await axios.get(
-        `/api/board/search?page=${page - 1}&size=20&term=${term}`
+        process.env.REACT_APP_PATH_SEARCH +
+          `?page=${page - 1}&size=20&term=${term}`
       );
       setPostData(res.data);
     } catch (err) {

@@ -18,7 +18,7 @@ export default function Header() {
 
     dispatch(setPage({ nextPage: 1 }));
     dispatch(setCategory({ category: "HOME" }));
-    navigate("/");
+    navigate(process.env.REACT_APP_ROUTE_HOME);
   };
 
   return (
@@ -26,7 +26,7 @@ export default function Header() {
       <header className="header">
         <a
           className="header__logo"
-          href="/"
+          href={process.env.REACT_APP_ROUTE_HOME}
           onClick={(e) => handleClickLogo(e)}
         >
           BayClip

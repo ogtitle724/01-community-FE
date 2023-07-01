@@ -35,7 +35,7 @@ export default function SignUp({ setShowSignUpForm }) {
     setCount(240);
 
     try {
-      await axios.get("/api/auth/creatAuthCode");
+      await axios.get(process.env.REACT_APP_PATH_AUTH_GENEERATE_CODE);
     } catch (err) {
       console.log(err);
     }
@@ -43,7 +43,7 @@ export default function SignUp({ setShowSignUpForm }) {
 
   const handleConfirmBtnClick = async () => {
     try {
-      await axios.post("/api/auth/emailAuth");
+      await axios.post(process.env.REACT_APP_PATH_AUTH_CONFIRM_CODE);
       setIsCodeVaild(true);
     } catch (err) {
       console.log(err);
@@ -65,7 +65,7 @@ export default function SignUp({ setShowSignUpForm }) {
     e.preventDefault();
 
     try {
-      const res = await axios.post("/api/auth/register", {
+      const res = await axios.post(process.env.REACT_APP_PATH_AUTH_SIGNUP, {
         uid: uid,
         nick: nick,
         email: email,

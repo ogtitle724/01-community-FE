@@ -13,7 +13,7 @@ export default function Board({ postData }) {
 
   const handleClickPost = async (e, post) => {
     e.preventDefault();
-    navigate(`/post`, { state: post });
+    navigate(process.env.REACT_APP_ROUTE_POST, { state: post });
   };
 
   return (

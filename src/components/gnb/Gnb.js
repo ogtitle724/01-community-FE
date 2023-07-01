@@ -25,7 +25,7 @@ export default function Gnb() {
     const category = e.target.innerHTML;
     dispatch(setCategory({ category }));
     dispatch(setScrollY({ scrollY: 0 }));
-    navigate("/");
+    navigate(process.env.REACT_APP_ROUTE_HOME);
   };
 
   return (

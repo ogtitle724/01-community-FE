@@ -13,13 +13,8 @@ import SearchResult from "./scenes/search_result/SearchResult.js";
 import MyPage from "./scenes/mypage/MyPage.js";
 import { store, persistor } from "./redux/store.js";
 import "./index.css";
-
-const local = "http://localhost:8000";
-const cloud = "https://d3peui63u3s8co.cloudfront.net";
-
-const domain = local;
-
-axios.defaults.baseURL = domain;
+console.log(process.env.REACT_APP_DOMAIN);
+axios.defaults.baseURL = process.env.REACT_APP_DOMAIN;
 axios.defaults.withCredentials = true;
 axios.interceptors.response.use((res) => {
   const authHeader = res.headers["authorization"];
@@ -43,24 +38,24 @@ const handleInitialSetting = () => {
 
 const router = createBrowserRouter([
   {
-    path: "/",
+    path: process.env.REACT_APP_ROUTE_HOME,
     element: <Home />,
     errorElement: <ErrorPage />,
   },
   {
-    path: "/write",
+    path: process.env.REACT_APP_ROUTE_WRITE,
     element: <WritePage />,
   },
   {
-    path: "/post",
+    path: process.env.REACT_APP_ROUTE_POST,
     element: <PostDetail />,
   },
   {
-    path: "/search",
+    path: process.env.REACT_APP_ROUTE_SEARCH,
     element: <SearchResult />,
   },
   {
-    path: "/mypage",
+    path: process.env.REACT_APP_ROUTE_MYPAGE,
     element: <MyPage />,
   },
 ]);

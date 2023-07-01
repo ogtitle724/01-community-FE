@@ -14,7 +14,9 @@ export default function SearchBar() {
 
     if (searchTerm) {
       dispatch(setSearchPage({ nextPage: 1 }));
-      navigate(`/search`, { state: { term: searchTerm } });
+      navigate(process.env.REACT_APP_ROUTE_SEARCH, {
+        state: { term: searchTerm },
+      });
     }
   };
 

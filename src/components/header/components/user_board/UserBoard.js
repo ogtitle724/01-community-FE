@@ -11,7 +11,7 @@ export default function UserBoard() {
 
   const handleClickLogOut = async () => {
     try {
-      await axios.post("/api/auth/logout", null);
+      await axios.post(process.env.REACT_APP_PATH_AUTH_LOGOUT, null);
 
       delete axios.defaults.headers.common["Authorization"];
       dispatch(logout());
@@ -22,7 +22,7 @@ export default function UserBoard() {
   };
 
   const handleNavigateMypage = () => {
-    navigate("/mypage");
+    navigate(process.env.REACT_APP_ROUTE_MYPAGE);
   };
 
   return (

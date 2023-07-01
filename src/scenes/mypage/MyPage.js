@@ -1,9 +1,6 @@
 import Header from "../../components/header/Header";
 import Gnb from "../../components/gnb/Gnb";
 import profileImg from "../../asset/icons/person.svg";
-import bag from "../../asset/icons/bag.svg";
-import bagCheck from "../../asset/icons/bag-check.svg";
-
 import "./style.css";
 
 export default function MyPage() {

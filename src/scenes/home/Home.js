@@ -26,9 +26,8 @@ export default function Home() {
     const getPosts = async () => {
       try {
         const res = await axios.get(
-          `/api/board/post?category=${converter[category]}&page=${
-            page - 1
-          }&size=30`
+          "/api/board/post" +
+            `?category=${converter[category]}&page=${page - 1}&size=30`
         );
         setPosts(res.data);
       } catch (err) {

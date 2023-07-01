@@ -32,7 +32,7 @@ function Post({ post, mainEle }) {
   const handleClickPost = async (e) => {
     e.preventDefault();
     dispatch(setScrollY({ scrollY: mainEle.current.scrollTop }));
-    navigate(`/post`, { state: post });
+    navigate(process.env.REACT_APP_ROUTE_POST, { state: post });
   };
 
   return (

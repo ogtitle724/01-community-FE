@@ -14,7 +14,7 @@ export default function SignIn() {
     e.preventDefault();
 
     try {
-      const id = await axios.post("/api/auth/authenticate", {
+      const id = await axios.post(process.env.REACT_APP_PATH_AUTH_LOGIN, {
         uid: uid,
         pwd: pwd,
       });
@@ -35,7 +35,7 @@ export default function SignIn() {
     console.log("regenerate time:", process.env.REACT_APP_REGENERATE_TIME);
 
     try {
-      await axios.post("/api/auth/silentRefresh", null);
+      await axios.post(process.env.REACT_APP_PATH_AUTH_LOGIN_SILENT, null);
       setTimeout(silentRefresh, process.env.REACT_APP_REGENERATE_TIME);
       console.log("silent refresh executed!");
     } catch (err) {

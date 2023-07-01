@@ -54,7 +54,7 @@ function UD({ post }) {
   const navigate = useNavigate();
 
   const handleClickUpdate = () => {
-    navigate("/write", {
+    navigate(process.env.REACT_APP_ROUTE_WRITE, {
       state: {
         isUpdate: true,
         title: post.title,
@@ -70,7 +70,7 @@ function UD({ post }) {
 
     if (isDelete) {
       try {
-        await axios.post(`/api/board/delete?id=${post.id}`);
+        await axios.post(process.env.REACT_APP_PATH_DELETE + `?id=${post.id}`);
         navigate(-1);
       } catch (err) {
         console.log(err);

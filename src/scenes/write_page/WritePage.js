@@ -11,7 +11,7 @@ export default function WritePage() {
   //state for post update
   const navigate = useNavigate();
   const location = useLocation();
-  const isUpdate = location.state.isUpdate;
+  const isUpdate = location.state?.isUpdate;
   const titleArg = isUpdate ? location.state.title : "";
   const categoryArg = isUpdate ? converter[location.state.category] : "";
   const postId = isUpdate && location.state.id;
@@ -46,7 +46,7 @@ export default function WritePage() {
     const getBodyData = async () => {
       try {
         const data = await axios.get(
-          `/api/board/update?id=${location.state.id}`
+          process.env.REACT_APP_PATH_UPDATE + `?id=${location.state.id}`
         );
         setOgData(data);
       } catch (err) {
@@ -81,7 +81,7 @@ export default function WritePage() {
     if (isUpdate) {
       try {
         //TODO: 여기서 category, thumbnail, wr_Date 추가 처리 필요
-        await axios.post(`/api/board/update?id=${postId}`, {
+        await axios.post(process.env.REACT_APP_PATH_UPDATE + `?id=${postId}`, {
           title,
           category,
           content: body,
@@ -95,7 +95,7 @@ export default function WritePage() {
       }
     } else {
       try {
-        await axios.post("/api/board/register", {
+        await axios.post(process.env.REACT_APP_PATH_CREATE, {
           title,
           category,
           content: body,
