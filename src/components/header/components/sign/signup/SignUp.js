@@ -24,26 +24,30 @@ export default function SignUp({ setShowSignUpForm }) {
   const [isPwdMatch, setIsPwdMatch] = useState(false);
   const [isCodeValid, setIsCodeVaild] = useState(false);
 
-  const [isClickAuthBtn, setIsClickAuthBtn] = useState(false);
+  const [isClickBtnAuth, setIsClickBtnAuth] = useState(false);
   const [count, setCount] = useState();
   const [isAuthBtnDisabled, setIsAuthBtnDisabled] = useState(false);
   const [isFail, setIsFail] = useState(false);
 
-  const handleClickAuthBtn = async () => {
-    setIsClickAuthBtn(true);
+  const handleClickBtnAuth = async () => {
+    setIsClickBtnAuth(true);
     setIsAuthBtnDisabled(true);
     setCount(240);
 
     try {
-      await axios.get(process.env.REACT_APP_PATH_AUTH_GENEERATE_CODE);
+      await axios.post(process.env.REACT_APP_PATH_AUTH_GENEERATE_CODE, {
+        email,
+      });
     } catch (err) {
       console.log(err);
     }
   };
 
-  const handleConfirmBtnClick = async () => {
+  const handleClickBtnConfrim = async () => {
     try {
-      await axios.post(process.env.REACT_APP_PATH_AUTH_CONFIRM_CODE);
+      await axios.post(process.env.REACT_APP_PATH_AUTH_CONFIRM_CODE, {
+        authCode: Number(authCode),
+      });
       setIsCodeVaild(true);
     } catch (err) {
       console.log(err);
@@ -53,7 +57,7 @@ export default function SignUp({ setShowSignUpForm }) {
   };
 
   useEffect(() => {
-    if (isClickAuthBtn && count > 0) {
+    if (isClickBtnAuth && count > 0) {
       setTimeout(() => setCount(count - 1), 1000);
     }
     if (count === 0) {
@@ -145,8 +149,8 @@ export default function SignUp({ setShowSignUpForm }) {
             />
             <button
               className={"form-signup__btn-auth"}
-              onClick={handleClickAuthBtn}
-              disabled={isAuthBtnDisabled}
+              onClick={handleClickBtnAuth}
+              disabled={isAuthBtnDisabled || !isEmailVaild}
             >
               {count ? `${~~(count / 60)} : ${count % 60}` : "인증"}
             </button>
@@ -156,10 +160,10 @@ export default function SignUp({ setShowSignUpForm }) {
               type="text"
               className={
                 "form-signup__input-auth" +
-                (isClickAuthBtn
+                (isClickBtnAuth
                   ? " form-signup__input-auth--active"
                   : " form-signup__input-auth--disable") +
-                (isClickAuthBtn && isFail
+                (isClickBtnAuth && isFail
                   ? " form-signup__input-auth--fail"
                   : "")
               }
@@ -169,11 +173,11 @@ export default function SignUp({ setShowSignUpForm }) {
             <button
               className={
                 "form-signup__btn-auth" +
-                (isClickAuthBtn
+                (isClickBtnAuth
                   ? " form-signup__btn-auth--active"
                   : " form-signup__btn-auth--disable")
               }
-              onClick={() => handleConfirmBtnClick()}
+              onClick={() => handleClickBtnConfrim()}
               type="button"
               disabled={isCodeValid}
             >

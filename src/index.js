@@ -13,7 +13,7 @@ import SearchResult from "./scenes/search_result/SearchResult.js";
 import MyPage from "./scenes/mypage/MyPage.js";
 import { store, persistor } from "./redux/store.js";
 import "./index.css";
-console.log(process.env.REACT_APP_DOMAIN);
+
 axios.defaults.baseURL = process.env.REACT_APP_DOMAIN;
 axios.defaults.withCredentials = true;
 axios.interceptors.response.use((res) => {

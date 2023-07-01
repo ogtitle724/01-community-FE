@@ -14,13 +14,12 @@ export default function SignIn() {
     e.preventDefault();
 
     try {
-      const id = await axios.post(process.env.REACT_APP_PATH_AUTH_LOGIN, {
+      const res = await axios.post(process.env.REACT_APP_PATH_AUTH_LOGIN, {
         uid: uid,
         pwd: pwd,
       });
-
       dispatch(login());
-      dispatch(setId({ id }));
+      dispatch(setId({ id: res.data }));
       setTimeout(silentRefresh, process.env.REACT_APP_REGENERATE_TIME);
     } catch (err) {
       setIsFail(true);
