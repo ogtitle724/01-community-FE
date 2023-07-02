@@ -39,7 +39,7 @@ export default function Home() {
       try {
         const res = await axios.get(
           process.env.REACT_APP_PATH_GET_POST +
-            `?category=${converter[category]}&page=${page - 1}&size=30`
+            `?category=${category}&page=${page - 1}&size=30`
         );
         setPosts(res.data);
       } catch (err) {

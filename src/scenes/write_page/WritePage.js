@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { selectId } from "../../redux/slice/signSlice";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import axios from "axios";
@@ -15,6 +17,7 @@ export default function WritePage() {
   const titleArg = isUpdate ? location.state.title : "";
   const categoryArg = isUpdate ? converter[location.state.category] : "";
   const postId = isUpdate && location.state.id;
+  const ogData = isUpdate && location.state.content;
 
   const [title, setTitle] = useState(titleArg);
   const [body, setBody] = useState("");
@@ -22,7 +25,7 @@ export default function WritePage() {
   const [thumbnail, setThumbnail] = useState("");
   const [isThumbShow, setIsThumbShow] = useState(false);
   const [imgSrc, setImgSrc] = useState("");
-  const [ogData, setOgData] = useState("");
+  const id = useSelector(selectId);
 
   //prevent "resizeobserver loop limit exceeded" error appearing
   useEffect(() => {
@@ -42,19 +45,6 @@ export default function WritePage() {
         }
       }
     });
-
-    const getBodyData = async () => {
-      try {
-        const data = await axios.get(
-          process.env.REACT_APP_PATH_UPDATE + `?id=${location.state.id}`
-        );
-        setOgData(data);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-
-    if (isUpdate) getBodyData();
   }, []);
 
   const handleSelectCategory = (e) => {
@@ -95,7 +85,7 @@ export default function WritePage() {
       }
     } else {
       try {
-        await axios.post(process.env.REACT_APP_PATH_CREATE, {
+        const result = await axios.post(process.env.REACT_APP_PATH_CREATE, {
           title,
           category,
           content: body,
@@ -153,7 +143,7 @@ export default function WritePage() {
             // You can store the "editor" and use when it is needed.
             console.log("Editor is ready to use!", editor);
             if (isUpdate && ogData) {
-              editor.setData(ogData.content);
+              editor.setData(ogData);
             }
           }}
           onChange={(event, editor) => {

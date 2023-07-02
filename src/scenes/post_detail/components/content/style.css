@@ -83,8 +83,7 @@
 
 .ud {
   position: absolute;
-  bottom: -6px;
-  right: 0px;
+  bottom: -8px;
   display: flex;
   gap: 3px;
 }

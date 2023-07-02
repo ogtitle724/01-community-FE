@@ -6,7 +6,7 @@ export default function ContentHome({ posts, mainEle }) {
   return (
     <div className="main__content">
       <HorizontalList />
-      <Board title={"Recent Posts"} posts={posts} mainEle={mainEle} />
+      <Board posts={posts} mainEle={mainEle} />
     </div>
   );
 }

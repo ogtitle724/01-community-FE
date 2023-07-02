@@ -10,9 +10,9 @@ export default function ContentBoard({ post, sanitize }) {
   const id = useSelector(selectId);
 
   useEffect(() => {
-    if (id === post.author) setIsWriter(true);
+    if (id === post.user.id) setIsWriter(true);
     else setIsWriter(false);
-  }, [id, post.author]);
+  }, []);
 
   return (
     <section className="content-board">
@@ -22,11 +22,15 @@ export default function ContentBoard({ post, sanitize }) {
           {isWriter ? <UD post={post} /> : ""}
         </h2>
         <div className="content-board__info-wrapper">
-          <span className="content-board__date">{post.wr_date}</span>
+          <span className="content-board__date">
+            {post.wr_date.slice(0, -8).replace("T", " ")}
+          </span>
           <div>
-            <span className="content-board__category">{post.category}</span>
+            <span className="content-board__category">
+              {post.category ? post.category : "카테고리 없음"}
+            </span>
             <span> | </span>
-            <span className="content-board__writer">{post.author}</span>
+            <span className="content-board__writer">{post.user.nick}</span>
           </div>
         </div>
         <div
@@ -60,6 +64,7 @@ function UD({ post }) {
         title: post.title,
         id: post.id,
         category: post.category,
+        content: post.content,
       },
     });
   };
@@ -70,7 +75,7 @@ function UD({ post }) {
 
     if (isDelete) {
       try {
-        await axios.post(process.env.REACT_APP_PATH_DELETE + `?id=${post.id}`);
+        await axios.post(process.env.REACT_APP_PATH_DELETE, { id: post.id });
         navigate(-1);
       } catch (err) {
         console.log(err);

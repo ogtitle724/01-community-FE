@@ -11,14 +11,25 @@ import "./style.css";
 
 export default function Board({ posts, mainEle }) {
   const title = useSelector(selectCategory);
+  console.log(posts);
 
   return (
     <section className="board">
       <h2 className="board__title">{title === "HOME" ? "BEST" : title}</h2>
-      <ul>
-        {posts.content.map((post, idx) => {
-          return <Post key={"post_" + idx} post={post} mainEle={mainEle} />;
-        })}
+      <ul
+        className={
+          "board__ul" + (posts.content.length ? "" : " board__skeleton")
+        }
+      >
+        {posts.content.length ? (
+          posts.content.map((post, idx) => {
+            return <Post key={"post_" + idx} post={post} mainEle={mainEle} />;
+          })
+        ) : (
+          <span className="board__notification">
+            {"첫 게시물을 작성해주세요 :)"}
+          </span>
+        )}
       </ul>
       <Nav posts={posts} />
     </section>
@@ -28,6 +39,19 @@ export default function Board({ posts, mainEle }) {
 function Post({ post, mainEle }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const date = new Date(post.wr_date);
+  const now = new Date();
+  const diffMinutes = ~~((now - date) / (1000 * 60));
+  let timeDisplay;
+
+  if (diffMinutes < 60) {
+    timeDisplay = `${diffMinutes}분 전`;
+  } else if (diffMinutes < 60 * 24) {
+    timeDisplay = `${~~(diffMinutes / 60)}시간 전`;
+  } else {
+    timeDisplay = post.wr_date.slice(0, -8).replace("T", " ");
+  }
+  console.log(date, now);
 
   const handleClickPost = async (e) => {
     e.preventDefault();
@@ -46,8 +70,12 @@ function Post({ post, mainEle }) {
         {post.title}
       </a>
       <div className="post__data-wrapper">
-        <p className="post__data">{post.category + " | " + post.view_cnt}</p>
-        <p className="post__data">{post.wr_date} </p>
+        <p className="post__data">
+          {(post.category ? post.category : "카테고리 없음") +
+            " | " +
+            post.view_cnt}
+        </p>
+        <p className="post__data">{timeDisplay} </p>
       </div>
     </li>
   );
