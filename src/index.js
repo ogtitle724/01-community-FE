@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import axios from "axios";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { Provider } from "react-redux";
+import { Provider, useDispatch } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 
 import Home from "./scenes/home/Home.js";
@@ -31,8 +31,9 @@ axios.interceptors.response.use((res) => {
 //css color-theme setting => using redux state makes an mismatch error when initial rendering
 const handleInitialSetting = () => {
   const root = document.documentElement;
-  const isDarkMode =
-    JSON.parse(localStorage.getItem("persist:local")).isDarkMode === "true";
+  const isDarkMode = localStorage.getItem("persist:local")
+    ? JSON.parse(localStorage.getItem("persist:local")).isDarkMode === "true"
+    : false;
   root.setAttribute("color-theme", isDarkMode ? "dark" : "light");
 };
 

@@ -15,7 +15,6 @@ export default function SearchResult() {
   const [postData, setPostData] = useState();
   const location = useLocation();
   const term = location.state.term;
-  console.log("rendering");
 
   const getSearchData = async (term, page) => {
     try {

@@ -5,7 +5,7 @@ export const signSlice = createSlice({
   initialState: {
     isLogIn: false,
     isDarkMode: false,
-    id: null,
+    user: null,
   },
   reducers: {
     login: (state) => {
@@ -18,17 +18,17 @@ export const signSlice = createSlice({
       let sign = !state.isDarkMode;
       state.isDarkMode = sign;
     },
-    setId: (state, action) => {
-      const { id } = action.payload;
-      state.id = id;
+    setUser: (state, action) => {
+      const { user } = action.payload;
+      state.user = user;
     },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { login, logout, clickModeBtn, setId } = signSlice.actions;
+export const { login, logout, clickModeBtn, setUser } = signSlice.actions;
 export const selectSign = (state) => state.sign.isLogIn;
 export const selectIsDarkMode = (state) => state.sign.isDarkMode;
-export const selectId = (state) => state.sign.id;
+export const selectUser = (state) => state.sign.user;
 
 export default signSlice.reducer;

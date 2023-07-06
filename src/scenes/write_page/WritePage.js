@@ -1,7 +1,5 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { selectId } from "../../redux/slice/signSlice";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import axios from "axios";
@@ -25,7 +23,6 @@ export default function WritePage() {
   const [thumbnail, setThumbnail] = useState("");
   const [isThumbShow, setIsThumbShow] = useState(false);
   const [imgSrc, setImgSrc] = useState("");
-  const id = useSelector(selectId);
 
   //prevent "resizeobserver loop limit exceeded" error appearing
   useEffect(() => {
@@ -85,7 +82,7 @@ export default function WritePage() {
       }
     } else {
       try {
-        const result = await axios.post(process.env.REACT_APP_PATH_CREATE, {
+        await axios.post(process.env.REACT_APP_PATH_CREATE, {
           title,
           category,
           content: body,

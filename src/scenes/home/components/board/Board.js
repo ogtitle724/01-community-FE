@@ -1,3 +1,4 @@
+import axios from "axios";
 import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -11,7 +12,6 @@ import "./style.css";
 
 export default function Board({ posts, mainEle }) {
   const title = useSelector(selectCategory);
-  console.log(posts);
 
   return (
     <section className="board">
@@ -42,6 +42,7 @@ function Post({ post, mainEle }) {
   const date = new Date(post.wr_date);
   const now = new Date();
   const diffMinutes = ~~((now - date) / (1000 * 60));
+
   let timeDisplay;
 
   if (diffMinutes < 60) {
@@ -51,31 +52,37 @@ function Post({ post, mainEle }) {
   } else {
     timeDisplay = post.wr_date.slice(0, -8).replace("T", " ");
   }
-  console.log(date, now);
 
   const handleClickPost = async (e) => {
     e.preventDefault();
+    try {
+      await axios.post(process.env.REACT_APP_PATH_VIEW, {
+        postId: post.id,
+      });
+    } catch (err) {
+      console.log(err);
+    }
+
     dispatch(setScrollY({ scrollY: mainEle.current.scrollTop }));
-    navigate(process.env.REACT_APP_ROUTE_POST, { state: post });
+    navigate(process.env.REACT_APP_ROUTE_POST, { state: { postId: post.id } });
   };
 
   return (
     <li className="post">
       <a
-        className="post__title"
+        className="post__a"
         href="/post"
         id={post.id}
         onClick={(e) => handleClickPost(e)}
       >
-        {post.title}
+        <span className="post__span">{post.title}</span>
       </a>
       <div className="post__data-wrapper">
-        <p className="post__data">
-          {(post.category ? post.category : "카테고리 없음") +
-            " | " +
-            post.view_cnt}
-        </p>
-        <p className="post__data">{timeDisplay} </p>
+        <span className="post__data">
+          {post.category ? post.category : "카테고리 없음"}
+        </span>
+        <span className="post__data post__view">{post.view_cnt}</span>
+        <p className="post__data post__date">{timeDisplay} </p>
       </div>
     </li>
   );

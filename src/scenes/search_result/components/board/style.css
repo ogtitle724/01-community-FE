@@ -29,9 +29,14 @@
 }
 
 .search-board__data-wrapper {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-rows: auto;
+  justify-content: flex-end;
+  justify-items: flex-end;
+  align-content: center;
+  align-items: center;
+  column-gap: 6px;
 }
 
 .search-board__category {
@@ -40,7 +45,17 @@
   color: var(--color-grey);
 }
 
+.search-board__view {
+  width: 13px;
+  text-align: center;
+  font-size: var(--font-size-vsm);
+  font-weight: 600;
+  color: var(--color-grey);
+}
+
 .search-board__date {
+  grid-column: 1/3;
+  grid-row: 2/3;
   font-size: var(--font-size-vsm);
   font-weight: 600;
   color: var(--color-grey);

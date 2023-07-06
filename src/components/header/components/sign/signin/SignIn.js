@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { login, logout, setId } from "../../../../../redux/slice/signSlice";
+import { login, logout, setUser } from "../../../../../redux/slice/signSlice";
 import "./style.css";
 
 export default function SignIn() {
@@ -18,8 +18,9 @@ export default function SignIn() {
         uid: uid,
         pwd: pwd,
       });
+      const userData = res.data;
       dispatch(login());
-      dispatch(setId({ id: res.data }));
+      dispatch(setUser({ user: userData }));
       setTimeout(silentRefresh, process.env.REACT_APP_REGENERATE_TIME);
     } catch (err) {
       setIsFail(true);
@@ -39,7 +40,7 @@ export default function SignIn() {
       console.log("silent refresh executed!");
     } catch (err) {
       dispatch(logout());
-      dispatch(setId({ id: null }));
+      dispatch(setUser({ user: null }));
       console.log(err);
     }
   };

@@ -1,48 +1,94 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
 import axios from "axios";
-import { selectId } from "../../../../redux/slice/signSlice";
+
+import thumbsUp from "../../../../asset/icons/thumbs-up.svg";
+import thumbsDown from "../../../../asset/icons/thumbs-down.svg";
 import "./style.css";
 
-export default function ContentBoard({ post, sanitize }) {
-  const [isWriter, setIsWriter] = useState(false);
-  const id = useSelector(selectId);
+export default function ContentBoard({
+  postDetail,
+  user,
+  isWriter,
+  trigger,
+  setTrigger,
+  sanitize,
+}) {
+  const recommendations = useRef();
 
-  useEffect(() => {
-    if (id === post.user.id) setIsWriter(true);
-    else setIsWriter(false);
-  }, []);
+  recommendations.current = Object.entries(postDetail.recommendations);
+  const recNum = recommendations.current.filter(
+    (value) => value[1] === 1
+  ).length;
+  const nrecNum = recommendations.current.filter(
+    (value) => value[1] === -1
+  ).length;
+
+  const handleClickRecommend = async () => {
+    try {
+      await axios.post(process.env.REACT_APP_PATH_REC, {
+        postId: postDetail.id,
+        id: user.id,
+        value: +1,
+      });
+      setTrigger(!trigger);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const handleClickNonRecommend = async () => {
+    try {
+      await axios.post(process.env.REACT_APP_PATH_REC, {
+        postId: postDetail.id,
+        id: user.id,
+        value: -1,
+      });
+      setTrigger(!trigger);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   return (
     <section className="content-board">
       <article className="content-board__content">
         <h2 className="content-board__title">
-          {post.title}
-          {isWriter ? <UD post={post} /> : ""}
+          {postDetail.title}
+          {isWriter ? <UD postDetail={postDetail} /> : ""}
         </h2>
         <div className="content-board__info-wrapper">
           <span className="content-board__date">
-            {post.wr_date.slice(0, -8).replace("T", " ")}
+            {postDetail.wr_date.slice(0, -8).replace("T", " ")}
           </span>
           <div>
             <span className="content-board__category">
-              {post.category ? post.category : "카테고리 없음"}
+              {postDetail.category ? postDetail.category : "카테고리 없음"}
             </span>
             <span> | </span>
-            <span className="content-board__writer">{post.user.nick}</span>
+            <span className="content-board__writer">
+              {postDetail.user.nick}
+            </span>
           </div>
         </div>
         <div
           className="content-board__detail"
-          dangerouslySetInnerHTML={{ __html: sanitize(post.content) }}
+          dangerouslySetInnerHTML={{ __html: sanitize(postDetail.content) }}
         ></div>
         <div className="content-board__btn-wrapper">
-          <button className="content-board__btn content-board__btn--good">
-            Good
+          <button
+            className="content-board__btn content-board__btn--good"
+            onClick={handleClickRecommend}
+          >
+            <img src={thumbsUp} alt="추천"></img>
+            <span>{recNum}</span>
           </button>
-          <button className="content-board__btn content-board__btn--bad">
-            Bad
+          <button
+            className="content-board__btn content-board__btn--bad"
+            onClick={handleClickNonRecommend}
+          >
+            <img src={thumbsDown} alt="비추천"></img>
+            <span>{nrecNum}</span>
           </button>
         </div>
         <section className="content-board__related">
@@ -54,17 +100,17 @@ export default function ContentBoard({ post, sanitize }) {
   );
 }
 
-function UD({ post }) {
+function UD({ postDetail }) {
   const navigate = useNavigate();
 
   const handleClickUpdate = () => {
     navigate(process.env.REACT_APP_ROUTE_WRITE, {
       state: {
         isUpdate: true,
-        title: post.title,
-        id: post.id,
-        category: post.category,
-        content: post.content,
+        title: postDetail.title,
+        id: postDetail.id,
+        category: postDetail.category,
+        content: postDetail.content,
       },
     });
   };
@@ -75,7 +121,9 @@ function UD({ post }) {
 
     if (isDelete) {
       try {
-        await axios.post(process.env.REACT_APP_PATH_DELETE, { id: post.id });
+        await axios.post(process.env.REACT_APP_PATH_DELETE, {
+          id: postDetail.id,
+        });
         navigate(-1);
       } catch (err) {
         console.log(err);
