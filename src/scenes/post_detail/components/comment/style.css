@@ -52,6 +52,25 @@
   justify-content: space-evenly;
 }
 
+.comment-board__form .ck.ck-toolbar {
+  display: none;
+}
+
+.comment-board__form .ck.ck-editor__editable:not(.ck-editor__nested-editable) {
+  width: 260px;
+  height: 140px;
+  border-radius: 4px;
+  font-size: var(--font-size-sm);
+  cursor: text;
+}
+
+/*ckeditor boarder*/
+.comment-board__form
+  .ck.ck-editor__editable.ck-focused:not(.ck-editor__nested-editable) {
+  border: none;
+  box-shadow: none;
+}
+
 .comment-board__input {
   width: 270px;
   height: 150px;
@@ -121,6 +140,7 @@
 }
 
 .comment__info {
+  position: relative;
   margin: 4px 2px;
   font-size: var(--font-size-vsm);
   display: flex;
@@ -143,7 +163,8 @@
 
 .comment__date {
   position: absolute;
-  right: 10px;
+  right: 4px;
+  opacity: 0.5;
 }
 
 .comment__detail {

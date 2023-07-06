@@ -1,7 +1,9 @@
 import axios from "axios";
-import { useState, useRef, useInsertionEffect } from "react";
+import { useState, useRef } from "react";
 import { useSelector } from "react-redux";
 import { selectIsDarkMode } from "../../../../redux/slice/signSlice";
+import { CKEditor } from "@ckeditor/ckeditor5-react";
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 
 import "./style.css";
 import thumbsUp from "../../../../asset/icons/thumbs-up.svg";
@@ -37,18 +39,23 @@ export default function CommentBoard({
 
   const handleClickBtnAdd = async () => {
     let payload;
+    let contentArg = content;
+
+    for (let i = 0; i < 2; i++) {
+      contentArg = contentArg.replace("p", "span");
+    }
 
     if (isReply) {
       payload = {
         postId: postDetail.id,
-        content: content,
+        content: contentArg,
         wr_date: new Date(),
         targetComment,
       };
     } else {
       payload = {
         postId: postDetail.id,
-        content: content,
+        content: contentArg,
         wr_date: new Date(),
       };
     }
@@ -67,35 +74,32 @@ export default function CommentBoard({
     }
   };
 
-  const handleWrite = (e) => {
-    setContent(e.target.value);
-  };
-
   return (
     <section className="comment-board">
       <section className="comment-board__comment-wrapper">
         <div className="comment-board__comment">
           {postDetail.comments.map((comment, idxC) => {
-            console.log(comment.replies);
             return (
               <>
                 <Comment
-                  idx={idxC}
+                  key={"comment-" + idxC}
                   comment={comment}
                   setIsShowInput={setIsShowInput}
                   setIsReply={setIsReply}
                   setTargetComment={setTargetComment}
+                  sanitize={sanitize}
                 />
                 {comment.replies.length
                   ? comment.replies.map((reply, idxR) => {
                       return (
                         <Comment
-                          idx={idxR}
+                          key={"reply-" + idxR}
                           comment={reply}
                           setIsShowInput={setIsShowInput}
                           setIsReply={setIsReply}
                           setTargetComment={setTargetComment}
                           cName={" comment__reply"}
+                          sanitize={sanitize}
                         />
                       );
                     })
@@ -116,11 +120,13 @@ export default function CommentBoard({
       </button>
       {isShowInput && (
         <form className="comment-board__form">
-          <textarea
-            className="comment-board__input"
-            type="text"
-            value={content}
-            onChange={(e) => handleWrite(e)}
+          <CKEditor
+            editor={ClassicEditor}
+            data=""
+            onChange={(event, editor) => {
+              const data = editor.getData();
+              setContent(data);
+            }}
           />
           <button
             type="button"
@@ -137,11 +143,11 @@ export default function CommentBoard({
 
 function Comment({
   comment,
-  idx,
   setIsShowInput,
   setIsReply,
   setTargetComment,
   cName,
+  sanitize,
 }) {
   const isDarkMode = useSelector(selectIsDarkMode);
   const date = new Date(comment.wr_date);
@@ -188,10 +194,7 @@ function Comment({
   };
 
   return (
-    <div
-      key={"commnets-" + idx}
-      className={"comment__default" + (cName ? cName : "")}
-    >
+    <div className={"comment__default" + (cName ? cName : "")}>
       <span className="comment__info">
         <div className="comment__img"></div>
         <span className="comment__nickname">{comment.user.nick}</span>
@@ -205,7 +208,10 @@ function Comment({
         ) : (
           ""
         )}
-        <span className="comment__descripition">{comment.content}</span>
+        <span
+          className="comment__descripition"
+          dangerouslySetInnerHTML={{ __html: sanitize(comment.content) }}
+        ></span>
       </div>
       <div
         className={
