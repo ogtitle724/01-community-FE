@@ -42,7 +42,7 @@ export default function CommentBoard({
     let contentArg = content;
 
     for (let i = 0; i < 2; i++) {
-      contentArg = contentArg.replace("p", "span");
+      contentArg = contentArg.replace("<p>", "<span>");
     }
 
     if (isReply) {
@@ -63,11 +63,13 @@ export default function CommentBoard({
     try {
       await axios.post(`/api/board/${postDetail.id}/comment`, payload);
       btnShow.current.style = "transform:rotateZ(0deg)";
-      setIsShowInput(false);
-      setTargetComment(null);
-      setIsReply(false);
-      setTrigger(!trigger);
-      setContent("");
+      setTimeout(() => {
+        setIsShowInput(false);
+        setTargetComment(null);
+        setIsReply(false);
+        setTrigger(!trigger);
+        setContent("");
+      }, 200);
     } catch (err) {
       alert("로그인이 필요합니다.");
       console.log(err);

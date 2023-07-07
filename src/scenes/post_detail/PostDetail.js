@@ -45,7 +45,7 @@ export default function PostDetail() {
 
   useEffect(() => {
     const checkWriter = async () => {
-      if (postDetail) {
+      if (postDetail && user) {
         if (postDetail.user.id === user.id) {
           setIsWriter(true);
         } else {
