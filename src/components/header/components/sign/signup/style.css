@@ -70,6 +70,11 @@
   outline: none;
 }
 
+.form-signup__warn-wrapper {
+  height: 20px;
+  margin: 0px 0 10px 0;
+}
+
 .form-signup__warn {
   width: 279px;
   height: 16px;
@@ -79,7 +84,7 @@
 }
 
 .form-signup__warn-duplication {
-  color: var(--font-color-green);
+  color: green;
 }
 
 .form-signup__section-auth {
@@ -142,7 +147,7 @@
 .form-signup__btn {
   width: 85%;
   height: 40px;
-  margin-top: 30px;
+  margin-top: 20px;
   background-color: var(--main-color);
   border: 1px solid var(--main-color);
   border-radius: 4px;

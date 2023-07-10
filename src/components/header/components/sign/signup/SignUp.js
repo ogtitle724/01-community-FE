@@ -101,6 +101,11 @@ export default function SignUp({ setShowSignUpForm }) {
         setCanUseUid(true);
       }
     } catch (err) {
+      if (type === "nick") {
+        setCanUseNick(false);
+      } else if (type === "uid") {
+        setCanUseUid(false);
+      }
       console.log(err);
     }
   };
@@ -128,22 +133,25 @@ export default function SignUp({ setShowSignUpForm }) {
               handleCheckDuplication(e.target.value, "uid");
             }}
           />
-          <p
-            className={
-              "form-signup__warn" +
-              (canUseUid ? " form-signup__warn-duplication" : "")
-            }
-          >
-            {uid &&
-              (canUseUid
-                ? "사용 가능한 아이디입니다."
-                : "이미 사용중인 아이디입니다.")}
-          </p>
-          <p className="form-signup__warn form-signup__warn-validation">
-            {uid &&
-              (isUidVaild
-                ? ""
-                : "아이디는 3~20자 사이의 영문/숫자로 이루어져야 합니다.")}
+          <p className="form-signup__warn-wrapper">
+            <span
+              className={
+                "form-signup__warn" +
+                (canUseUid ? " form-signup__warn-duplication" : "")
+              }
+            >
+              {uid &&
+                isUidVaild &&
+                (canUseUid
+                  ? "사용 가능한 아이디입니다."
+                  : "이미 사용중인 아이디입니다.")}
+            </span>
+            <span className="form-signup__warn">
+              {uid &&
+                (isUidVaild
+                  ? ""
+                  : "아이디는 3~20자 사이의 영문/숫자로 이루어져야 합니다.")}{" "}
+            </span>
           </p>
         </section>
         <section className="form-signup__section">
@@ -161,8 +169,22 @@ export default function SignUp({ setShowSignUpForm }) {
               handleCheckDuplication(e.target.value, "nick");
             }}
           />
-          <p className="form-signup__warn">
-            {nick && (isNickVaild ? "" : "닉네임은 2~8자 이내여야 합니다.")}{" "}
+          <p className="form-signup__warn-wrapper">
+            <span
+              className={
+                "form-signup__warn" +
+                (canUseNick ? " form-signup__warn-duplication" : "")
+              }
+            >
+              {nick &&
+                isNickVaild &&
+                (canUseNick
+                  ? "사용 가능한 닉네임입니다."
+                  : "이미 사용중인 닉네임입니다.")}
+            </span>
+            <span className="form-signup__warn">
+              {nick && (isNickVaild ? "" : "닉네임은 2~8자 이내여야 합니다.")}{" "}
+            </span>
           </p>
         </section>
         <section className="form-signup__section">
@@ -232,11 +254,13 @@ export default function SignUp({ setShowSignUpForm }) {
                 : setIsPwdValid(false);
             }}
           />
-          <p className="form-signup__warn">
-            {pwd &&
-              (isPwdValid
-                ? ""
-                : "비밀번호는 8 ~ 16자 영문/숫자로 이루어져야 합니다.")}
+          <p className="form-signup__warn-wrapper">
+            <span className="form-signup__warn">
+              {pwd &&
+                (isPwdValid
+                  ? ""
+                  : "비밀번호는 8 ~ 16자 영문/숫자로 이루어져야 합니다.")}
+            </span>
           </p>
         </section>
         <section className="form-signup__section">
@@ -253,9 +277,11 @@ export default function SignUp({ setShowSignUpForm }) {
                 : setIsPwdMatch(false);
             }}
           />
-          <p className="form-signup__warn">
-            {confirmPwd &&
-              (isPwdMatch ? "" : "입력한 비밀번호가 일치하지 않습니다.")}
+          <p className="form-signup__warn-wrapper">
+            <span className="form-signup__warn">
+              {confirmPwd &&
+                (isPwdMatch ? "" : "입력한 비밀번호가 일치하지 않습니다.")}
+            </span>
           </p>
         </section>
         <button
