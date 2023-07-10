@@ -70,11 +70,16 @@
   outline: none;
 }
 
-.form-signup-warn {
+.form-signup__warn {
   width: 279px;
-  height: 30px;
+  height: 16px;
+  margin-top: 2px;
   color: var(--color-red);
   font-size: var(--font-size-vsm);
+}
+
+.form-signup__warn-duplication {
+  color: var(--font-color-green);
 }
 
 .form-signup__section-auth {

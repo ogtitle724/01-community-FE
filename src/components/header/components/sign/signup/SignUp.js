@@ -18,7 +18,9 @@ export default function SignUp({ setShowSignUpForm }) {
   const [authCode, setAuthCode] = useState("");
 
   const [isUidVaild, setIsUidValid] = useState(false);
+  const [canUseUid, setCanUseUid] = useState(false);
   const [isNickVaild, setIsNickValid] = useState(false);
+  const [canUseNick, setCanUseNick] = useState(false);
   const [isEmailVaild, setIsEmailValid] = useState(false);
   const [isPwdValid, setIsPwdValid] = useState(false);
   const [isPwdMatch, setIsPwdMatch] = useState(false);
@@ -28,6 +30,15 @@ export default function SignUp({ setShowSignUpForm }) {
   const [count, setCount] = useState();
   const [isAuthBtnDisabled, setIsAuthBtnDisabled] = useState(false);
   const [isFail, setIsFail] = useState(false);
+
+  useEffect(() => {
+    if (isClickBtnAuth && count > 0) {
+      setTimeout(() => setCount(count - 1), 1000);
+    }
+    if (count === 0) {
+      setIsAuthBtnDisabled(false);
+    }
+  }, [count, isClickBtnAuth]);
 
   const handleClickBtnAuth = async () => {
     setIsClickBtnAuth(true);
@@ -56,16 +67,7 @@ export default function SignUp({ setShowSignUpForm }) {
     }
   };
 
-  useEffect(() => {
-    if (isClickBtnAuth && count > 0) {
-      setTimeout(() => setCount(count - 1), 1000);
-    }
-    if (count === 0) {
-      setIsAuthBtnDisabled(false);
-    }
-  }, [count]);
-
-  const handleBtnClick = async (e) => {
+  const handleClickBtnSubmit = async (e) => {
     e.preventDefault();
 
     try {
@@ -82,6 +84,24 @@ export default function SignUp({ setShowSignUpForm }) {
     } catch (err) {
       console.log(err);
       alert("ERROR:", err);
+    }
+  };
+
+  const handleCheckDuplication = async (value, type) => {
+    try {
+      if (type === "nick") {
+        await axios.post(process.env.REACT_APP_PATH_AUTH_CHECK_NICK, {
+          nick: value,
+        });
+        setCanUseNick(true);
+      } else if (type === "uid") {
+        await axios.post(process.env.REACT_APP_PATH_AUTH_CHECK_UID, {
+          uid: value,
+        });
+        setCanUseUid(true);
+      }
+    } catch (err) {
+      console.log(err);
     }
   };
 
@@ -105,13 +125,25 @@ export default function SignUp({ setShowSignUpForm }) {
               checkUid(e.target.value)
                 ? setIsUidValid(true)
                 : setIsUidValid(false);
+              handleCheckDuplication(e.target.value, "uid");
             }}
           />
-          <p className="form-signup-warn">
+          <p
+            className={
+              "form-signup__warn" +
+              (canUseUid ? " form-signup__warn-duplication" : "")
+            }
+          >
+            {uid &&
+              (canUseUid
+                ? "사용 가능한 아이디입니다."
+                : "이미 사용중인 아이디입니다.")}
+          </p>
+          <p className="form-signup__warn form-signup__warn-validation">
             {uid &&
               (isUidVaild
                 ? ""
-                : "사용자 ID는 3~20자 사이의 영문+숫자로 이루어져야 하며 영문으로 시작되어야 합니다.")}
+                : "아이디는 3~20자 사이의 영문/숫자로 이루어져야 합니다.")}
           </p>
         </section>
         <section className="form-signup__section">
@@ -126,9 +158,10 @@ export default function SignUp({ setShowSignUpForm }) {
               checkNick(e.target.value)
                 ? setIsNickValid(true)
                 : setIsNickValid(false);
+              handleCheckDuplication(e.target.value, "nick");
             }}
           />
-          <p className="form-signup-warn">
+          <p className="form-signup__warn">
             {nick && (isNickVaild ? "" : "닉네임은 2~8자 이내여야 합니다.")}{" "}
           </p>
         </section>
@@ -199,11 +232,11 @@ export default function SignUp({ setShowSignUpForm }) {
                 : setIsPwdValid(false);
             }}
           />
-          <p className="form-signup-warn">
+          <p className="form-signup__warn">
             {pwd &&
               (isPwdValid
                 ? ""
-                : "Password must consist of 8 to 16 charactors/numbers")}
+                : "비밀번호는 8 ~ 16자 영문/숫자로 이루어져야 합니다.")}
           </p>
         </section>
         <section className="form-signup__section">
@@ -220,9 +253,9 @@ export default function SignUp({ setShowSignUpForm }) {
                 : setIsPwdMatch(false);
             }}
           />
-          <p className="form-signup-warn">
+          <p className="form-signup__warn">
             {confirmPwd &&
-              (isPwdMatch ? "" : "The two passwords you entered do not match.")}
+              (isPwdMatch ? "" : "입력한 비밀번호가 일치하지 않습니다.")}
           </p>
         </section>
         <button
@@ -231,14 +264,16 @@ export default function SignUp({ setShowSignUpForm }) {
           disabled={
             !(
               isUidVaild &&
+              canUseUid &&
               isNickVaild &&
+              canUseNick &&
               isEmailVaild &&
               isPwdValid &&
               isPwdMatch &&
               isCodeValid
             )
           }
-          onClick={(e) => handleBtnClick(e)}
+          onClick={(e) => handleClickBtnSubmit(e)}
         >
           Sign up
         </button>
