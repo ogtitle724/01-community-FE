@@ -10,6 +10,8 @@ import thumbsUp from "../../../../asset/icons/thumbs-up.svg";
 import thumbsDown from "../../../../asset/icons/thumbs-down.svg";
 import chatBox from "../../../../asset/icons/chatbox.svg";
 import closeCircle from "../../../../asset/icons/close-circle.svg";
+import edit from "../../../../asset/icons/edit.svg";
+import trash from "../../../../asset/icons/trash.svg";
 
 export default function CommentBoard({
   postDetail,
@@ -47,21 +49,19 @@ export default function CommentBoard({
 
     if (isReply) {
       payload = {
-        postId: postDetail.id,
         content: contentArg,
         wr_date: new Date(),
         targetComment,
       };
     } else {
       payload = {
-        postId: postDetail.id,
         content: contentArg,
         wr_date: new Date(),
       };
     }
 
     try {
-      await axios.post(`/api/board/${postDetail.id}/comment`, payload);
+      await axios.post(`/board/${postDetail.id}/comment`, payload);
       btnShow.current.style = "transform:rotateZ(0deg)";
       setTimeout(() => {
         setIsShowInput(false);
@@ -85,6 +85,8 @@ export default function CommentBoard({
               <>
                 <Comment
                   key={"comment-" + idxC}
+                  postDetail={postDetail}
+                  user={user}
                   comment={comment}
                   setIsShowInput={setIsShowInput}
                   setIsReply={setIsReply}
@@ -96,6 +98,8 @@ export default function CommentBoard({
                       return (
                         <Comment
                           key={"reply-" + idxR}
+                          postDetail={postDetail}
+                          user={user}
                           comment={reply}
                           setIsShowInput={setIsShowInput}
                           setIsReply={setIsReply}
@@ -144,6 +148,8 @@ export default function CommentBoard({
 }
 
 function Comment({
+  postDetail,
+  user,
   comment,
   setIsShowInput,
   setIsReply,
@@ -155,6 +161,16 @@ function Comment({
   const date = new Date(comment.wr_date);
   const now = new Date();
   const diffMinutes = ~~((now - date) / (1000 * 60));
+
+  const recommendations = useRef();
+
+  recommendations.current = Object.entries(comment.recommendations);
+  const recNum = recommendations.current.filter(
+    (value) => value[1] === 1
+  ).length;
+  const nrecNum = recommendations.current.filter(
+    (value) => value[1] === -1
+  ).length;
 
   let timeDisplay;
 
@@ -195,6 +211,21 @@ function Comment({
     setTargetComment(targetArg);
   };
 
+  const handleClickRec = async (value) => {
+    if (!user) {
+      return alert("로그인이 필요합니다!");
+    }
+
+    try {
+      await axios.post(`/board/${postDetail.id}/comment/rec/${comment.id}`, {
+        id: user.id,
+        value,
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <div className={"comment__default" + (cName ? cName : "")}>
       <span className="comment__info">
@@ -217,22 +248,45 @@ function Comment({
       </div>
       <div
         className={
-          "comment__btn-wrapper" +
-          (isDarkMode ? " comment__btn-wrapper--dark" : "")
+          "comment__interface" + (isDarkMode ? " comment__interface--dark" : "")
         }
       >
-        <button className="comment__btn comment__btn-like">
-          <img src={thumbsUp} alt="x"></img>
-        </button>
-        <button className="comment__btn comment__btn-dislike">
-          <img src={thumbsDown} alt="x"></img>
-        </button>
-        <button
-          className="comment__btn comment__btn-reply"
-          onClick={() => handleClickBtnReply()}
-        >
-          <img src={chatBox} alt="x"></img>
-        </button>
+        <div className="comment__rec-wrapper">
+          <button
+            className="comment__btn comment__btn-like"
+            onClick={() => handleClickRec(1)}
+          >
+            <img src={thumbsUp} alt="x"></img>
+          </button>
+          <span className="comment__span-rec">{recNum}</span>
+          <button
+            className="comment__btn comment__btn-dislike"
+            onClick={() => handleClickRec(-1)}
+          >
+            <img src={thumbsDown} alt="x"></img>
+          </button>
+          <span className="comment__span-rec">{nrecNum}</span>
+        </div>
+        <div className="comment__btn-wrapper">
+          <button
+            className="comment__btn comment__btn-edit"
+            onClick={() => handleClickBtnReply()}
+          >
+            <img src={edit} alt="edit"></img>
+          </button>
+          <button
+            className="comment__btn comment__btn-delete"
+            onClick={() => handleClickBtnReply()}
+          >
+            <img src={trash} alt="delete"></img>
+          </button>
+          <button
+            className="comment__btn comment__btn-reply"
+            onClick={() => handleClickBtnReply()}
+          >
+            <img src={chatBox} alt="reply"></img>
+          </button>
+        </div>
       </div>
     </div>
   );

@@ -117,7 +117,7 @@ export default function SignUp({ setShowSignUpForm }) {
         onClick={() => setShowSignUpForm(false)}
       ></div>
       <form className="form-signup">
-        <h2 className="form-signup__title">Create Account</h2>
+        <h2 className="form-signup__title">회원 가입</h2>
         <section className="form-signup__section">
           <h3 className="form-signup__h3">아이디</h3>
           <input

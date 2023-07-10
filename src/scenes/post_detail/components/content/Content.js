@@ -24,25 +24,16 @@ export default function ContentBoard({
     (value) => value[1] === -1
   ).length;
 
-  const handleClickRecommend = async () => {
-    try {
-      await axios.post(process.env.REACT_APP_PATH_REC, {
-        postId: postDetail.id,
-        id: user.id,
-        value: +1,
-      });
-      setTrigger(!trigger);
-    } catch (err) {
-      console.log(err);
+  const handleClickRecommend = async (value) => {
+    if (!user) {
+      return alert("로그인이 필요합니다!");
     }
-  };
 
-  const handleClickNonRecommend = async () => {
     try {
       await axios.post(process.env.REACT_APP_PATH_REC, {
         postId: postDetail.id,
         id: user.id,
-        value: -1,
+        value,
       });
       setTrigger(!trigger);
     } catch (err) {
@@ -78,14 +69,14 @@ export default function ContentBoard({
         <div className="content-board__btn-wrapper">
           <button
             className="content-board__btn content-board__btn--good"
-            onClick={handleClickRecommend}
+            onClick={() => handleClickRecommend(1)}
           >
             <img src={thumbsUp} alt="추천"></img>
             <span>{recNum}</span>
           </button>
           <button
             className="content-board__btn content-board__btn--bad"
-            onClick={handleClickNonRecommend}
+            onClick={() => handleClickRecommend(-1)}
           >
             <img src={thumbsDown} alt="비추천"></img>
             <span>{nrecNum}</span>
