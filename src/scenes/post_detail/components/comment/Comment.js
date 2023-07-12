@@ -88,6 +88,7 @@ export default function CommentBoard({
                   postDetail={postDetail}
                   user={user}
                   comment={comment}
+                  btnShow={btnShow}
                   setIsShowInput={setIsShowInput}
                   setIsReply={setIsReply}
                   setTargetComment={setTargetComment}
@@ -101,6 +102,7 @@ export default function CommentBoard({
                           postDetail={postDetail}
                           user={user}
                           comment={reply}
+                          btnShow={btnShow}
                           setIsShowInput={setIsShowInput}
                           setIsReply={setIsReply}
                           setTargetComment={setTargetComment}
@@ -151,16 +153,28 @@ function Comment({
   postDetail,
   user,
   comment,
+  btnShow,
   setIsShowInput,
   setIsReply,
   setTargetComment,
   cName,
   sanitize,
 }) {
+  const [isEdit, setIsEdit] = useState(false);
+  const [content, setContent] = useState("");
   const isDarkMode = useSelector(selectIsDarkMode);
   const date = new Date(comment.wr_date);
   const now = new Date();
   const diffMinutes = ~~((now - date) / (1000 * 60));
+  let timeDisplay;
+
+  if (diffMinutes < 60) {
+    timeDisplay = `${diffMinutes}분 전`;
+  } else if (diffMinutes < 60 * 24) {
+    timeDisplay = `${~~(diffMinutes / 60)}시간 전`;
+  } else {
+    timeDisplay = comment.wr_date.slice(0, -8).replace("T", " ");
+  }
 
   const recommendations = useRef();
 
@@ -172,19 +186,10 @@ function Comment({
     (value) => value[1] === -1
   ).length;
 
-  let timeDisplay;
-
-  if (diffMinutes < 60) {
-    timeDisplay = `${diffMinutes}분 전`;
-  } else if (diffMinutes < 60 * 24) {
-    timeDisplay = `${~~(diffMinutes / 60)}시간 전`;
-  } else {
-    timeDisplay = comment.wr_date.slice(0, -8).replace("T", " ");
-  }
-
   const handleClickBtnReply = () => {
     setIsShowInput(true);
     setIsReply(true);
+    btnShow.current.style = "transform:rotateZ(45deg)";
 
     let targetArg;
 
@@ -226,6 +231,38 @@ function Comment({
     }
   };
 
+  const handleClickBtnEdit = async () => {
+    try {
+      const res = await axios.get(
+        `/board/${postDetail.id}/comment/edit/${comment.id}`
+      );
+      setContent(res.data);
+      setIsEdit(true);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const handleClickBtnSubmit = async () => {
+    try {
+      await axios.post(`/board/${postDetail.id}/comment/edit/${comment.id}`, {
+        content,
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const handleClickBtnDelete = async () => {
+    try {
+      await axios.delete(
+        `/board/${postDetail.id}/comment/delete/${comment.id}`
+      );
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <div className={"comment__default" + (cName ? cName : "")}>
       <span className="comment__info">
@@ -241,10 +278,27 @@ function Comment({
         ) : (
           ""
         )}
-        <span
-          className="comment__descripition"
-          dangerouslySetInnerHTML={{ __html: sanitize(comment.content) }}
-        ></span>
+        {isEdit ? (
+          <>
+            <CKEditor
+              editor={ClassicEditor}
+              data=""
+              onReady={(editor) => {
+                editor.setData(content);
+              }}
+              onChange={(event, editor) => {
+                const data = editor.getData();
+                setContent(data);
+              }}
+            />
+            <button onClick={handleClickBtnSubmit}>등록</button>
+          </>
+        ) : (
+          <span
+            className="comment__descripition"
+            dangerouslySetInnerHTML={{ __html: sanitize(comment.content) }}
+          ></span>
+        )}
       </div>
       <div
         className={
@@ -256,27 +310,27 @@ function Comment({
             className="comment__btn comment__btn-like"
             onClick={() => handleClickRec(1)}
           >
-            <img src={thumbsUp} alt="x"></img>
+            <img src={thumbsUp} alt="like"></img>
           </button>
           <span className="comment__span-rec">{recNum}</span>
           <button
             className="comment__btn comment__btn-dislike"
             onClick={() => handleClickRec(-1)}
           >
-            <img src={thumbsDown} alt="x"></img>
+            <img src={thumbsDown} alt="dislike"></img>
           </button>
           <span className="comment__span-rec">{nrecNum}</span>
         </div>
         <div className="comment__btn-wrapper">
           <button
             className="comment__btn comment__btn-edit"
-            onClick={() => handleClickBtnReply()}
+            onClick={() => handleClickBtnEdit()}
           >
             <img src={edit} alt="edit"></img>
           </button>
           <button
             className="comment__btn comment__btn-delete"
-            onClick={() => handleClickBtnReply()}
+            onClick={() => handleClickBtnDelete()}
           >
             <img src={trash} alt="delete"></img>
           </button>
