@@ -86,7 +86,6 @@ export default function WritePage() {
           category,
           content: body,
           thumbnail,
-          wr_date: new Date(),
         });
         navigate(-1);
       } catch (err) {
