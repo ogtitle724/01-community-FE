@@ -108,15 +108,19 @@
 }
 
 .post__data-wrapper {
+  min-width: 200px;
   margin-right: 4px;
+  position: relative;
   display: grid;
-  grid-template-columns: 1fr auto;
+  grid-template-columns: 1fr 0.8fr 0.2fr;
   grid-template-rows: 1fr 1fr;
+  grid-template-areas:
+    "nick category view"
+    "nick date date";
   justify-content: flex-end;
   justify-items: flex-end;
   align-content: center;
   align-items: center;
-  column-gap: 7px;
 }
 
 .post__data {
@@ -125,16 +129,40 @@
   color: var(--font-color-dark);
 }
 
+.post__wrtier {
+  grid-area: nick;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  justify-self: start;
+  font-weight: 600;
+}
+
+.post__writer-level {
+  width: 18px;
+  height: 18px;
+  border-radius: 100%;
+  box-shadow: inset 0 0 4px rgba(0, 0, 0, 0.3);
+  background-color: whitesmoke;
+}
+
+.post__writer-nick {
+  font-size: var(--font-size-sm);
+  padding-bottom: 5px;
+}
+.post__category {
+  grid-area: category;
+}
+
 .post__view {
+  grid-area: view;
   width: 22px;
   padding-bottom: 1px;
-  border: 1px solid var(--color-background);
   border-radius: 4px;
   text-align: center;
 }
 
 .post__date {
+  grid-area: date;
   margin-right: 2px;
-  grid-row: 2/3;
-  grid-column: 1/3;
 }

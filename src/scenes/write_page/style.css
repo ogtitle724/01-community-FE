@@ -59,10 +59,16 @@
   border: none;
 }
 
+/*ckeditor - focused*/
 .write-page
   .ck.ck-editor__editable.ck-focused:not(.ck-editor__nested-editable) {
   border: none;
   box-shadow: none;
+}
+
+/*ckeditor - focused*/
+.write-page .ck.ck-editor__editable.ck-focused {
+  border: none;
 }
 
 .write-page__board {

@@ -8,6 +8,7 @@ import {
   setPage,
   setScrollY,
 } from "../../../../redux/slice/pageSlice";
+import timeConverter from "../../../../components/util/time_converter";
 import "./style.css";
 
 export default function Board({ posts, mainEle }) {
@@ -39,19 +40,7 @@ export default function Board({ posts, mainEle }) {
 function Post({ post, mainEle }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const date = new Date(post.wr_date);
-  const now = new Date();
-  const diffMinutes = ~~((now - date) / (1000 * 60));
-
-  let timeDisplay;
-
-  if (diffMinutes < 60) {
-    timeDisplay = `${diffMinutes}분 전`;
-  } else if (diffMinutes < 60 * 24) {
-    timeDisplay = `${~~(diffMinutes / 60)}시간 전`;
-  } else {
-    timeDisplay = post.wr_date.slice(0, -8).replace("T", " ");
-  }
+  const timeDisplay = timeConverter(post.wr_date);
 
   const handleClickPost = async (e) => {
     e.preventDefault();
@@ -78,11 +67,15 @@ function Post({ post, mainEle }) {
         <span className="post__span">{post.title}</span>
       </a>
       <div className="post__data-wrapper">
-        <span className="post__data">
+        <div className="post__wrtier">
+          <div className="post__writer-level"></div>
+          <span className="post__writer-nick">{post.user.nick}</span>
+        </div>
+        <span className="post__data post__category">
           {post.category ? post.category : "카테고리 없음"}
         </span>
-        <span className="post__data post__view">{post.view_cnt}</span>
-        <p className="post__data post__date">{timeDisplay} </p>
+        <span className="post__data post__view">{"/ " + post.view_cnt}</span>
+        <span className="post__data post__date">{timeDisplay} </span>
       </div>
     </li>
   );

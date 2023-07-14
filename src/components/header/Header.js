@@ -32,8 +32,10 @@ export default function Header() {
           BayClip
         </a>
         <SearchBar />
-        <ThemeToggle />
-        <section className="sign">{isLogIn ? <UserBoard /> : <Sign />}</section>
+        <section className="sign">
+          {<ThemeToggle />}
+          {isLogIn ? <UserBoard /> : <Sign />}
+        </section>
       </header>
     </>
   );

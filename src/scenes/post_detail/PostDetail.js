@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { selectUser } from "../../redux/slice/signSlice";
@@ -41,7 +41,7 @@ export default function PostDetail() {
     };
 
     initialSet();
-  }, [postId, trigger]);
+  }, [postId, trigger, user]);
 
   useEffect(() => {
     const checkWriter = async () => {
@@ -55,7 +55,7 @@ export default function PostDetail() {
     };
 
     checkWriter();
-  }, [user]);
+  }, [user, postDetail]);
 
   const sanitize = (content) =>
     sanitizeHtml(content, {

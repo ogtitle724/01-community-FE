@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import axios from "axios";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { Provider, useDispatch } from "react-redux";
+import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 
 import Home from "./scenes/home/Home.js";

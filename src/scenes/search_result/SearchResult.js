@@ -30,11 +30,7 @@ export default function SearchResult() {
 
   useEffect(() => {
     getSearchData(term, page);
-  }, [term]);
-
-  useEffect(() => {
-    getSearchData(term, page);
-  }, [page]);
+  }, [term, page]);
 
   return (
     <div className="search-result">

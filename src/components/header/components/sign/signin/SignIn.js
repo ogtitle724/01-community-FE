@@ -2,6 +2,7 @@ import axios from "axios";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { login, logout, setUser } from "../../../../../redux/slice/signSlice";
+import { blindPwd } from "../../../../util/secure";
 import "./style.css";
 
 export default function SignIn() {
@@ -53,18 +54,24 @@ export default function SignIn() {
         name="uid"
         type="text"
         placeholder="e-mail"
+        autoComplete="off"
         onChange={(e) => {
           setUid(e.target.value);
         }}
       />
       <input
-        value={pwd}
+        value={blindPwd(pwd)}
         className="form-login__input"
         name="pwd"
         type="text"
         placeholder="password"
+        autoComplete="off"
         onChange={(e) => {
-          setPwd(e.target.value);
+          if (pwd.length < e.target.value.length) {
+            setPwd(pwd + e.target.value.at(-1));
+          } else {
+            setPwd(pwd.slice(0, -1));
+          }
         }}
       />
 

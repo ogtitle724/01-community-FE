@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import profileImg from "../../../../asset/icons/person.svg";
 import "./style.css";
-import { useEffect, useState } from "react";
 
 export default function UserBoard() {
   const dispatch = useDispatch();

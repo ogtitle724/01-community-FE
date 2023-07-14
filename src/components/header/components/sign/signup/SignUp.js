@@ -6,7 +6,7 @@ import {
   checkEmail,
   checkPwd,
   isMatch,
-} from "../util/validation";
+} from "../../../../util/validation";
 import "./style.css";
 
 export default function SignUp({ setShowSignUpForm }) {
@@ -132,6 +132,7 @@ export default function SignUp({ setShowSignUpForm }) {
                 : setIsUidValid(false);
               handleCheckDuplication(e.target.value, "uid");
             }}
+            autoComplete="off"
           />
           <p className="form-signup__warn-wrapper">
             <span
@@ -168,6 +169,7 @@ export default function SignUp({ setShowSignUpForm }) {
                 : setIsNickValid(false);
               handleCheckDuplication(e.target.value, "nick");
             }}
+            autoComplete="off"
           />
           <p className="form-signup__warn-wrapper">
             <span
@@ -201,6 +203,7 @@ export default function SignUp({ setShowSignUpForm }) {
                   ? setIsEmailValid(true)
                   : setIsEmailValid(false);
               }}
+              autoComplete="off"
             />
             <button
               className={"form-signup__btn-auth"}
@@ -224,6 +227,7 @@ export default function SignUp({ setShowSignUpForm }) {
               }
               value={authCode}
               onChange={(e) => setAuthCode(e.target.value)}
+              autoComplete="off"
             ></input>
             <button
               className={
@@ -253,6 +257,7 @@ export default function SignUp({ setShowSignUpForm }) {
                 ? setIsPwdValid(true)
                 : setIsPwdValid(false);
             }}
+            autoComplete="off"
           />
           <p className="form-signup__warn-wrapper">
             <span className="form-signup__warn">
@@ -276,6 +281,7 @@ export default function SignUp({ setShowSignUpForm }) {
                 ? setIsPwdMatch(true)
                 : setIsPwdMatch(false);
             }}
+            autoComplete="off"
           />
           <p className="form-signup__warn-wrapper">
             <span className="form-signup__warn">

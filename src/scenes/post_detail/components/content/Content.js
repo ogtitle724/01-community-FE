@@ -1,7 +1,8 @@
-import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
+import calRecommend from "../../../../components/util/cal_rec";
+import timeConverter from "../../../../components/util/time_converter";
 import thumbsUp from "../../../../asset/icons/thumbs-up.svg";
 import thumbsDown from "../../../../asset/icons/thumbs-down.svg";
 import "./style.css";
@@ -14,16 +15,8 @@ export default function ContentBoard({
   setTrigger,
   sanitize,
 }) {
-  const recommendations = useRef();
-
-  recommendations.current = Object.entries(postDetail.recommendations);
-  const recNum = recommendations.current.filter(
-    (value) => value[1] === 1
-  ).length;
-  const nrecNum = recommendations.current.filter(
-    (value) => value[1] === -1
-  ).length;
-
+  const recResult = calRecommend(postDetail.recommendations);
+  const timeDisplay = timeConverter(postDetail.wr_date);
   const handleClickRecommend = async (value) => {
     if (!user) {
       return alert("로그인이 필요합니다!");
@@ -49,9 +42,7 @@ export default function ContentBoard({
           {isWriter ? <UD postDetail={postDetail} /> : ""}
         </h2>
         <div className="content-board__info-wrapper">
-          <span className="content-board__date">
-            {postDetail.wr_date.slice(0, -8).replace("T", " ")}
-          </span>
+          <span className="content-board__date">{timeDisplay}</span>
           <div>
             <span className="content-board__category">
               {postDetail.category ? postDetail.category : "카테고리 없음"}
@@ -72,14 +63,14 @@ export default function ContentBoard({
             onClick={() => handleClickRecommend(1)}
           >
             <img src={thumbsUp} alt="추천"></img>
-            <span>{recNum}</span>
+            <span>{recResult.like}</span>
           </button>
           <button
             className="content-board__btn content-board__btn--bad"
             onClick={() => handleClickRecommend(-1)}
           >
             <img src={thumbsDown} alt="비추천"></img>
-            <span>{nrecNum}</span>
+            <span>{recResult.disLike}</span>
           </button>
         </div>
         <section className="content-board__related">

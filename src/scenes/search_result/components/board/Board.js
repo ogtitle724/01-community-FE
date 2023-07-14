@@ -6,6 +6,7 @@ import {
 import { useSelector, useDispatch } from "react-redux";
 import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import timeConverter from "../../../../components/util/time_converter";
 import "./style.css";
 
 export default function Board({ postData }) {
@@ -29,12 +30,9 @@ export default function Board({ postData }) {
 
 function Post({ post, idx }) {
   const navigate = useNavigate();
-  const date = new Date(post.wr_date);
-  const now = new Date();
-  const diffMinutes = ~~((now - date) / (1000 * 60));
+  const timeDisplay = timeConverter(post.wr_date);
 
   const handleClickPost = async (e, post) => {
-    console.log(post);
     e.preventDefault();
     try {
       await axios.post(process.env.REACT_APP_PATH_VIEW, {
@@ -46,16 +44,6 @@ function Post({ post, idx }) {
     navigate(process.env.REACT_APP_ROUTE_POST, { state: { postId: post.id } });
   };
 
-  let timeDisplay;
-
-  if (diffMinutes < 60) {
-    timeDisplay = `${diffMinutes}분 전`;
-  } else if (diffMinutes < 60 * 24) {
-    timeDisplay = `${~~(diffMinutes / 60)}시간 전`;
-  } else {
-    timeDisplay = post.wr_date.slice(0, -8).replace("T", " ");
-  }
-
   return (
     <a
       key={"search_" + idx}
@@ -65,8 +53,14 @@ function Post({ post, idx }) {
     >
       <h3 className="search-board__title">{post.title}</h3>
       <section className="search-board__data-wrapper">
-        <span className="search-board__category">{post.category}</span>
-        <span className="search-board__view">{post.view_cnt}</span>
+        <div className="search-board__writer-data">
+          <div className="search-board__img"></div>
+          <span className="search-board__nick">{post.user.nick}</span>
+        </div>
+        <span className="search-board__category">
+          {post.category ? post.category : "카테고리 없음"}
+        </span>
+        <span className="search-board__view">{" / " + post.view_cnt}</span>
         <span className="search-board__date">{timeDisplay}</span>
       </section>
     </a>

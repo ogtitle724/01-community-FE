@@ -23,22 +23,10 @@ export default function Home() {
   const [content, mainEle] = [useRef(), useRef()];
 
   useEffect(() => {
-    const converter = {
-      HOME: "home",
-      BEST: "best",
-      유머: "humor",
-      "게임/스포츠": "game",
-      "연예/방송": "broadcast",
-      여행: "travel",
-      취미: "hobby",
-      "경제/금융": "economic",
-      "시사/이슈": "issue",
-    };
-
     const getPosts = async () => {
       try {
         const res = await axios.get(
-          process.env.REACT_APP_PATH_GET_POST +
+          process.env.REACT_APP_PATH_PAGING +
             `?category=${category}&page=${page - 1}&size=30`
         );
         setPosts(res.data);

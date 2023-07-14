@@ -1,10 +1,13 @@
 import axios from "axios";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { selectIsDarkMode } from "../../../../redux/slice/signSlice";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 
+import calRecommend from "../../../../components/util/cal_rec";
+import timeConverter from "../../../../components/util/time_converter";
+import changeP2Span from "../../../../components/util/commentProcess";
 import "./style.css";
 import thumbsUp from "../../../../asset/icons/thumbs-up.svg";
 import thumbsDown from "../../../../asset/icons/thumbs-down.svg";
@@ -41,22 +44,16 @@ export default function CommentBoard({
 
   const handleClickBtnAdd = async () => {
     let payload;
-    let contentArg = content;
-
-    for (let i = 0; i < 2; i++) {
-      contentArg = contentArg.replace("<p>", "<span>");
-    }
+    let contentArg = changeP2Span(content);
 
     if (isReply) {
       payload = {
         content: contentArg,
-        wr_date: new Date(),
         targetComment,
       };
     } else {
       payload = {
         content: contentArg,
-        wr_date: new Date(),
       };
     }
 
@@ -93,6 +90,8 @@ export default function CommentBoard({
                   setIsReply={setIsReply}
                   setTargetComment={setTargetComment}
                   sanitize={sanitize}
+                  trigger={trigger}
+                  setTrigger={setTrigger}
                 />
                 {comment.replies.length
                   ? comment.replies.map((reply, idxR) => {
@@ -108,6 +107,8 @@ export default function CommentBoard({
                           setTargetComment={setTargetComment}
                           cName={" comment__reply"}
                           sanitize={sanitize}
+                          trigger={trigger}
+                          setTrigger={setTrigger}
                         />
                       );
                     })
@@ -159,32 +160,23 @@ function Comment({
   setTargetComment,
   cName,
   sanitize,
+  trigger,
+  setTrigger,
 }) {
   const [isEdit, setIsEdit] = useState(false);
+  const [isWriter, setIsWriter] = useState(false);
   const [content, setContent] = useState("");
   const isDarkMode = useSelector(selectIsDarkMode);
-  const date = new Date(comment.wr_date);
-  const now = new Date();
-  const diffMinutes = ~~((now - date) / (1000 * 60));
-  let timeDisplay;
+  const timeDisplay = timeConverter(comment.wr_date);
+  const recResult = calRecommend(comment.recommendations);
 
-  if (diffMinutes < 60) {
-    timeDisplay = `${diffMinutes}분 전`;
-  } else if (diffMinutes < 60 * 24) {
-    timeDisplay = `${~~(diffMinutes / 60)}시간 전`;
-  } else {
-    timeDisplay = comment.wr_date.slice(0, -8).replace("T", " ");
-  }
-
-  const recommendations = useRef();
-
-  recommendations.current = Object.entries(comment.recommendations);
-  const recNum = recommendations.current.filter(
-    (value) => value[1] === 1
-  ).length;
-  const nrecNum = recommendations.current.filter(
-    (value) => value[1] === -1
-  ).length;
+  useEffect(() => {
+    if (user && user.id === comment.user.id) {
+      setIsWriter(true);
+    } else {
+      setIsWriter(false);
+    }
+  }, [user, comment]);
 
   const handleClickBtnReply = () => {
     setIsShowInput(true);
@@ -226,6 +218,7 @@ function Comment({
         id: user.id,
         value,
       });
+      setTrigger(!trigger);
     } catch (err) {
       console.log(err);
     }
@@ -233,33 +226,41 @@ function Comment({
 
   const handleClickBtnEdit = async () => {
     try {
-      const res = await axios.get(
-        `/board/${postDetail.id}/comment/edit/${comment.id}`
-      );
-      setContent(res.data);
+      setContent(comment.content);
       setIsEdit(true);
     } catch (err) {
       console.log(err);
     }
   };
 
-  const handleClickBtnSubmit = async () => {
+  const handleClickBtnUpdate = async () => {
+    const contentArg = changeP2Span(content);
     try {
       await axios.post(`/board/${postDetail.id}/comment/edit/${comment.id}`, {
-        content,
+        content: contentArg,
       });
+      setIsEdit(false);
+      setTrigger(!trigger);
     } catch (err) {
       console.log(err);
     }
   };
 
+  const handleClickBtnCancel = () => {
+    setIsEdit(false);
+  };
+
   const handleClickBtnDelete = async () => {
-    try {
-      await axios.delete(
-        `/board/${postDetail.id}/comment/delete/${comment.id}`
-      );
-    } catch (err) {
-      console.log(err);
+    // eslint-disable-next-line no-restricted-globals
+    if (confirm("댓글을 삭제하시겠습니까?")) {
+      try {
+        await axios.delete(
+          `/board/${postDetail.id}/comment/delete/${comment.id}`
+        );
+        setTrigger(!trigger);
+      } catch (err) {
+        console.log(err);
+      }
     }
   };
 
@@ -271,7 +272,7 @@ function Comment({
         <span className="comment__date">{timeDisplay}</span>
       </span>
       <div className="comment__detail">
-        {cName ? (
+        {!isEdit && cName ? (
           <span className="comment__reply-target">
             {comment.targetComment.user.nick}
           </span>
@@ -291,7 +292,20 @@ function Comment({
                 setContent(data);
               }}
             />
-            <button onClick={handleClickBtnSubmit}>등록</button>
+            <div className="comment__edit-btn-wrapper">
+              <button
+                className="comment__edit-btn"
+                onClick={handleClickBtnUpdate}
+              >
+                ✔
+              </button>
+              <button
+                className="comment__edit-btn"
+                onClick={handleClickBtnCancel}
+              >
+                ✖
+              </button>
+            </div>
           </>
         ) : (
           <span
@@ -300,48 +314,55 @@ function Comment({
           ></span>
         )}
       </div>
-      <div
-        className={
-          "comment__interface" + (isDarkMode ? " comment__interface--dark" : "")
-        }
-      >
-        <div className="comment__rec-wrapper">
-          <button
-            className="comment__btn comment__btn-like"
-            onClick={() => handleClickRec(1)}
-          >
-            <img src={thumbsUp} alt="like"></img>
-          </button>
-          <span className="comment__span-rec">{recNum}</span>
-          <button
-            className="comment__btn comment__btn-dislike"
-            onClick={() => handleClickRec(-1)}
-          >
-            <img src={thumbsDown} alt="dislike"></img>
-          </button>
-          <span className="comment__span-rec">{nrecNum}</span>
+      {!isEdit && (
+        <div
+          className={
+            "comment__interface" +
+            (isDarkMode ? " comment__interface--dark" : "")
+          }
+        >
+          <div className="comment__rec-wrapper">
+            <button
+              className="comment__btn comment__btn-like"
+              onClick={() => handleClickRec(1)}
+            >
+              <img src={thumbsUp} alt="like"></img>
+            </button>
+            <span className="comment__span-rec">{recResult.like}</span>
+            <button
+              className="comment__btn comment__btn-dislike"
+              onClick={() => handleClickRec(-1)}
+            >
+              <img src={thumbsDown} alt="dislike"></img>
+            </button>
+            <span className="comment__span-rec">{recResult.disLike}</span>
+          </div>
+          <div className="comment__btn-wrapper">
+            {isWriter && (
+              <button
+                className="comment__btn comment__btn-edit"
+                onClick={() => handleClickBtnEdit()}
+              >
+                <img src={edit} alt="edit"></img>
+              </button>
+            )}
+            {isWriter && (
+              <button
+                className="comment__btn comment__btn-delete"
+                onClick={() => handleClickBtnDelete()}
+              >
+                <img src={trash} alt="delete"></img>
+              </button>
+            )}
+            <button
+              className="comment__btn comment__btn-reply"
+              onClick={() => handleClickBtnReply()}
+            >
+              <img src={chatBox} alt="reply"></img>
+            </button>
+          </div>
         </div>
-        <div className="comment__btn-wrapper">
-          <button
-            className="comment__btn comment__btn-edit"
-            onClick={() => handleClickBtnEdit()}
-          >
-            <img src={edit} alt="edit"></img>
-          </button>
-          <button
-            className="comment__btn comment__btn-delete"
-            onClick={() => handleClickBtnDelete()}
-          >
-            <img src={trash} alt="delete"></img>
-          </button>
-          <button
-            className="comment__btn comment__btn-reply"
-            onClick={() => handleClickBtnReply()}
-          >
-            <img src={chatBox} alt="reply"></img>
-          </button>
-        </div>
-      </div>
+      )}
     </div>
   );
 }
