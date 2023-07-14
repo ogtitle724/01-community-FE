@@ -74,7 +74,7 @@ function Post({ post, mainEle }) {
         <span className="post__data post__category">
           {post.category ? post.category : "카테고리 없음"}
         </span>
-        <span className="post__data post__view">{"/ " + post.view_cnt}</span>
+        <span className="post__data post__view">{post.view_cnt}</span>
         <span className="post__data post__date">{timeDisplay} </span>
       </div>
     </li>

@@ -60,7 +60,7 @@ function Post({ post, idx }) {
         <span className="search-board__category">
           {post.category ? post.category : "카테고리 없음"}
         </span>
-        <span className="search-board__view">{" / " + post.view_cnt}</span>
+        <span className="search-board__view">{post.view_cnt}</span>
         <span className="search-board__date">{timeDisplay}</span>
       </section>
     </a>

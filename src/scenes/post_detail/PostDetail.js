@@ -62,7 +62,8 @@ export default function PostDetail() {
       allowedTags: sanitizeHtml.defaults.allowedTags.concat(["span", "img"]),
       allowedAttributes: {
         ...sanitizeHtml.defaults.allowedAttributes,
-        img: ["src", "alt"],
+        img: ["src", "alt", "width", "height"],
+        iframe: ["src", "width", "height"],
       },
     });
 

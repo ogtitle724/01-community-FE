@@ -7,15 +7,15 @@
   width: 260px;
   height: 140px;
   border-radius: 4px;
-  border: 1px solid var(--color-whitesmoke);
+  border: 1px solid var(--color-grey);
   background-color: var(--color-body);
-  font-size: var(--font-size-sm);
+  font-size: var(--font-size-reply);
   cursor: text;
 }
 
 .comment-board
   .ck.ck-editor__editable.ck-focused:not(.ck-editor__nested-editable) {
-  border: 1px solid var(--color-whitesmoke);
+  border: 1px solid var(--color-grey);
   box-shadow: none;
 }
 
@@ -181,6 +181,15 @@
   font-size: var(--font-size-reply);
 }
 
+.comment__detail img {
+  max-width: 60px;
+  max-height: 60px;
+  margin: 10px;
+  display: block;
+  position: relative;
+  object-fit: contain;
+}
+
 .comment__edit-btn-wrapper {
   display: flex;
   justify-content: center;
@@ -191,16 +200,18 @@
 .comment__edit-btn {
   flex-grow: 1;
   height: 18px;
-  border: 1px solid var(--color-whitesmoke);
+  border: 1px solid var(--color-grey);
   border-radius: 4px;
   background-color: var(--color-body);
-  color: var(--color-whitesmoke);
+  color: var(--color-grey);
   font-size: var(--font-size-vsm);
   font-weight: 600;
 }
 
 .comment__edit-btn:hover {
-  filter: brightness(1.3);
+  background-color: var(--main-color);
+  border: 1px solid var(--main-color);
+  color: var(--color-body);
 }
 
 .comment__reply-target {
@@ -267,7 +278,4 @@
 .comment__span-rec {
   color: var(--color-grey);
   font-size: var(--font-size-vsm);
-}
-
-.comment__btn-reply {
 }

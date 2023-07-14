@@ -32,6 +32,16 @@
   margin: 15px 0;
 }
 
+.content-board__detail img,
+iframe {
+  max-width: 600px;
+  max-height: 600px;
+  margin: 10px 0;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
 .content-board__btn-wrapper {
   margin-top: 20px;
   display: flex;
