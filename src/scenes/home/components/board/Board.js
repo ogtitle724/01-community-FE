@@ -69,7 +69,7 @@ function Post({ post, mainEle }) {
       <div className="post__data-wrapper">
         <div className="post__wrtier">
           <div className="post__writer-level"></div>
-          <span className="post__writer-nick">{post.user.nick}</span>
+          <span className="post__writer-nick">{post.nick}</span>
         </div>
         <span className="post__data post__category">
           {post.category ? post.category : "카테고리 없음"}

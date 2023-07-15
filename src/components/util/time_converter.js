@@ -1,5 +1,4 @@
 export default function timeConverter(wr_date) {
-  console.log(wr_date);
   const date = new Date(wr_date);
   const now = new Date();
   const diffMinutes = ~~((now - date) / (1000 * 60));
@@ -10,7 +9,7 @@ export default function timeConverter(wr_date) {
   } else if (diffMinutes < 60 * 24) {
     timeDisplay = `${~~(diffMinutes / 60)}시간 전`;
   } else {
-    timeDisplay = wr_date.slice(0, -8).replace("T", " ");
+    timeDisplay = wr_date.slice(0, 16).replace("T", " ");
   }
 
   return timeDisplay;
