@@ -12,8 +12,9 @@ export default function UserBoard() {
 
   const handleClickLogOut = async () => {
     try {
-      await axios.post(process.env.REACT_APP_PATH_AUTH_LOGOUT, null);
+      await axios.get(process.env.REACT_APP_PATH_LOGOUT);
 
+      navigate("/");
       delete axios.defaults.headers.common["Authorization"];
       dispatch(logout());
       dispatch(setUser({ user: null }));
@@ -42,6 +43,7 @@ export default function UserBoard() {
           <p className="user-board__email">{user.email}</p>
         </div>
       </div>
+      <div className="user-board__div"></div>
       <button className="user-board__btn-logout" onClick={handleClickLogOut}>
         ✖
       </button>

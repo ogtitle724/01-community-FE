@@ -2,38 +2,49 @@ import axios from "axios";
 import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  selectCategory,
-  selectPage,
-  setPage,
-  setScrollY,
-} from "../../../../redux/slice/pageSlice";
-import timeConverter from "../../../../components/util/time_converter";
+import { selectPage, setPage, setScrollY } from "../../redux/slice/pageSlice";
+import timeConverter from "../../util/time_converter";
 import "./style.css";
 
-export default function Board({ posts, mainEle }) {
-  const title = useSelector(selectCategory);
+export default function Board({ posts, mainEle, title }) {
+  const [isDivide, setIsDivide] = useState(false);
+
+  const handleChangeLayout = () => {
+    setIsDivide(!isDivide);
+  };
 
   return (
-    <section className="board">
-      <h2 className="board__title">{title === "HOME" ? "BEST" : title}</h2>
-      <ul
-        className={
-          "board__ul" + (posts.content.length ? "" : " board__skeleton")
-        }
-      >
-        {posts.content.length ? (
-          posts.content.map((post, idx) => {
-            return <Post key={"post_" + idx} post={post} mainEle={mainEle} />;
-          })
-        ) : (
-          <span className="board__notification">
-            {"첫 게시물을 작성해주세요 :)"}
-          </span>
-        )}
-      </ul>
-      <Nav posts={posts} />
-    </section>
+    <>
+      <section className="board">
+        <h2 className="board__title">{title}</h2>
+        <button
+          className={
+            "board__btn-layout" +
+            (isDivide
+              ? " board__btn-layout--two-line"
+              : " board__btn-layout--one-line")
+          }
+          onClick={handleChangeLayout}
+        ></button>
+        <ul
+          className={
+            (posts.content.length ? "board__ul" : " board__skeleton") +
+            (isDivide ? " board__ul--two-line" : " board__ul--one-line")
+          }
+        >
+          {posts.content.length ? (
+            posts.content.map((post, idx) => {
+              return <Post key={"post_" + idx} post={post} mainEle={mainEle} />;
+            })
+          ) : (
+            <span className="board__notification">
+              {"게시물이 존재하지 않습니다 :("}
+            </span>
+          )}
+        </ul>
+        <Nav posts={posts} />
+      </section>
+    </>
   );
 }
 
@@ -44,38 +55,22 @@ function Post({ post, mainEle }) {
 
   const handleClickPost = async (e) => {
     e.preventDefault();
-    try {
-      await axios.post(process.env.REACT_APP_PATH_VIEW, {
-        postId: post.id,
-      });
-    } catch (err) {
-      console.log(err);
-    }
-
     dispatch(setScrollY({ scrollY: mainEle.current.scrollTop }));
     navigate(process.env.REACT_APP_ROUTE_POST, { state: { postId: post.id } });
   };
 
   return (
-    <li className="post">
-      <a
-        className="post__a"
-        href="/post"
-        id={post.id}
-        onClick={(e) => handleClickPost(e)}
-      >
-        <span className="post__span">{post.title}</span>
-      </a>
-      <div className="post__data-wrapper">
-        <div className="post__wrtier">
-          <div className="post__writer-level"></div>
-          <span className="post__writer-nick">{post.nick}</span>
-        </div>
-        <span className="post__data post__category">
-          {post.category ? post.category : "카테고리 없음"}
-        </span>
-        <span className="post__data post__view">{post.view_cnt}</span>
-        <span className="post__data post__date">{timeDisplay} </span>
+    <li className="post-li" onClick={(e) => handleClickPost(e)}>
+      <span className="post-li__category">
+        {post.category ? post.category : "카테고리 없음"}
+      </span>
+      <h3 className="post-li__title">{post.title}</h3>
+      <div className="post-li__data-wrapper">
+        <span className="post-li__data post-li__view">{post.view_cnt}</span>
+        <span className="post-li__data post-li__like">{76}</span>
+        <span className="post-li__data post-li__comment">{17}</span>
+        <span className="post-li__data">{post.nick}</span>
+        <span className="post-li__data post-li__date">{timeDisplay} </span>
       </div>
     </li>
   );

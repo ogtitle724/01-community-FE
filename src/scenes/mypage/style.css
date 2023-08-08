@@ -19,16 +19,15 @@
 .mypage__grid-container {
   width: 765px;
   height: 1600px;
-  margin: 40px 0;
+  margin: 60px 0;
   position: relative;
   display: grid;
   grid-template-areas:
     "profile graph"
-    "board graph"
     "document document"
     "comment comment";
   grid-template-columns: 200px 480px;
-  grid-template-rows: 150px 40px 260px 200px;
+  grid-template-rows: 190px 260px 200px;
   justify-content: center;
   justify-items: center;
   align-content: start;
@@ -38,29 +37,28 @@
 
 .mypage__profile {
   grid-area: profile;
-  align-self: end;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.mypage__img-wrapper {
   width: 120px;
   height: 120px;
-  margin-bottom: 5px;
   position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   border-radius: 100%;
   background-color: var(--color-background);
   overflow: hidden;
-  box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.1);
 }
 
 .mypage__profile-img {
-  width: 90%;
-  height: 90%;
+  width: 100%;
+  height: 100%;
 }
 
 .mypage__board {
-  grid-area: board;
   width: 100%;
-  height: 100%;
+  margin-top: 13px;
   display: flex;
   justify-content: center;
   align-items: flex-start;
@@ -82,13 +80,16 @@
 .point-graph {
   grid-area: graph;
   position: relative;
-  bottom: 12px;
   width: 100%;
   height: 100%;
   border-radius: 4px;
+  background-color: var(--color-background);
 }
 
 .point-graph__title {
+  width: 100%;
+  position: absolute;
+  top: -30px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -116,11 +117,11 @@
 }
 
 .point-graph canvas {
-  background-color: whitesmoke;
+  background-color: var(--color-background);
   position: relative;
   left: 50%;
-  top: 5%;
-  transform: translate(-50%);
+  top: 50%;
+  transform: translate(-50%, -50%);
   border-radius: 4px;
 }
 
@@ -158,14 +159,14 @@
 }
 
 .mp-document__posts {
-  width: 60%;
+  width: 55%;
   height: 100%;
   padding-right: 10px;
   position: relative;
 }
 
 .mp-document__comments {
-  width: 40%;
+  width: 45%;
   height: 100%;
   padding-left: 10px;
   position: relative;
@@ -176,18 +177,23 @@
   width: 40px;
   height: 10px;
   position: absolute;
-  right: 5px;
-  bottom: 0px;
+  right: 0px;
+  bottom: -4px;
   border: none;
   font-size: var(--font-size-vsm);
   color: var(--font-color-dark);
   background-color: transparent;
 }
 
+.mp-document__posts button {
+  right: 5px;
+}
+
 .mypage__comment {
   grid-area: comment;
   width: 100%;
   height: 100%;
+  position: relative;
   background-color: aliceblue;
 }
 
@@ -201,7 +207,18 @@
   cursor: pointer;
 }
 
+.mp-list * {
+  cursor: pointer;
+}
+
+.mp-list__title-wrapper {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
 .mp-list__title {
+  max-width: 50%;
   margin-right: 5px;
 }
 
@@ -211,4 +228,40 @@
 
 .mp-list__view {
   margin-left: 10px;
+}
+
+@media screen and (max-width: 768px) {
+  .mypage__grid-container {
+    width: 90vw;
+    margin: 50px 0;
+    grid-template-columns: 100px 1fr;
+    grid-template-rows: 0.5fr 1.5fr 1fr;
+    row-gap: 30px;
+  }
+
+  .mypage__img-wrapper {
+    width: 80px;
+    height: 80px;
+  }
+
+  .mypage__board img {
+    width: 16px;
+    height: 16px;
+  }
+  .point-graph__title {
+    top: -22px;
+  }
+  .point-graph canvas {
+    width: 200px;
+    height: 100px;
+  }
+
+  .point-graph__img {
+    width: 17px;
+    height: 17px;
+  }
+
+  .mp-document__title {
+    text-align: center;
+  }
 }

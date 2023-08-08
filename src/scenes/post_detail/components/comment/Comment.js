@@ -5,9 +5,9 @@ import { selectIsDarkMode } from "../../../../redux/slice/signSlice";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 
-import calRecommend from "../../../../components/util/cal_rec";
-import timeConverter from "../../../../components/util/time_converter";
-import changeP2Span from "../../../../components/util/commentProcess";
+import calRecommend from "../../../../util/cal_rec";
+import timeConverter from "../../../../util/time_converter";
+import changeP2Span from "../../../../util/commentProcess";
 import "./style.css";
 import thumbsUp from "../../../../asset/icons/thumbs-up.svg";
 import thumbsDown from "../../../../asset/icons/thumbs-down.svg";
@@ -43,23 +43,29 @@ export default function CommentBoard({
   };
 
   const handleClickBtnAdd = async () => {
-    let payload;
+    let payload, path;
     let contentArg = changeP2Span(content);
 
+    payload = {
+      content: contentArg,
+    };
+
     if (isReply) {
-      payload = {
-        content: contentArg,
-        targetComment,
-      };
+      path = process.env.REACT_APP_PATH_COMMENT;
+      path = path
+        .replace("{post-id}", postDetail.id)
+        .replace("/{comment-id}", "");
     } else {
-      payload = {
-        content: contentArg,
-      };
+      path = process.env.REACT_APP_PATH_REPLY;
+      path = path
+        .replace("{post-id}", postDetail.id)
+        .replace("/{comment-id}", "");
     }
 
     try {
-      await axios.post(`/board/${postDetail.id}/comment`, payload);
+      await axios.post(path, payload);
       btnShow.current.style = "transform:rotateZ(0deg)";
+
       setTimeout(() => {
         setIsShowInput(false);
         setTargetComment(null);
@@ -82,7 +88,7 @@ export default function CommentBoard({
               <>
                 <Comment
                   key={"comment-" + idxC}
-                  postDetail={postDetail}
+                  postId={postDetail.id}
                   user={user}
                   comment={comment}
                   btnShow={btnShow}
@@ -98,7 +104,7 @@ export default function CommentBoard({
                       return (
                         <Comment
                           key={"reply-" + idxR}
-                          postDetail={postDetail}
+                          postId={postDetail.id}
                           user={user}
                           comment={reply}
                           btnShow={btnShow}
@@ -151,7 +157,7 @@ export default function CommentBoard({
 }
 
 function Comment({
-  postDetail,
+  postId,
   user,
   comment,
   btnShow,
@@ -214,10 +220,11 @@ function Comment({
     }
 
     try {
-      await axios.post(`/board/${postDetail.id}/comment/rec/${comment.id}`, {
-        id: user.id,
-        value,
-      });
+      let path = process.env.REACT_APP_PATH_COMMENT_REC.replace(
+        "{post-id}",
+        postId
+      ).replace("{comment-id}", comment.id);
+      await axios.patch(path, { value });
       setTrigger(!trigger);
     } catch (err) {
       console.log(err);
@@ -236,9 +243,12 @@ function Comment({
   const handleClickBtnUpdate = async () => {
     const contentArg = changeP2Span(content);
     try {
-      await axios.post(`/board/${postDetail.id}/comment/edit/${comment.id}`, {
-        content: contentArg,
-      });
+      let path = process.env.REACT_APP_PATH_COMMENT.replace(
+        "{post-id}",
+        postId
+      ).replace("{comment-id}", comment.id);
+
+      await axios.patch(path, { content: contentArg });
       setIsEdit(false);
       setTrigger(!trigger);
     } catch (err) {
@@ -254,9 +264,11 @@ function Comment({
     // eslint-disable-next-line no-restricted-globals
     if (confirm("댓글을 삭제하시겠습니까?")) {
       try {
-        await axios.delete(
-          `/board/${postDetail.id}/comment/delete/${comment.id}`
-        );
+        let path = process.env.REACT_APP_PATH_COMMENT.replace(
+          "{post-id}",
+          postId
+        ).replace("{comment-id}", comment.id);
+        await axios.delete(path);
         setTrigger(!trigger);
       } catch (err) {
         console.log(err);
@@ -314,7 +326,7 @@ function Comment({
           ></span>
         )}
       </div>
-      {!isEdit && (
+      {!isEdit && !comment.isDeleted && (
         <div
           className={
             "comment__interface" +

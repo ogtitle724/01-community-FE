@@ -1,34 +1,38 @@
 import { useState, useRef, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import {
   selectCategory,
   selectPage,
   selectScrollY,
+  selectWidth,
+  setWidth,
 } from "../../redux/slice/pageSlice";
 import axios from "axios";
 
 import Header from "../../components/header/Header";
-import Snb from "../../components/snb/Snb";
-import ContentHome from "./components/content_feed/Content_Home";
-import ContentBest from "./components/content_feed/Content_Best";
+import Gnb from "../../components/gnb/Gnb";
+import ContentHome from "./components/content/Content_Home";
 import ContentTopic from "./components/content_topic/Content_Topic";
-import MenuBtn from "../../components/menu_btn/Menu_Btn";
+import WriteBtn from "../../components/write_btn/WriteBtn";
 import "./style.css";
 
 export default function Home() {
   const category = useSelector(selectCategory);
   const page = useSelector(selectPage);
   const scrollY = useSelector(selectScrollY);
+  const dispatch = useDispatch();
   const [posts, setPosts] = useState();
   const [content, mainEle] = [useRef(), useRef()];
 
   useEffect(() => {
+    const handleResize = () => dispatch(setWidth({ width: window.innerWidth }));
     const getPosts = async () => {
       try {
-        const res = await axios.get(
-          process.env.REACT_APP_PATH_PAGING +
-            `?category=${category}&page=${page - 1}&size=30`
+        const path = process.env.REACT_APP_PATH_PAGING.replace(
+          "{category}",
+          category
         );
+        const res = await axios.get(path + `?page=${page - 1}&size=30`);
         setPosts(res.data);
       } catch (err) {
         console.log(err);
@@ -36,14 +40,17 @@ export default function Home() {
     };
 
     getPosts();
-  }, [category, page]);
+    window.addEventListener("resize", handleResize);
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, [category, page, dispatch]);
 
   if (mainEle.current) {
-    if (category === "HOME")
+    if (category === "홈") {
       content.current = <ContentHome posts={posts} mainEle={mainEle} />;
-    else if (category === "BEST")
-      content.current = <ContentBest posts={posts} mainEle={mainEle} />;
-    else content.current = <ContentTopic posts={posts} mainEle={mainEle} />;
+    } else {
+      content.current = <ContentTopic posts={posts} mainEle={mainEle} />;
+    }
 
     if (scrollY) {
       mainEle.current.scrollTo({
@@ -61,11 +68,11 @@ export default function Home() {
   return (
     <main className="home">
       <Header />
-      <Snb />
+      <Gnb />
       <section ref={mainEle} className="main">
-        {posts && content.current}
+        <div className="main-content">{posts && content.current}</div>
       </section>
-      <MenuBtn mainEle={mainEle} />
+      <WriteBtn mainEle={mainEle} />
     </main>
   );
 }

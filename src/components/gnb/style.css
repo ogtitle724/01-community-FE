@@ -1,12 +1,16 @@
 .gnb {
   width: 100%;
-  height: var(--gnb-height);
+  min-height: var(--gnb-height);
+  padding: 3px;
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 18px;
+  align-content: center;
+  flex-wrap: wrap;
+  column-gap: 18px;
+  border-top: 1px solid var(--main-color);
   border-bottom: 1px solid var(--main-color);
-  background-color: var(--color-background);
+  background-color: var(--color-body);
 }
 
 .gnb__a {
@@ -14,7 +18,7 @@
   cursor: pointer;
   font-size: var(--font-size-sm);
   font-weight: 600;
-  background-color: var(--color-background);
+  background-color: var(--color-body);
 }
 
 .gnb__a::after {
@@ -33,4 +37,10 @@
 .gnb__a:hover::after {
   background-color: var(--color-orange);
   filter: brightness(0.9);
+}
+
+@media screen and (max-width: 768px) {
+  .gnb {
+    column-gap: 10px;
+  }
 }

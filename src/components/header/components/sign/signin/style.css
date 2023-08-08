@@ -1,6 +1,6 @@
 .form-login {
   width: 244px;
-  height: 32px;
+  height: 30px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -17,11 +17,12 @@
 
 .form-login__input {
   width: 100px;
-  height: 20px;
+  height: 18px;
   padding-left: 8px;
   border: none;
   border-radius: 3px;
   background-color: var(--color-body);
+  font-size: 12px;
 }
 
 .form-login__input:focus {

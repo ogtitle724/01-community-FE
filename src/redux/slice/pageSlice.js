@@ -7,6 +7,7 @@ export const pageSlice = createSlice({
     searchPageIdx: 1,
     category: "HOME",
     scrollY: 0,
+    width: window.innerWidth,
   },
   reducers: {
     setPage: (state, action) => {
@@ -25,15 +26,20 @@ export const pageSlice = createSlice({
       const { scrollY } = action.payload;
       state.scrollY = scrollY;
     },
+    setWidth: (state, action) => {
+      const { width } = action.payload;
+      state.width = width;
+    },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { setPage, setSearchPage, setCategory, setScrollY } =
+export const { setPage, setSearchPage, setCategory, setScrollY, setWidth } =
   pageSlice.actions;
 export const selectPage = (state) => state.page.homePageIdx;
 export const selectSearchPage = (state) => state.page.searchPageIdx;
 export const selectCategory = (state) => state.page.category;
 export const selectScrollY = (state) => state.page.scrollY;
+export const selectWidth = (state) => state.page.width;
 
 export default pageSlice.reducer;

@@ -8,6 +8,12 @@ export default function timeConverter(wr_date) {
     timeDisplay = `${diffMinutes}분 전`;
   } else if (diffMinutes < 60 * 24) {
     timeDisplay = `${~~(diffMinutes / 60)}시간 전`;
+  } else if (diffMinutes < 60 * 48) {
+    timeDisplay = `어제`;
+  } else if (diffMinutes < 60 * 72) {
+    timeDisplay = `이틀전`;
+  } else if (diffMinutes < 60 * 96) {
+    timeDisplay = `삼일전`;
   } else {
     timeDisplay = wr_date.slice(0, 16).replace("T", " ");
   }

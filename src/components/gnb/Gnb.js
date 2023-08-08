@@ -1,18 +1,17 @@
 import { useNavigate } from "react-router-dom";
 import "./style.css";
 import { useDispatch } from "react-redux";
-import { setCategory, setScrollY } from "../../redux/slice/pageSlice";
+import { setCategory, setScrollY, setPage } from "../../redux/slice/pageSlice";
 
 const category = [
-  "HOME",
-  "BEST",
+  "홈",
   "유머",
-  "게임/스포츠",
-  "연예/방송",
+  "게임·스포츠",
+  "연예·방송",
   "여행",
   "취미",
-  "경제/금융",
-  "시사/이슈",
+  "경제·금융",
+  "시사·이슈",
 ];
 
 export default function Gnb() {
@@ -23,8 +22,11 @@ export default function Gnb() {
     e.preventDefault();
 
     const category = e.target.innerHTML;
+
+    console.log(category);
     dispatch(setCategory({ category }));
     dispatch(setScrollY({ scrollY: 0 }));
+    dispatch(setPage({ nextPage: 1 }));
     navigate(process.env.REACT_APP_ROUTE_HOME);
   };
 

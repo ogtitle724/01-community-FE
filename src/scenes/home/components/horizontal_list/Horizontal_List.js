@@ -56,7 +56,7 @@ export default function HorizontalList() {
 
   return (
     <section className="horizon-list">
-      <h1 className="horizon-list__list-title">Trendings</h1>
+      <h1 className="horizon-list__list-title">트렌딩</h1>
       <div
         ref={container}
         className="horizon-list__card-container"

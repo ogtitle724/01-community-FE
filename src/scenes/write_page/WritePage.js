@@ -13,7 +13,7 @@ export default function WritePage() {
   const location = useLocation();
   const isUpdate = location.state?.isUpdate;
   const titleArg = isUpdate ? location.state.title : "";
-  const categoryArg = isUpdate ? converter[location.state.category] : "";
+  const categoryArg = isUpdate ? location.state.category : "";
   const postId = isUpdate && location.state.id;
   const ogData = isUpdate && location.state.content;
 
@@ -65,33 +65,29 @@ export default function WritePage() {
       return;
     }
 
-    if (isUpdate) {
-      try {
-        //TODO: 여기서 category, thumbnail, wr_Date 추가 처리 필요
-        await axios.post(process.env.REACT_APP_PATH_UPDATE + `?id=${postId}`, {
-          title,
-          category,
-          content: body,
-          thumbnail,
-        });
-        navigate(-1);
-      } catch (err) {
-        console.log(err);
-        alert("게시글 수정을 실패했습니다.");
+    let payload = {
+      title,
+      category,
+      content: body,
+      thumbnail,
+    };
+
+    try {
+      if (isUpdate) {
+        const path = process.env.REACT_APP_PATH_POST.replace(
+          "{post-id}",
+          postId
+        );
+        console.log(payload);
+        await axios.patch(path, payload);
+      } else {
+        const path = process.env.REACT_APP_PATH_POST.replace("/{post-id}", "");
+        await axios.post(path, payload);
       }
-    } else {
-      try {
-        await axios.post(process.env.REACT_APP_PATH_CREATE, {
-          title,
-          category,
-          content: body,
-          thumbnail,
-        });
-        navigate(-1);
-      } catch (err) {
-        console.log(err);
-        alert("게시글 작성을 실패했습니다.");
-      }
+      navigate(-1);
+    } catch (err) {
+      console.log(err);
+      alert("게시글 작성 혹은 수정을 완료하지 못했습니다.");
     }
   };
 
@@ -256,15 +252,3 @@ function ThumbnailDropbox({ thumbnail, setThumbnail, imgSrc, setImgSrc }) {
     </section>
   );
 }
-
-const converter = {
-  home: "HOME",
-  best: "BEST",
-  humor: "유머",
-  game: "게임/스포츠",
-  brodcast: "연예/방송",
-  travel: "여행",
-  hobby: "취미",
-  economic: "경제/금융",
-  issue: "시사/이슈",
-};

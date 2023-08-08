@@ -1,3 +1,10 @@
+.sign-wrapper {
+  width: 270px;
+  margin: 0 20px;
+  display: flex;
+  align-items: center;
+}
+
 .sign__btn-signup {
   width: 18px;
   height: 18px;

@@ -8,7 +8,8 @@ export default function Sign() {
   const [showSignUpForm, setShowSignUpForm] = useState(false);
 
   return (
-    <>
+    <section className="sign-wrapper">
+      <h3 hidden>Sign</h3>
       <SignIn />
       <button
         className="sign__btn-signup"
@@ -17,6 +18,6 @@ export default function Sign() {
         +
       </button>
       {showSignUpForm && <SignUp setShowSignUpForm={setShowSignUpForm} />}
-    </>
+    </section>
   );
 }

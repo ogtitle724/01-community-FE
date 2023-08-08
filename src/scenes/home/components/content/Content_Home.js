@@ -1,12 +1,14 @@
 import HorizontalList from "../horizontal_list/Horizontal_List";
-import Board from "../board/Board";
+import Board from "../../../../components/board/Board";
 import "./style.css";
 
 export default function ContentHome({ posts, mainEle }) {
   return (
-    <div className="main__content">
+    <>
       <HorizontalList />
-      <Board posts={posts} mainEle={mainEle} />
-    </div>
+      <div className="board-pre">
+        <Board posts={posts} mainEle={mainEle} title={"최신글"} />
+      </div>
+    </>
   );
 }

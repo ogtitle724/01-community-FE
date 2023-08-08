@@ -1,14 +1,13 @@
-import Board from "../board/Board";
+import { useSelector } from "react-redux";
+import Board from "../../../../components/board/Board";
 import "./style.css";
+import { selectCategory } from "../../../../redux/slice/pageSlice";
 
 export default function Others({ posts, mainEle }) {
+  const category = useSelector(selectCategory);
   return (
-    <div className="main__content main__content--topic">
-      <Board posts={posts} postNum={35} mainEle={mainEle} />
-
-      <section className="main__hit">
-        <Hit />
-      </section>
+    <div className="board-pre">
+      <Board posts={posts} postNum={35} mainEle={mainEle} title={category} />
     </div>
   );
 }

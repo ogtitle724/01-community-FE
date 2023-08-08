@@ -1,8 +1,8 @@
 .themetoggle {
-  margin-right: 25px;
+  margin-right: 10px;
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
 }
 
 .themetoggle__btn-wrapper {
@@ -47,4 +47,54 @@
 .themetoggle__icon--dark {
   filter: invert(60%);
   background: url(../../../../asset/icons/dark.svg);
+}
+
+@media screen and (max-width: 1024px) {
+  .themetoggle {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    gap: 6px;
+  }
+
+  .themetoggle__btn-wrapper {
+    width: 36px;
+    height: 20px;
+  }
+
+  .themetoggle__btn {
+    width: 18px;
+    height: 18px;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    border-radius: 100%;
+    background-color: white;
+    transition: 0.3s;
+  }
+
+  .themetoggle__btn--light {
+    left: 2px;
+  }
+
+  .themetoggle__btn--dark {
+    left: 15px;
+  }
+
+  .themetoggle__icon {
+    width: 18px;
+    height: 18px;
+    border-radius: 100%;
+    background-size: 50;
+  }
+
+  .themetoggle__icon--light {
+    filter: invert(60%);
+    background: url(../../../../asset/icons/light.svg);
+  }
+
+  .themetoggle__icon--dark {
+    filter: invert(60%);
+    background: url(../../../../asset/icons/dark.svg);
+  }
 }

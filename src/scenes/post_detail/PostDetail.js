@@ -23,9 +23,8 @@ export default function PostDetail() {
   useEffect(() => {
     const initialSet = async () => {
       try {
-        const res = await axios.get(
-          process.env.REACT_APP_PATH_BOARD + `/${postId}`
-        );
+        let path = process.env.REACT_APP_PATH_POST.replace("{post-id}", postId);
+        const res = await axios.get(path);
         const post = res.data;
 
         if (user && post.user.id === user.id) {

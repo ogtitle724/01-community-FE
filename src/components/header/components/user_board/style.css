@@ -1,7 +1,9 @@
 .user-board {
   height: 38px;
+  width: 270px;
+  margin: 0 20px;
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-between;
   align-items: center;
   gap: 20px;
   border-radius: 6px;
@@ -47,4 +49,14 @@
 
 .user-board__btn-logout:active {
   filter: brightness(0.9);
+}
+
+.user-board__div {
+  flex-grow: 1;
+  height: 1px;
+  border: 1px solid pink;
+}
+
+.user-board__div:hover {
+  height: 100%;
 }

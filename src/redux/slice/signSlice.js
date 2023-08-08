@@ -27,7 +27,7 @@ export const signSlice = createSlice({
 
 // Action creators are generated for each case reducer function
 export const { login, logout, clickModeBtn, setUser } = signSlice.actions;
-export const selectSign = (state) => state.sign.isLogIn;
+export const selectIsLogIn = (state) => state.sign.isLogIn;
 export const selectIsDarkMode = (state) => state.sign.isDarkMode;
 export const selectUser = (state) => state.sign.user;
 

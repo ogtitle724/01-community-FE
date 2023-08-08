@@ -55,7 +55,7 @@ function Post({ post, idx }) {
       <section className="search-board__data-wrapper">
         <div className="search-board__writer-data">
           <div className="search-board__img"></div>
-          <span className="search-board__nick">{post.user.nick}</span>
+          <span className="search-board__nick">{post.nick}</span>
         </div>
         <span className="search-board__category">
           {post.category ? post.category : "카테고리 없음"}

@@ -1,8 +1,8 @@
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
-import calRecommend from "../../../../components/util/cal_rec";
-import timeConverter from "../../../../components/util/time_converter";
+import calRecommend from "../../../../util/cal_rec";
+import timeConverter from "../../../../util/time_converter";
 import thumbsUp from "../../../../asset/icons/thumbs-up.svg";
 import thumbsDown from "../../../../asset/icons/thumbs-down.svg";
 import "./style.css";
@@ -17,17 +17,18 @@ export default function ContentBoard({
 }) {
   const recResult = calRecommend(postDetail.recommendations);
   const timeDisplay = timeConverter(postDetail.wr_date);
+
   const handleClickRecommend = async (value) => {
     if (!user) {
       return alert("로그인이 필요합니다!");
     }
 
     try {
-      await axios.post(process.env.REACT_APP_PATH_REC, {
-        postId: postDetail.id,
-        id: user.id,
-        value,
-      });
+      const path = process.env.REACT_APP_PATH_POST_REC.replace(
+        "{post-id}",
+        postDetail.id
+      );
+      await axios.patch(path, { value });
       setTrigger(!trigger);
     } catch (err) {
       console.log(err);
@@ -103,9 +104,11 @@ function UD({ postDetail }) {
 
     if (isDelete) {
       try {
-        await axios.post(process.env.REACT_APP_PATH_DELETE, {
-          id: postDetail.id,
-        });
+        const path = process.env.REACT_APP_PATH_POST.replace(
+          "{post-id}",
+          postDetail.id
+        );
+        await axios.delete(path);
         navigate(-1);
       } catch (err) {
         console.log(err);

@@ -13,7 +13,7 @@
 }
 
 .content-board__title {
-  margin: 10px 0;
+  margin: 10px 0 16px 0;
   position: relative;
   text-align: center;
   font-size: var(--font-size-lg);
@@ -95,7 +95,6 @@ iframe {
 
 .content-board__related {
   width: 100%;
-  height: 700px;
   position: relative;
   margin: 50px 0 3px 0;
   border: 2.5px solid;
@@ -119,7 +118,7 @@ iframe {
 
 .ud {
   position: absolute;
-  bottom: -8px;
+  bottom: -15px;
   display: flex;
   gap: 3px;
 }
@@ -131,4 +130,26 @@ iframe {
 
 .ud__btn {
   cursor: pointer;
+}
+
+@media screen and (max-width: 1080px) {
+  .content-board {
+    width: 650px;
+    height: auto;
+    margin: 10px auto;
+    overflow: auto;
+  }
+
+  .content-board__content {
+    padding: 0;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .content-board {
+    width: 90%;
+  }
+
+  .content-board__content {
+  }
 }

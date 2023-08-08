@@ -1,0 +1,28 @@
+.menu-btn {
+  width: 22px;
+  height: 22px;
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  border: none;
+  background: url(../../../../asset/icons/menu.svg);
+  filter: invert(60%);
+}
+
+.menu {
+  padding: 37px 0px;
+  position: absolute;
+  top: 5vh;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+  z-index: 2;
+  background-color: var(--color-body);
+  border: 1px solid var(--main-color);
+  border-radius: 4px;
+  box-shadow: 0 0 0 100vh rgba(0, 0, 0, 0.6);
+}

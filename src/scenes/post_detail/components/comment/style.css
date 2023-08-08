@@ -4,8 +4,9 @@
 }
 
 .comment-board .ck.ck-editor__editable:not(.ck-editor__nested-editable) {
-  width: 260px;
-  height: 140px;
+  width: 90%;
+  min-width: 260px;
+  height: 80px;
   border-radius: 4px;
   border: 1px solid var(--color-grey);
   background-color: var(--color-body);
@@ -278,4 +279,23 @@
 .comment__span-rec {
   color: var(--color-grey);
   font-size: var(--font-size-vsm);
+}
+
+@media screen and (max-width: 1080px) {
+  .comment-board {
+    width: 650px;
+    min-height: 300px;
+    margin: 20px auto;
+    position: relative;
+  }
+
+  .comment-board__comment-wrapper {
+    margin: 0;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .comment-board {
+    width: 90%;
+  }
 }

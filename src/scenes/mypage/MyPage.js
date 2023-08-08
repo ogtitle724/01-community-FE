@@ -1,9 +1,10 @@
-import { useEffect, useRef, useState } from "react";
-import { useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { selectUser } from "../../redux/slice/signSlice";
+import { selectWidth, setWidth } from "../../redux/slice/pageSlice";
 import axios from "axios";
 
-import timeConverter from "../../components/util/time_converter";
+import { getTitle } from "../../util/commentProcess";
 import Header from "../../components/header/Header";
 import Gnb from "../../components/gnb/Gnb";
 import profileImg from "../../asset/icons/person.svg";
@@ -13,12 +14,15 @@ import chat from "../../asset/icons/chatbubble.svg";
 import clip from "../../asset/icons/clip.svg";
 import "./style.css";
 import { useNavigate } from "react-router-dom";
+import calRecommend from "../../util/cal_rec";
 
 export default function MyPage() {
+  const dispatch = useDispatch();
   const user = useSelector(selectUser);
   const [userData, setUserData] = useState();
 
   useEffect(() => {
+    const handleResize = () => dispatch(setWidth({ width: window.innerWidth }));
     const getUserData = async () => {
       try {
         let res = await axios.get(process.env.REACT_APP_PATH_USER);
@@ -29,7 +33,44 @@ export default function MyPage() {
     };
 
     getUserData();
-  }, []);
+    window.addEventListener("resize", handleResize);
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, [dispatch]);
+
+  const getListItems = (dataArr) => {
+    let components = [];
+
+    for (let i = 0; i < 9; i++) {
+      if (!dataArr[i]) break;
+
+      if (dataArr[i]?.title) {
+        components.push(
+          <ListItem
+            key={`mp-list__${i}`}
+            postId={dataArr[i].id}
+            title={dataArr[i].title}
+            date={dataArr[i].wr_date}
+            info1={dataArr[i].category ? dataArr[i].category : "카테고리 없음"}
+            info2={dataArr[i].view_cnt}
+          />
+        );
+      } else {
+        let rec = calRecommend(dataArr[i].recommendations);
+
+        components.push(
+          <ListItem
+            key={`mp-list_${i}`}
+            postId={dataArr[i].postId}
+            title={getTitle(dataArr[i].content)}
+            date={dataArr[i].wr_date}
+            info2={rec.result}
+          />
+        );
+      }
+    }
+    return components;
+  };
 
   return (
     <div className="mypage">
@@ -41,19 +82,21 @@ export default function MyPage() {
             my page
           </h2>
           <div className="mypage__profile">
-            <img
-              src={profileImg}
-              className="mypage__profile-img"
-              alt="profile-img"
-            ></img>
+            <div className="mypage__img-wrapper">
+              <img
+                src={profileImg}
+                className="mypage__profile-img"
+                alt="profile-img"
+              ></img>
+            </div>
+            <div className="mypage__board">
+              <h3 hidden>mypage board</h3>
+              <img src={store} alt="icon-trade"></img>
+              <img src={chat} alt="icon-chat"></img>
+              <img src={setting} alt="icon-setting"></img>
+            </div>
           </div>
-          <section className="mypage__board">
-            <h3 hidden>mypage board</h3>
-            <img src={store} alt="icon-trade"></img>
-            <img src={chat} alt="icon-chat"></img>
-            <img src={setting} alt="icon-setting"></img>
-          </section>
-          <section className="point-graph">
+          <div className="point-graph">
             <h3 className="point-graph__title">
               <span className="point-grap__nick">{user.nick}</span>
               <div className="point-graph__amount">
@@ -62,31 +105,20 @@ export default function MyPage() {
               </div>
             </h3>
             <canvas id="point-graph__canvas" width="480" height="160"></canvas>
-          </section>
-          <section className="mp-document">
+          </div>
+          <div className="mp-document">
             <h3 className="mp-document__title">내가 쓴 글/댓글</h3>
             <div className="mp-document__display">
               <ul className="mp-document__posts">
-                {userData &&
-                  userData.posts.map((post, idx) => {
-                    return (
-                      <ListItem
-                        key={`mp-list__${idx}`}
-                        postId={post.id}
-                        title={post.title}
-                        category={post.category}
-                        date={post.wr_date}
-                        view={post.view_cnt}
-                      />
-                    );
-                  })}
+                {userData && getListItems(userData.posts)}
                 <button className="mp-document__btn-showmore">+더보기</button>
               </ul>
               <ul className="mp-document__comments">
+                {userData && getListItems(userData.comments)}
                 <button className="mp-document__btn-showmore">+더보기</button>
               </ul>
             </div>
-          </section>
+          </div>
           <div className="mypage__comment"></div>
         </section>
       </main>
@@ -94,23 +126,25 @@ export default function MyPage() {
   );
 }
 
-function ListItem({ title, category, date, view, postId }) {
+function ListItem({ title, date, info1, info2, postId }) {
   const navigate = useNavigate();
+  const width = useSelector(selectWidth);
+  console.log(width);
   const handleClick = () => {
     navigate("/post", { state: { postId } });
   };
 
   return (
     <li className="mp-list" onClick={handleClick}>
-      <div>
+      <div className="mp-list__title-wrapper">
         <span className="mp-list__title">{title}</span>
         <span className="mp-list__indicator">
           {"( " + date.slice(0, 10) + " )"}
         </span>
       </div>
       <div>
-        <span>{category ? category : "카테고리 없음"}</span>
-        <span className="mp-list__view">{view}</span>
+        {width > 480 ? <span>{info1}</span> : ""}
+        <span className="mp-list__view">{info2}</span>
       </div>
     </li>
   );
