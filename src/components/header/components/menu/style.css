@@ -30,15 +30,20 @@
   box-shadow: 0 0 0 100vh rgba(0, 0, 0, 0.6);
 }
 
-.menu .sign-wrapper {
-  grid-column: 1/3;
-  grid-row: 2/3;
-}
-
 .menu .themetoggle {
   justify-self: end;
 }
 
 .menu .search-bar {
   justify-self: start;
+}
+
+.menu .sign-wrapper {
+  grid-column: 1/3;
+  grid-row: 2/3;
+}
+
+.menu .user-board {
+  grid-column: 1/3;
+  grid-row: 2/3;
 }

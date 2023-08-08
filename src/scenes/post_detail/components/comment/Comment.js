@@ -24,9 +24,8 @@ export default function CommentBoard({
   sanitize,
 }) {
   const [isShowInput, setIsShowInput] = useState(false);
-  const [isReply, setIsReply] = useState(false);
   const [content, setContent] = useState("");
-  const [targetComment, setTargetComment] = useState(null);
+  const [targetId, setTargetId] = useState(null);
   const btnShow = useRef();
   const isDarkMode = useSelector(selectIsDarkMode);
 
@@ -34,8 +33,7 @@ export default function CommentBoard({
     if (isShowInput) {
       btnShow.current.style = "transform:rotateZ(0deg)";
       setIsShowInput(false);
-      setTargetComment(null);
-      setIsReply(false);
+      setTargetId(null);
     } else {
       btnShow.current.style = "transform:rotateZ(45deg)";
       setIsShowInput(true);
@@ -50,16 +48,14 @@ export default function CommentBoard({
       content: contentArg,
     };
 
-    if (isReply) {
-      path = process.env.REACT_APP_PATH_COMMENT;
-      path = path
-        .replace("{post-id}", postDetail.id)
-        .replace("/{comment-id}", "");
-    } else {
+    if (targetId) {
       path = process.env.REACT_APP_PATH_REPLY;
       path = path
         .replace("{post-id}", postDetail.id)
-        .replace("/{comment-id}", "");
+        .replace("{comment-id}", targetId);
+    } else {
+      path = process.env.REACT_APP_PATH_COMMENT;
+      path = path.replace("{post-id}", postDetail.id);
     }
 
     try {
@@ -68,8 +64,7 @@ export default function CommentBoard({
 
       setTimeout(() => {
         setIsShowInput(false);
-        setTargetComment(null);
-        setIsReply(false);
+        setTargetId(null);
         setTrigger(!trigger);
         setContent("");
       }, 200);
@@ -93,8 +88,7 @@ export default function CommentBoard({
                   comment={comment}
                   btnShow={btnShow}
                   setIsShowInput={setIsShowInput}
-                  setIsReply={setIsReply}
-                  setTargetComment={setTargetComment}
+                  setTargetId={setTargetId}
                   sanitize={sanitize}
                   trigger={trigger}
                   setTrigger={setTrigger}
@@ -109,8 +103,7 @@ export default function CommentBoard({
                           comment={reply}
                           btnShow={btnShow}
                           setIsShowInput={setIsShowInput}
-                          setIsReply={setIsReply}
-                          setTargetComment={setTargetComment}
+                          setTargetId={setTargetId}
                           cName={" comment__reply"}
                           sanitize={sanitize}
                           trigger={trigger}
@@ -162,8 +155,7 @@ function Comment({
   comment,
   btnShow,
   setIsShowInput,
-  setIsReply,
-  setTargetComment,
+  setTargetId,
   cName,
   sanitize,
   trigger,
@@ -186,32 +178,8 @@ function Comment({
 
   const handleClickBtnReply = () => {
     setIsShowInput(true);
-    setIsReply(true);
+    setTargetId(comment.id);
     btnShow.current.style = "transform:rotateZ(45deg)";
-
-    let targetArg;
-
-    if (comment.targetComment) {
-      targetArg = {
-        rootCommentId: comment.targetComment.rootCommentId,
-        commentId: comment.id,
-        user: {
-          id: comment.user.id,
-          nick: comment.user.nick,
-        },
-      };
-    } else {
-      targetArg = {
-        rootCommentId: comment.id,
-        commentId: comment.id,
-        user: {
-          id: comment.user.id,
-          nick: comment.user.nick,
-        },
-      };
-    }
-
-    setTargetComment(targetArg);
   };
 
   const handleClickRec = async (value) => {
@@ -286,7 +254,7 @@ function Comment({
       <div className="comment__detail">
         {!isEdit && cName ? (
           <span className="comment__reply-target">
-            {comment.targetComment.user.nick}
+            {comment.targetId.user.nick}
           </span>
         ) : (
           ""
