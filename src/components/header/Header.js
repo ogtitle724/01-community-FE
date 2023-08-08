@@ -48,7 +48,7 @@ export default function Header() {
           클립마켓
         </a>
         {width > 1024 ? <SearchBar /> : ""}
-        <ThemeToggle />
+        {width > 1024 ? <ThemeToggle /> : ""}
         <div className="sign">{isLogIn ? <UserBoard /> : <Sign />}</div>
         {width < 1024 && <MenuBtn />}
       </header>
