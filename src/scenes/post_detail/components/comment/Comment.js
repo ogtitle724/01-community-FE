@@ -5,7 +5,6 @@ import { selectIsDarkMode } from "../../../../redux/slice/signSlice";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 
-import calRecommend from "../../../../util/cal_rec";
 import timeConverter from "../../../../util/time_converter";
 import changeP2Span from "../../../../util/commentProcess";
 import "./style.css";
@@ -166,7 +165,7 @@ function Comment({
   const [content, setContent] = useState("");
   const isDarkMode = useSelector(selectIsDarkMode);
   const timeDisplay = timeConverter(comment.wr_date);
-  const recResult = calRecommend(comment.recommendations);
+  const recResult = comment.recommend_cnt + comment.decommend_cnt;
 
   useEffect(() => {
     if (user && user.id === comment.user.id) {
@@ -308,14 +307,16 @@ function Comment({
             >
               <img src={thumbsUp} alt="like"></img>
             </button>
-            <span className="comment__span-rec">{recResult.like}</span>
+            <span className="comment__span-rec">{recResult}</span>
             <button
               className="comment__btn comment__btn-dislike"
               onClick={() => handleClickRec(-1)}
             >
               <img src={thumbsDown} alt="dislike"></img>
             </button>
-            <span className="comment__span-rec">{recResult.disLike}</span>
+            <span className="comment__span-rec" hidden>
+              {comment.decommend_cnt}
+            </span>
           </div>
           <div className="comment__btn-wrapper">
             {isWriter && (

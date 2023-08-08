@@ -1,7 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
-import calRecommend from "../../../../util/cal_rec";
 import timeConverter from "../../../../util/time_converter";
 import thumbsUp from "../../../../asset/icons/thumbs-up.svg";
 import thumbsDown from "../../../../asset/icons/thumbs-down.svg";
@@ -15,7 +14,7 @@ export default function ContentBoard({
   setTrigger,
   sanitize,
 }) {
-  const recResult = calRecommend(postDetail.recommendations);
+  const recResult = postDetail.recommend_cnt + postDetail.decommend_cnt;
   const timeDisplay = timeConverter(postDetail.wr_date);
 
   const handleClickRecommend = async (value) => {
@@ -64,14 +63,14 @@ export default function ContentBoard({
             onClick={() => handleClickRecommend(1)}
           >
             <img src={thumbsUp} alt="추천"></img>
-            <span>{recResult.like}</span>
+            <span>{recResult}</span>
           </button>
           <button
             className="content-board__btn content-board__btn--bad"
             onClick={() => handleClickRecommend(-1)}
           >
             <img src={thumbsDown} alt="비추천"></img>
-            <span>{recResult.disLike}</span>
+            <span>{recResult}</span>
           </button>
         </div>
         <section className="content-board__related">

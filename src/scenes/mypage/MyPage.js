@@ -14,7 +14,6 @@ import chat from "../../asset/icons/chatbubble.svg";
 import clip from "../../asset/icons/clip.svg";
 import "./style.css";
 import { useNavigate } from "react-router-dom";
-import calRecommend from "../../util/cal_rec";
 
 export default function MyPage() {
   const dispatch = useDispatch();
@@ -56,7 +55,7 @@ export default function MyPage() {
           />
         );
       } else {
-        let rec = calRecommend(dataArr[i].recommendations);
+        let rec = dataArr[i].recommend_cnt + dataArr[i].decommend_cnt;
 
         components.push(
           <ListItem
