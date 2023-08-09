@@ -14,7 +14,6 @@ export default function ContentBoard({
   setTrigger,
   sanitize,
 }) {
-  const recResult = postDetail.recommend_cnt + postDetail.decommend_cnt;
   const timeDisplay = timeConverter(postDetail.wr_date);
 
   const handleClickRecommend = async (value) => {
@@ -63,14 +62,18 @@ export default function ContentBoard({
             onClick={() => handleClickRecommend(1)}
           >
             <img src={thumbsUp} alt="추천"></img>
-            <span>{recResult}</span>
+            <span>
+              {postDetail.recommend_cnt ? postDetail.recommend_cnt : "-"}
+            </span>
           </button>
           <button
             className="content-board__btn content-board__btn--bad"
             onClick={() => handleClickRecommend(-1)}
           >
             <img src={thumbsDown} alt="비추천"></img>
-            <span>{recResult}</span>
+            <span>
+              {postDetail.decommend_cnt ? postDetail.decommend_cnt : "-"}
+            </span>
           </button>
         </div>
         <section className="content-board__related">

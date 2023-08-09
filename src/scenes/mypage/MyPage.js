@@ -63,7 +63,7 @@ export default function MyPage() {
             postId={dataArr[i].postId}
             title={getTitle(dataArr[i].content)}
             date={dataArr[i].wr_date}
-            info2={rec.result}
+            info2={rec}
           />
         );
       }
@@ -143,7 +143,7 @@ function ListItem({ title, date, info1, info2, postId }) {
       </div>
       <div>
         {width > 480 ? <span>{info1}</span> : ""}
-        <span className="mp-list__view">{info2}</span>
+        <span className="mp-list__info2">{info2}</span>
       </div>
     </li>
   );

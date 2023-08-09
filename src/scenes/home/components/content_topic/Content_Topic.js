@@ -11,7 +11,8 @@ export default function Others({ posts, mainEle }) {
     </div>
   );
 }
-function Hit() {
+
+/* function Hit() {
   return (
     <aside className="hit__wrapper">
       <h2 className="hit__title">{"Hit"}</h2>
@@ -87,3 +88,4 @@ function HitComments({ hitCommentData }) {
     </ul>
   );
 }
+ */
