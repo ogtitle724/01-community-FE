@@ -24,7 +24,7 @@ export default function CommentBoard({
 }) {
   const [isShowInput, setIsShowInput] = useState(false);
   const [content, setContent] = useState("");
-  const [targetId, setTargetId] = useState(null);
+  const [target, setTarget] = useState(null);
   const btnShow = useRef();
   const isDarkMode = useSelector(selectIsDarkMode);
 
@@ -32,7 +32,7 @@ export default function CommentBoard({
     if (isShowInput) {
       btnShow.current.style = "transform:rotateZ(0deg)";
       setIsShowInput(false);
-      setTargetId(null);
+      setTarget(null);
     } else {
       btnShow.current.style = "transform:rotateZ(45deg)";
       setIsShowInput(true);
@@ -47,14 +47,17 @@ export default function CommentBoard({
       content: contentArg,
     };
 
-    if (targetId) {
+    if (target) {
       path = process.env.REACT_APP_PATH_REPLY;
       path = path
         .replace("{post-id}", postDetail.id)
-        .replace("{comment-id}", targetId);
+        .replace("{comment-id}", target.id);
+      payload.targetNick = target.nick;
     } else {
       path = process.env.REACT_APP_PATH_COMMENT;
-      path = path.replace("{post-id}", postDetail.id);
+      path = path
+        .replace("{post-id}", postDetail.id)
+        .replace("/{comment-id}", "");
     }
 
     try {
@@ -63,7 +66,7 @@ export default function CommentBoard({
 
       setTimeout(() => {
         setIsShowInput(false);
-        setTargetId(null);
+        setTarget(null);
         setTrigger(!trigger);
         setContent("");
       }, 200);
@@ -87,12 +90,12 @@ export default function CommentBoard({
                   comment={comment}
                   btnShow={btnShow}
                   setIsShowInput={setIsShowInput}
-                  setTargetId={setTargetId}
+                  setTarget={setTarget}
                   sanitize={sanitize}
                   trigger={trigger}
                   setTrigger={setTrigger}
                 />
-                {comment.replies.length
+                {comment.replies?.length
                   ? comment.replies.map((reply, idxR) => {
                       return (
                         <Comment
@@ -102,7 +105,7 @@ export default function CommentBoard({
                           comment={reply}
                           btnShow={btnShow}
                           setIsShowInput={setIsShowInput}
-                          setTargetId={setTargetId}
+                          setTarget={setTarget}
                           cName={" comment__reply"}
                           sanitize={sanitize}
                           trigger={trigger}
@@ -154,7 +157,7 @@ function Comment({
   comment,
   btnShow,
   setIsShowInput,
-  setTargetId,
+  setTarget,
   cName,
   sanitize,
   trigger,
@@ -167,7 +170,7 @@ function Comment({
   const timeDisplay = timeConverter(comment.wr_date);
 
   useEffect(() => {
-    if (user && user.id === comment.user.id) {
+    if (user && user.id === comment.user_id) {
       setIsWriter(true);
     } else {
       setIsWriter(false);
@@ -176,7 +179,7 @@ function Comment({
 
   const handleClickBtnReply = () => {
     setIsShowInput(true);
-    setTargetId(comment.id);
+    setTarget({ id: comment.id, nick: comment.user_nick });
     btnShow.current.style = "transform:rotateZ(45deg)";
   };
 
@@ -246,13 +249,13 @@ function Comment({
     <div className={"comment__default" + (cName ? cName : "")}>
       <span className="comment__info">
         <div className="comment__img"></div>
-        <span className="comment__nickname">{comment.user.nick}</span>
+        <span className="comment__nickname">{comment.user_nick}</span>
         <span className="comment__date">{timeDisplay}</span>
       </span>
       <div className="comment__detail">
         {!isEdit && cName ? (
           <span className="comment__reply-target">
-            {comment.targetId.user.nick}
+            {comment.target_nick ? "🔗" + comment.target_nick : "🔗targetNick"}
           </span>
         ) : (
           ""
@@ -292,7 +295,7 @@ function Comment({
           ></span>
         )}
       </div>
-      {!isEdit && !comment.isDeleted && (
+      {!isEdit && !comment.del_date && (
         <div
           className={
             "comment__interface" +

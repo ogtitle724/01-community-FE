@@ -7,7 +7,6 @@ import "./style.css";
 
 export default function Board({ posts, mainEle, title }) {
   const [isDivide, setIsDivide] = useState(false);
-
   const handleChangeLayout = () => {
     setIsDivide(!isDivide);
   };
@@ -27,8 +26,10 @@ export default function Board({ posts, mainEle, title }) {
         ></button>
         <ul
           className={
-            (posts.content.length ? "board__ul" : " board__skeleton") +
-            (isDivide ? " board__ul--two-line" : " board__ul--one-line")
+            posts.content.length
+              ? "board__ul" +
+                (isDivide ? " board__ul--two-line" : " board__ul--one-line")
+              : " board__skeleton"
           }
         >
           {posts.content.length ? (
@@ -68,7 +69,7 @@ function Post({ post, mainEle }) {
         <span className="post-li__data post-li__view">{post.view_cnt}</span>
         <span className="post-li__data post-li__like">{76}</span>
         <span className="post-li__data post-li__comment">{17}</span>
-        <span className="post-li__data">{post.nick}</span>
+        <span className="post-li__data post-li__nick">{post.nick}</span>
         <span className="post-li__data post-li__date">{timeDisplay} </span>
       </div>
     </li>

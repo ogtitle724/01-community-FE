@@ -6,6 +6,7 @@
 }
 
 .board__title {
+  padding-left: 5px;
   margin-bottom: 10px;
   font-size: var(--font-size-lg);
 }
@@ -86,6 +87,16 @@
   background-color: var(--color-whitesmoke);
 }
 
+.post-li__data {
+  margin-right: 15px;
+  font-size: var(--font-size-sm);
+}
+
+.post-li__data-wrapper {
+  display: flex;
+  align-items: center;
+}
+
 .post-li__category {
   width: fit-content;
   padding: 3px;
@@ -104,14 +115,17 @@
   font-weight: 500;
 }
 
-.post-li__data-wrapper {
-  display: flex;
-  align-items: center;
+.post-li__nick {
+  margin-left: 0px;
+  position: relative;
+  bottom: -1px;
 }
 
-.post-li__data {
-  margin-right: 15px;
-  font-size: var(--font-size-sm);
+.post-li__date {
+  margin-right: 0px;
+  position: absolute;
+  right: 6px;
+  bottom: 5.5px;
 }
 
 .post-li__view::before {
@@ -142,18 +156,12 @@
   content: "";
   width: 12px;
   height: 12px;
-  margin-right: 3px;
+  margin-right: 5px;
   position: relative;
   top: 2px;
   display: inline-block;
   background: url(../../asset/icons/chatbox.svg);
   filter: invert(60%);
-}
-
-.post-li__date {
-  margin-right: 0px;
-  position: absolute;
-  right: 6px;
 }
 
 .board__nav {
@@ -225,22 +233,26 @@
     margin-right: 10px;
   }
 
+  .post-li__date {
+    margin-right: 0px;
+  }
+
   .post-li__view::before {
     width: 10px;
     height: 10px;
-    margin-right: 5px;
+    margin-right: 3px;
   }
 
   .post-li__like::before {
     width: 10px;
     height: 10px;
-    margin-right: 4px;
+    margin-right: 3px;
   }
 
   .post-li__comment::before {
     width: 10px;
     height: 10px;
-    margin-right: 3.5px;
+    margin-right: 3px;
   }
 
   .board__nav-btn {
@@ -262,6 +274,10 @@
     top: 0px;
   }
 
+  .post-li__data {
+    margin-right: 8px;
+  }
+
   .post-li__category {
     padding: 2px;
   }
@@ -270,26 +286,29 @@
     font-weight: 600;
   }
 
-  .post-li__data {
-    margin-right: 10px;
+  .post-li__date {
+    margin-right: 0px;
   }
 
   .post-li__view::before {
     width: 10px;
     height: 10px;
-    margin-right: 5px;
   }
 
   .post-li__like::before {
     width: 10px;
     height: 10px;
-    margin-right: 4px;
   }
 
   .post-li__comment::before {
     width: 10px;
     height: 10px;
-    margin-right: 3.5px;
+  }
+
+  .board__ul--two-line .post-li__nick {
+    position: absolute;
+    top: 10px;
+    right: 5px;
   }
 
   .board__nav-btn {

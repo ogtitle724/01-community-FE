@@ -112,7 +112,6 @@
 }
 
 /* hitPost */
-
 .hit-board--post {
   flex: 1 1 calc((100% - 21.5px) * 0.6);
 }

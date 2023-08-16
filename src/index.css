@@ -1,32 +1,32 @@
 :root {
   --header-height: 50px;
   --gnb-height: 30px;
-  --font-size-title: 1.5rem;
-  --font-size-lg: 1.2rem;
-  --font-size-md: 1rem;
-  --font-size-sm: 0.8rem;
-  --font-size-vsm: 0.5rem;
+  --font-size-title: 23px;
+  --font-size-lg: 18px;
+  --font-size-md: 16px;
+  --font-size-sm: 12px;
+  --font-size-vsm: 10px;
 }
 
 @media screen and (max-width: 1024px) {
   :root {
     --header-height: 40px;
     --gnb-height: 23px;
-    --font-size-title: 1.2rem;
-    --font-size-lg: 1rem;
-    --font-size-md: 0.8rem;
-    --font-size-sm: 0.5rem;
-    --font-size-vsm: 0.2rem;
+    --font-size-title: 18px;
+    --font-size-lg: 16px;
+    --font-size-md: 12px;
+    --font-size-sm: 10px;
+    --font-size-vsm: 10px;
   }
 }
 
 @media screen and (max-width: 768px) {
   :root {
-    --font-size-title: 1rem;
-    --font-size-lg: 0.8rem;
-    --font-size-md: 0.6rem;
-    --font-size-sm: 0.3rem;
-    --font-size-vsm: 0.1rem;
+    --font-size-title: 16px;
+    --font-size-lg: 12px;
+    --font-size-md: 10px;
+    --font-size-sm: 10px;
+    --font-size-vsm: 10px;
   }
 }
 

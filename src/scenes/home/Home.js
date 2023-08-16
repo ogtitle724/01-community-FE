@@ -70,7 +70,15 @@ export default function Home() {
       <Header />
       <Gnb />
       <section ref={mainEle} className="main">
-        <div className="main-content">{posts && content.current}</div>
+        <div className="main-content">
+          {posts ? (
+            content.current
+          ) : (
+            <span className="main-content__alert">
+              {"서버와의 통신이 불안정합니다 :("}
+            </span>
+          )}
+        </div>
       </section>
       <WriteBtn mainEle={mainEle} />
     </main>

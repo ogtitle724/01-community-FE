@@ -38,9 +38,10 @@
   width: 100%;
   height: 100%;
   margin: 0 10px;
-  border: 2.5px solid;
-  border-radius: 8px;
-  border-color: var(--color-orange) transparent var(--color-orange) transparent;
+  border: 2px solid;
+  border-radius: 3px;
+  border-color: var(--color-orange) var(--color-body) var(--color-orange)
+    var(--color-body);
   overflow-y: scroll;
 }
 

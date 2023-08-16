@@ -111,7 +111,9 @@ export default function SignUp({ setShowSignUpForm }) {
 
   return (
     <form className="form-signup">
-      <h2 className="form-signup__title">회원 가입</h2>
+      <h2 className="form-signup__title" hidden>
+        회원 가입
+      </h2>
       <button
         className="btn-close"
         onClick={() => setShowSignUpForm(false)}
@@ -303,7 +305,7 @@ export default function SignUp({ setShowSignUpForm }) {
         }
         onClick={(e) => handleClickBtnSignUp(e)}
       >
-        Sign up
+        회원 가입
       </button>
     </form>
   );

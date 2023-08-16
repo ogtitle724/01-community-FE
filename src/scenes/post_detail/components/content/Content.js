@@ -48,7 +48,7 @@ export default function ContentBoard({
             </span>
             <span> | </span>
             <span className="content-board__writer">
-              {postDetail.user.nick}
+              {postDetail.user_nick}
             </span>
           </div>
         </div>
