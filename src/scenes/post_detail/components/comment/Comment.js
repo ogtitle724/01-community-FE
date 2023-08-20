@@ -7,13 +7,14 @@ import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 
 import timeConverter from "../../../../util/time_converter";
-import changeP2Span from "../../../../util/commentProcess";
+import { changeP2Span, deleteEnter } from "../../../../util/textProcess";
 import "./style.css";
 import thumbsUp from "../../../../asset/icons/thumbs-up.svg";
 import thumbsDown from "../../../../asset/icons/thumbs-down.svg";
 import chatBox from "../../../../asset/icons/chatbox.svg";
 import edit from "../../../../asset/icons/edit.svg";
 import trash from "../../../../asset/icons/trash.svg";
+import close from "../../../../asset/icons/close.svg";
 
 export default function CommentBoard({
   postDetail,
@@ -24,90 +25,116 @@ export default function CommentBoard({
 }) {
   const [content, setContent] = useState("");
   const [target, setTarget] = useState(null);
+  const editorRef = useRef();
 
   const handleClickBtnOk = async () => {
-    let payload, path;
-    let contentArg = changeP2Span(content);
-    console.log(contentArg);
+    if (content) {
+      let payload, path;
+      let contentArg = changeP2Span(content);
+      contentArg = deleteEnter(contentArg);
 
-    payload = {
-      content: contentArg,
-      postId: postDetail.id,
-    };
+      payload = {
+        content: contentArg,
+        postId: postDetail.id,
+      };
 
-    if (target) {
-      path = process.env.REACT_APP_PATH_REPLY;
-      path = path.replace("{comment-id}", target.parentId);
-      payload.targetId = target.targetId;
-    } else {
-      path = process.env.REACT_APP_PATH_COMMENT;
-      path = path.replace("/{comment-id}", "");
-    }
+      if (target) {
+        path = process.env.REACT_APP_PATH_REPLY;
+        path = path.replace("{comment-id}", target.parentId);
+        payload.targetId = target.targetId;
+      } else {
+        path = process.env.REACT_APP_PATH_COMMENT;
+        path = path.replace("/{comment-id}", "");
+      }
 
-    try {
-      await axios.post(path, payload);
+      try {
+        await axios.post(path, payload);
+        let ck = editorRef.current.editor;
 
-      setTimeout(() => {
+        ck.setData("댓글을 입력해주세요...");
         setTarget(null);
-        setTrigger(!trigger);
         setContent("");
-      }, 200);
-    } catch (err) {
-      alert("로그인이 필요합니다.");
-      console.log(err);
+        setTimeout(() => {
+          setTrigger(!trigger);
+        }, 500);
+      } catch (err) {
+        alert("로그인이 필요합니다.");
+        console.log(err);
+      }
     }
+  };
 
-    const event = new MouseEvent("mousedown", { bubbles: true });
-    let ele = document.getElementsByClassName("comment-board__comment")[0];
-    ele.dispatchEvent(event);
+  const handleClickBtnCancel = () => {
+    let ck = editorRef.current.editor;
+
+    ck.setData("댓글을 입력해주세요...");
+    setTarget(null);
+    setContent("");
+  };
+
+  const ckFocus = () => {
+    if (editorRef.current) {
+      editorRef.current.editor.editing.view.focus();
+    }
   };
 
   return (
     <section className="comment-board">
       <section className="comment-board__comment-wrapper">
         <form
-          className="comment-board__form"
-          onClick={() => console.log("form")}
+          className={
+            "comment-board__form" + (target ? " comment-board__form-reply" : "")
+          }
         >
           <CKEditor
+            ref={editorRef}
             editor={ClassicEditor}
             data=""
             onReady={(editor) => {
-              editor.setData("댓글을 입력하세요...");
+              editor.setData("댓글을 입력해주세요...");
             }}
             onFocus={(event, editor) => {
-              editor.setData("");
+              if (content) {
+                editor.setData(content);
+              } else {
+                editor.setData("");
+              }
             }}
             onChange={(event, editor) => {
-              const data = editor.getData();
-              setContent(data);
+              let data = editor.getData();
+              console.log(data);
+              if (data === "<p>댓글을 입력해주세요...</p>") {
+                setContent("");
+              } else {
+                setContent(data);
+              }
             }}
             onBlur={(event, editor) => {
-              editor.setData("댓글을 입력하세요...");
+              if (!content) {
+                editor.setData("댓글을 입력해주세요...");
+              }
             }}
           />
 
-          <div
-            className={"comment-board__btn-wrapper"}
-            onClick={() => console.log("wrapper")}
-          >
+          <div className={"comment-board__btn-wrapper"}>
             <button
               type="button"
-              className="btn-ok comment-board__btn"
+              className="btn--good comment-board__btn"
               onClick={() => handleClickBtnOk()}
-              onMouseDown={(e) => e.preventDefault()}
+              disabled={!content}
             >
               ✔
             </button>
-            <button type="button" className="btn-cancel comment-board__btn">
+            <button
+              type="button"
+              className="btn--bad comment-board__btn"
+              onMouseDown={() => handleClickBtnCancel()}
+            >
               ✖
             </button>
           </div>
         </form>
-        <div
-          className="comment-board__comment"
-          onMouseDown={() => console.log("donnnnnn")}
-        >
+        <div className="comment-board__comment">
           {postDetail.comments.map((comment, idxC) => {
             return (
               <Fragment key={"comment-" + idxC}>
@@ -115,10 +142,12 @@ export default function CommentBoard({
                   user={user}
                   comment={comment}
                   parentId={comment.id}
+                  target={target}
                   setTarget={setTarget}
                   sanitize={sanitize}
                   trigger={trigger}
                   setTrigger={setTrigger}
+                  ckFocus={ckFocus}
                 />
                 {comment.replies?.length
                   ? comment.replies.map((reply, idxR) => {
@@ -128,11 +157,13 @@ export default function CommentBoard({
                           user={user}
                           comment={reply}
                           parentId={comment.id}
+                          target={target}
                           setTarget={setTarget}
                           cName={" comment__reply"}
                           sanitize={sanitize}
                           trigger={trigger}
                           setTrigger={setTrigger}
+                          ckFocus={ckFocus}
                         />
                       );
                     })
@@ -150,11 +181,13 @@ function Comment({
   user,
   comment,
   parentId,
+  target,
   setTarget,
   cName,
   sanitize,
   trigger,
   setTrigger,
+  ckFocus,
 }) {
   const [isEdit, setIsEdit] = useState(false);
   const [isWriter, setIsWriter] = useState(false);
@@ -171,7 +204,17 @@ function Comment({
   }, [user, comment]);
 
   const handleClickBtnReply = () => {
-    setTarget({ parentId, targetId: comment.user_id });
+    if (target?.targetCommentId === comment.id) {
+      setTarget(null);
+    } else {
+      setTarget({
+        parentId,
+        targetId: comment.user_id,
+        targetNick: comment.user_nick,
+        targetCommentId: comment.id,
+      });
+      ckFocus();
+    }
   };
 
   const handleClickRec = async (value) => {
@@ -198,11 +241,12 @@ function Comment({
   };
 
   const handleClickBtnUpdate = async () => {
-    const contentArg = changeP2Span(content);
     let path = process.env.REACT_APP_PATH_COMMENT.replace(
       "{comment-id}",
       comment.id
     );
+    let contentArg = changeP2Span(content);
+    contentArg = deleteEnter(contentArg);
 
     try {
       await axios.patch(path, { content: contentArg });
@@ -235,7 +279,13 @@ function Comment({
   };
 
   return (
-    <div className={"comment__default" + (cName ? cName : "")}>
+    <div
+      className={
+        "comment__default" +
+        (cName ? cName : "") +
+        (target?.targetCommentId === comment.id ? " comment-target" : "")
+      }
+    >
       <span className="comment__info">
         <div className="comment__img"></div>
         <span className="comment__nickname">{comment.user_nick}</span>
@@ -244,7 +294,7 @@ function Comment({
       <div className="comment__detail">
         {!isEdit && cName ? (
           <span className="comment__reply-target">
-            {comment.target_nick ? "🔗" + comment.target_nick : "🔗targetNick"}
+            {comment.parent_nick ? "🔗" + comment.parent_nick : "🔗targetNick"}
           </span>
         ) : (
           ""
@@ -331,8 +381,12 @@ function Comment({
             <button
               className="comment__btn comment__btn-reply"
               onClick={() => handleClickBtnReply()}
+              onMouseDown={(e) => e.preventDefault()}
             >
-              <img src={chatBox} alt="reply"></img>
+              <img
+                src={target?.targetCommentId === comment.id ? close : chatBox}
+                alt="reply"
+              ></img>
             </button>
           </div>
         </div>

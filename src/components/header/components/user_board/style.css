@@ -43,7 +43,6 @@
   line-height: 15px;
   font-size: var(--font-size-vsm);
   font-weight: 600;
-  transition: 0.2s;
   background-color: var(--color-whitesmoke);
 }
 

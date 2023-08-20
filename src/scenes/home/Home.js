@@ -37,7 +37,7 @@ export default function Home() {
           category
         );
       }
-
+      console.log(path);
       try {
         const res = await axios.get(path + `?page=${page - 1}&size=30`);
         setPosts(res.data);

@@ -54,48 +54,48 @@ iframe {
   margin-top: 20px;
   display: flex;
   justify-content: center;
-  gap: 5px;
+  gap: 0px;
 }
 
 .content-board__btn {
-  width: 70px;
-  height: 25px;
+  width: 50px;
+  height: 24px;
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 10px;
-  border: none;
-  background-color: var(--color-body);
+  gap: 5px;
   font-size: var(--font-size-sm);
   font-weight: 600;
   cursor: pointer;
-  filter: brightness(110%);
 }
 
-.content-board__btn--good {
-  background-color: var(--main-color);
+.content-board__btn-like {
+  border-radius: 4px 0 0 4px;
 }
 
-.content-board__btn--good img {
-  margin-bottom: 3px;
+.content-board__btn-dislike {
+  border-radius: 0 4px 4px 0;
 }
 
-.content-board__btn--bad {
-  background-color: var(--color-orange);
+.content-board__img--like {
+  left: -25px;
 }
 
-.content-board__btn--bad img {
-  margin-top: 3px;
+.content-board__img--dislike {
+  right: -25px;
 }
 
 .content-board__btn img {
-  height: 65%;
+  height: 80%;
+  position: absolute;
+  filter: invert(60%);
   object-fit: contain;
-  filter: invert(80%);
 }
 
 .content-board__btn span {
-  color: rgb(208, 208, 208);
+  font-size: var(--font-size-vsm);
+  color: var(--font-color-light);
 }
 
 .content-board__related {

@@ -4,7 +4,7 @@ import { selectUser } from "../../redux/slice/signSlice";
 import { selectWidth, setWidth } from "../../redux/slice/pageSlice";
 import axios from "axios";
 
-import { getTitle } from "../../util/commentProcess";
+import { getTitle } from "../../util/textProcess";
 import Header from "../../components/header/Header";
 import Gnb from "../../components/gnb/Gnb";
 import profileImg from "../../asset/icons/person.svg";

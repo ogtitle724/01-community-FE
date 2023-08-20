@@ -7,13 +7,14 @@
   width: 100%;
   min-width: 260px;
   height: 26px;
+  padding: 2px 10px;
   border-radius: 4px;
   border: 1px solid var(--color-whitesmoke);
   background-color: var(--color-whitesmoke);
   font-size: var(--font-size-sm);
   cursor: text;
-  display: flex;
-  align-items: center;
+  transition: height 0.3s;
+  transition-delay: height 0.2s;
 }
 
 .comment-board
@@ -59,7 +60,7 @@
 }
 
 .comment-board__form {
-  margin: 5px 0 10px 0;
+  margin-bottom: 10px;
   padding-bottom: 15px;
   position: sticky;
   top: 5px;
@@ -77,6 +78,18 @@
   background-color: var(--color-body);
 }
 
+.comment-board__form-reply::after {
+  content: "⤷";
+  position: absolute;
+  left: -5px;
+  top: -2px;
+  z-index: 3;
+  font-size: var(--font-size-lg);
+  font-weight: 700;
+  color: var(--main-color);
+  background-color: transparent;
+}
+
 .comment-board__btn-wrapper {
   width: 100%;
   display: flex;
@@ -86,54 +99,34 @@
   overflow: hidden;
 }
 
-.comment-board__btn-wrapper--hidden {
-  height: 0px;
-}
-
 .comment-board__btn {
   flex-grow: 1;
+  color: var(--font-color-light);
 }
 
 .comment__default {
   width: 100%;
   min-height: 50px;
-  margin-bottom: 16px;
+  padding: 6px;
+  margin-bottom: 6px;
+  border-radius: 4px;
 }
 
-.comment__reply {
-  width: 96%;
-  margin-left: 13px;
-  position: relative;
+.comment-target {
+  transition: 0.3s;
+  background-color: rgb(255, 248, 157);
 }
 
-.comment__reply::before {
-  content: "";
-  width: 5px;
-  height: 5px;
-  position: absolute;
-  left: -12px;
-  top: 2px;
-  border: 2px solid;
-  border-radius: 3px;
-  border-color: transparent transparent var(--main-color) var(--main-color);
+.comment-target * {
+  color: black !important;
 }
 
-.comment__reply::after {
-  content: "";
-  width: 3px;
-  height: 3px;
-  position: absolute;
-  top: 6.3px;
-  left: -11px;
-  border: 2px solid;
-  border-radius: 3px;
-  border-color: transparent transparent var(--main-color) var(--main-color);
-  transform: rotateZ(-135deg);
+.comment-target .comment__reply-target {
+  background-color: var(--color-grey);
 }
 
 .comment__info {
   position: relative;
-  margin: 4px 2px;
   font-size: var(--font-size-vsm);
   display: flex;
   align-items: flex-end;
@@ -148,7 +141,7 @@
 }
 
 .comment__nickname {
-  margin-left: 3px;
+  margin-left: 2px;
   font-size: var(--font-size-sm);
   font-weight: 600;
 }
@@ -160,8 +153,7 @@
 }
 
 .comment__detail {
-  margin: 10px 0;
-  padding-left: 3px;
+  margin: 7px 0;
   font-size: var(--font-size-sm);
 }
 
@@ -188,24 +180,12 @@
   font-weight: 600;
 }
 
-.comment__reply-parent {
-  position: relative;
-  bottom: 1.5px;
-  margin-right: 6px;
-  padding: 0px 5px 3px 5px;
-  border-radius: 12px;
-  background-color: var(--color-background);
-  transform: translateY(-100px);
-  font-size: var(--font-size-vsm);
-  line-height: 20px;
-}
-
 .comment__descripition {
   line-height: 20px;
 }
 
 .comment__interface {
-  margin: 3px 0 6px 0;
+  margin: 2px 0;
   position: relative;
   display: flex;
   justify-content: space-between;
@@ -234,14 +214,13 @@
   margin: 0 4px;
   border-radius: 100%;
   border: none;
-  background-color: var(--color-body);
-  opacity: 0.2;
+  background-color: transparent;
   font-size: var(--font-size-vsm);
   transition: 0.2s;
+  filter: invert(60%);
 }
 
 .comment__btn:hover {
-  opacity: 0.6;
 }
 
 .comment__btn-dislike {
@@ -252,6 +231,35 @@
 .comment__span-rec {
   color: var(--color-grey);
   font-size: var(--font-size-vsm);
+}
+
+.comment__reply {
+  width: 96%;
+  margin-left: 13px;
+  position: relative;
+}
+
+.comment__reply::before {
+  content: "⤷";
+  position: absolute;
+  left: -10px;
+  top: 4px;
+  font-size: var(--font-size-md);
+  font-weight: 700;
+  color: var(--main-color);
+  background-color: transparent;
+}
+
+.comment__reply-target {
+  position: relative;
+  bottom: 1.5px;
+  margin-right: 6px;
+  padding: 0px 5px 3px 5px;
+  border-radius: 12px;
+  background-color: var(--color-background);
+  transform: translateY(-100px);
+  font-size: 10px;
+  line-height: 20px;
 }
 
 @media screen and (max-width: 1080px) {

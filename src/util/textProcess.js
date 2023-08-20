@@ -1,11 +1,14 @@
-export default function changeP2Span(content) {
+export function changeP2Span(content) {
   content = content.replace("<p>", "<span>");
   content = content.replace("</p>", "</span>");
   return content;
 }
 
+export function deleteEnter(content) {
+  return content.replace(/(<p>(&nbsp;|\s)*<\/p>)+$/, "");
+}
+
 export function getTitle(content) {
-  console.log(content);
   content = content.replace("<span>", "");
   let idx = content.indexOf("</span>");
 
