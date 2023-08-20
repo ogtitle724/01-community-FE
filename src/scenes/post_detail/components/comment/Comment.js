@@ -314,13 +314,13 @@ function Comment({
             />
             <div className="comment__edit-btn-wrapper">
               <button
-                className="btn-ok comment__edit-btn"
+                className="btn-ok comment__edit-btn btn--good"
                 onClick={handleClickBtnUpdate}
               >
                 ✔
               </button>
               <button
-                className="btn-cancel comment__edit-btn"
+                className="btn-cancel comment__edit-btn btn--bad"
                 onClick={handleClickBtnCancel}
               >
                 ✖
