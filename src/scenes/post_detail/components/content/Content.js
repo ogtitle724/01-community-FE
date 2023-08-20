@@ -63,7 +63,7 @@ export default function ContentBoard({
           >
             <img src={thumbsUp} alt="추천"></img>
             <span>
-              {postDetail.recommend_cnt ? postDetail.recommend_cnt : "-"}
+              {postDetail.recommend_cnt ? postDetail.recommend_cnt : "0"}
             </span>
           </button>
           <button
@@ -72,7 +72,7 @@ export default function ContentBoard({
           >
             <img src={thumbsDown} alt="비추천"></img>
             <span>
-              {postDetail.decommend_cnt ? postDetail.decommend_cnt : "-"}
+              {postDetail.decommend_cnt ? postDetail.decommend_cnt : "0"}
             </span>
           </button>
         </div>

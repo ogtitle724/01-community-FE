@@ -67,8 +67,12 @@ function Post({ post, mainEle }) {
       <h3 className="post-li__title">{post.title}</h3>
       <div className="post-li__data-wrapper">
         <span className="post-li__data post-li__view">{post.view_cnt}</span>
-        <span className="post-li__data post-li__like">{76}</span>
-        <span className="post-li__data post-li__comment">{17}</span>
+        <span className="post-li__data post-li__like">
+          {post.recommend_cnt}
+        </span>
+        <span className="post-li__data post-li__comment">
+          {post.comment_cnt}
+        </span>
         <span className="post-li__data post-li__nick">{post.nick}</span>
         <span className="post-li__data post-li__date">{timeDisplay} </span>
       </div>

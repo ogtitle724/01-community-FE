@@ -15,10 +15,16 @@ export default function SignIn() {
     e.preventDefault();
 
     try {
-      const res = await axios.post(process.env.REACT_APP_PATH_LOGIN, {
-        uid: uid,
-        pwd: pwd,
-      });
+      const res = await axios.post(
+        process.env.REACT_APP_PATH_LOGIN,
+        {
+          uid: uid,
+          pwd: pwd,
+        },
+        {
+          withCredentials: true,
+        }
+      );
 
       const userData = res.data;
 

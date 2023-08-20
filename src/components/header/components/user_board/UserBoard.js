@@ -14,7 +14,6 @@ export default function UserBoard() {
     try {
       await axios.get(process.env.REACT_APP_PATH_LOGOUT);
 
-      navigate("/");
       delete axios.defaults.headers.common["Authorization"];
       dispatch(logout());
       dispatch(setUser({ user: null }));

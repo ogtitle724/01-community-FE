@@ -7,7 +7,7 @@ export default function ContentHome({ posts, mainEle }) {
     <>
       <HorizontalList />
       <div className="board-pre">
-        <Board posts={posts} mainEle={mainEle} title={"최신글"} />
+        <Board posts={posts} mainEle={mainEle} title={"인기글"} />
       </div>
     </>
   );

@@ -1,5 +1,6 @@
+import { Fragment, useRef } from "react";
 import axios from "axios";
-import { useState, useRef, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { selectIsDarkMode } from "../../../../redux/slice/signSlice";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
@@ -11,7 +12,6 @@ import "./style.css";
 import thumbsUp from "../../../../asset/icons/thumbs-up.svg";
 import thumbsDown from "../../../../asset/icons/thumbs-down.svg";
 import chatBox from "../../../../asset/icons/chatbox.svg";
-import closeCircle from "../../../../asset/icons/close-circle.svg";
 import edit from "../../../../asset/icons/edit.svg";
 import trash from "../../../../asset/icons/trash.svg";
 
@@ -22,50 +22,32 @@ export default function CommentBoard({
   setTrigger,
   sanitize,
 }) {
-  const [isShowInput, setIsShowInput] = useState(false);
   const [content, setContent] = useState("");
   const [target, setTarget] = useState(null);
-  const btnShow = useRef();
-  const isDarkMode = useSelector(selectIsDarkMode);
 
-  const handleClickBtnShow = (e) => {
-    if (isShowInput) {
-      btnShow.current.style = "transform:rotateZ(0deg)";
-      setIsShowInput(false);
-      setTarget(null);
-    } else {
-      btnShow.current.style = "transform:rotateZ(45deg)";
-      setIsShowInput(true);
-    }
-  };
-
-  const handleClickBtnAdd = async () => {
+  const handleClickBtnOk = async () => {
     let payload, path;
     let contentArg = changeP2Span(content);
+    console.log(contentArg);
 
     payload = {
       content: contentArg,
+      postId: postDetail.id,
     };
 
     if (target) {
       path = process.env.REACT_APP_PATH_REPLY;
-      path = path
-        .replace("{post-id}", postDetail.id)
-        .replace("{comment-id}", target.id);
-      payload.targetNick = target.nick;
+      path = path.replace("{comment-id}", target.parentId);
+      payload.targetId = target.targetId;
     } else {
       path = process.env.REACT_APP_PATH_COMMENT;
-      path = path
-        .replace("{post-id}", postDetail.id)
-        .replace("/{comment-id}", "");
+      path = path.replace("/{comment-id}", "");
     }
 
     try {
       await axios.post(path, payload);
-      btnShow.current.style = "transform:rotateZ(0deg)";
 
       setTimeout(() => {
-        setIsShowInput(false);
         setTarget(null);
         setTrigger(!trigger);
         setContent("");
@@ -74,22 +56,65 @@ export default function CommentBoard({
       alert("로그인이 필요합니다.");
       console.log(err);
     }
+
+    const event = new MouseEvent("mousedown", { bubbles: true });
+    let ele = document.getElementsByClassName("comment-board__comment")[0];
+    ele.dispatchEvent(event);
   };
 
   return (
     <section className="comment-board">
       <section className="comment-board__comment-wrapper">
-        <div className="comment-board__comment">
+        <form
+          className="comment-board__form"
+          onClick={() => console.log("form")}
+        >
+          <CKEditor
+            editor={ClassicEditor}
+            data=""
+            onReady={(editor) => {
+              editor.setData("댓글을 입력하세요...");
+            }}
+            onFocus={(event, editor) => {
+              editor.setData("");
+            }}
+            onChange={(event, editor) => {
+              const data = editor.getData();
+              setContent(data);
+            }}
+            onBlur={(event, editor) => {
+              editor.setData("댓글을 입력하세요...");
+            }}
+          />
+
+          <div
+            className={"comment-board__btn-wrapper"}
+            onClick={() => console.log("wrapper")}
+          >
+            <button
+              type="button"
+              className="btn-ok comment-board__btn"
+              onClick={() => handleClickBtnOk()}
+              onMouseDown={(e) => e.preventDefault()}
+            >
+              ✔
+            </button>
+            <button type="button" className="btn-cancel comment-board__btn">
+              ✖
+            </button>
+          </div>
+        </form>
+        <div
+          className="comment-board__comment"
+          onMouseDown={() => console.log("donnnnnn")}
+        >
           {postDetail.comments.map((comment, idxC) => {
             return (
-              <>
+              <Fragment key={"comment-" + idxC}>
                 <Comment
-                  key={"comment-" + idxC}
-                  postId={postDetail.id}
                   user={user}
                   comment={comment}
-                  btnShow={btnShow}
-                  setIsShowInput={setIsShowInput}
+                  parentId={comment.id}
                   setTarget={setTarget}
                   sanitize={sanitize}
                   trigger={trigger}
@@ -100,11 +125,9 @@ export default function CommentBoard({
                       return (
                         <Comment
                           key={"reply-" + idxR}
-                          postId={postDetail.id}
                           user={user}
                           comment={reply}
-                          btnShow={btnShow}
-                          setIsShowInput={setIsShowInput}
+                          parentId={comment.id}
                           setTarget={setTarget}
                           cName={" comment__reply"}
                           sanitize={sanitize}
@@ -114,49 +137,19 @@ export default function CommentBoard({
                       );
                     })
                   : ""}
-              </>
+              </Fragment>
             );
           })}
         </div>
       </section>
-      <button
-        className={
-          "comment-board__btn-add" +
-          (isDarkMode ? " comment-board__btn-add--dark" : "")
-        }
-        onClick={(e) => handleClickBtnShow(e)}
-      >
-        <img ref={btnShow} src={closeCircle} alt="x" />
-      </button>
-      {isShowInput && (
-        <form className="comment-board__form">
-          <CKEditor
-            editor={ClassicEditor}
-            data=""
-            onChange={(event, editor) => {
-              const data = editor.getData();
-              setContent(data);
-            }}
-          />
-          <button
-            type="button"
-            className="comment-board__btn"
-            onClick={() => handleClickBtnAdd()}
-          >
-            Add
-          </button>
-        </form>
-      )}
     </section>
   );
 }
 
 function Comment({
-  postId,
   user,
   comment,
-  btnShow,
-  setIsShowInput,
+  parentId,
   setTarget,
   cName,
   sanitize,
@@ -178,9 +171,7 @@ function Comment({
   }, [user, comment]);
 
   const handleClickBtnReply = () => {
-    setIsShowInput(true);
-    setTarget({ id: comment.id, nick: comment.user_nick });
-    btnShow.current.style = "transform:rotateZ(45deg)";
+    setTarget({ parentId, targetId: comment.user_id });
   };
 
   const handleClickRec = async (value) => {
@@ -188,11 +179,12 @@ function Comment({
       return alert("로그인이 필요합니다!");
     }
 
+    let path = process.env.REACT_APP_PATH_COMMENT_REC.replace(
+      "{comment-id}",
+      comment.id
+    );
+
     try {
-      let path = process.env.REACT_APP_PATH_COMMENT_REC.replace(
-        "{post-id}",
-        postId
-      ).replace("{comment-id}", comment.id);
       await axios.patch(path, { value });
       setTrigger(!trigger);
     } catch (err) {
@@ -201,22 +193,18 @@ function Comment({
   };
 
   const handleClickBtnEdit = async () => {
-    try {
-      setContent(comment.content);
-      setIsEdit(true);
-    } catch (err) {
-      console.log(err);
-    }
+    setContent(comment.content);
+    setIsEdit(true);
   };
 
   const handleClickBtnUpdate = async () => {
     const contentArg = changeP2Span(content);
-    try {
-      let path = process.env.REACT_APP_PATH_COMMENT.replace(
-        "{post-id}",
-        postId
-      ).replace("{comment-id}", comment.id);
+    let path = process.env.REACT_APP_PATH_COMMENT.replace(
+      "{comment-id}",
+      comment.id
+    );
 
+    try {
       await axios.patch(path, { content: contentArg });
       setIsEdit(false);
       setTrigger(!trigger);
@@ -232,11 +220,12 @@ function Comment({
   const handleClickBtnDelete = async () => {
     // eslint-disable-next-line no-restricted-globals
     if (confirm("댓글을 삭제하시겠습니까?")) {
+      let path = process.env.REACT_APP_PATH_COMMENT.replace(
+        "{comment-id}",
+        comment.id
+      );
+
       try {
-        let path = process.env.REACT_APP_PATH_COMMENT.replace(
-          "{post-id}",
-          postId
-        ).replace("{comment-id}", comment.id);
         await axios.delete(path);
         setTrigger(!trigger);
       } catch (err) {
@@ -275,13 +264,13 @@ function Comment({
             />
             <div className="comment__edit-btn-wrapper">
               <button
-                className="comment__edit-btn"
+                className="btn-ok comment__edit-btn"
                 onClick={handleClickBtnUpdate}
               >
                 ✔
               </button>
               <button
-                className="comment__edit-btn"
+                className="btn-cancel comment__edit-btn"
                 onClick={handleClickBtnCancel}
               >
                 ✖
@@ -310,7 +299,7 @@ function Comment({
               <img src={thumbsUp} alt="like"></img>
             </button>
             <span className="comment__span-rec">
-              {comment.recommend_cnt ? comment.recommend_cnt : "-"}
+              {comment.recommend_cnt ? comment.recommend_cnt : "0"}
             </span>
             <button
               className="comment__btn comment__btn-dislike"
@@ -319,7 +308,7 @@ function Comment({
               <img src={thumbsDown} alt="dislike"></img>
             </button>
             <span className="comment__span-rec">
-              {comment.decommend_cnt ? comment.decommend_cnt : "-"}
+              {comment.decommend_cnt ? comment.decommend_cnt : "0"}
             </span>
           </div>
           <div className="comment__btn-wrapper">

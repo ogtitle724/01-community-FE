@@ -63,6 +63,9 @@ export default function WritePage() {
     } else if (!body) {
       alert("내용을 입력해주세요");
       return;
+    } else if (!category) {
+      alert("카테고리를 정해주세요");
+      return;
     }
 
     let payload = {

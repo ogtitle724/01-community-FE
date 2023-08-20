@@ -27,11 +27,18 @@ export default function Home() {
   useEffect(() => {
     const handleResize = () => dispatch(setWidth({ width: window.innerWidth }));
     const getPosts = async () => {
-      try {
-        const path = process.env.REACT_APP_PATH_PAGING.replace(
+      let path;
+
+      if (category === "홈") {
+        path = process.env.REACT_APP_PATH_PAGING_BEST;
+      } else {
+        path = process.env.REACT_APP_PATH_PAGING.replace(
           "{category}",
           category
         );
+      }
+
+      try {
         const res = await axios.get(path + `?page=${page - 1}&size=30`);
         setPosts(res.data);
       } catch (err) {

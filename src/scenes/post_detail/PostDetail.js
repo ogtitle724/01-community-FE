@@ -27,7 +27,7 @@ export default function PostDetail() {
         const res = await axios.get(path);
         const post = res.data;
 
-        if (user && post.user.id === user?.id) {
+        if (user && post.user_id === user.id) {
           setIsWriter(true);
         } else {
           setIsWriter(false);
@@ -45,7 +45,7 @@ export default function PostDetail() {
   useEffect(() => {
     const checkWriter = async () => {
       if (postDetail && user) {
-        if (postDetail.user.id === user.id) {
+        if (postDetail.user_id === user.id) {
           setIsWriter(true);
         } else {
           setIsWriter(false);
