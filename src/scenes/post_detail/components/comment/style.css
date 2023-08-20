@@ -188,7 +188,7 @@
   font-weight: 600;
 }
 
-.comment__reply-target {
+.comment__reply-parent {
   position: relative;
   bottom: 1.5px;
   margin-right: 6px;
