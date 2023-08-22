@@ -54,48 +54,49 @@ iframe {
   margin-top: 20px;
   display: flex;
   justify-content: center;
-  gap: 0px;
+  align-items: center;
+  gap: 16px;
 }
 
 .content-board__btn {
-  width: 50px;
-  height: 24px;
+  width: 35px;
+  height: 35px;
   position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 5px;
   font-size: var(--font-size-sm);
   font-weight: 600;
   cursor: pointer;
+  border: none;
+  border-radius: 0%;
+  background-color: transparent;
 }
 
 .content-board__btn-like {
-  border-radius: 4px 0 0 4px;
+  border-bottom: 2px solid var(--main-color);
 }
 
 .content-board__btn-dislike {
-  border-radius: 0 4px 4px 0;
+  border-bottom: 2px solid var(--color-orange);
 }
 
 .content-board__img--like {
-  left: -25px;
 }
 
 .content-board__img--dislike {
-  right: -25px;
+  bottom: +0px;
 }
 
 .content-board__btn img {
-  height: 80%;
-  position: absolute;
+  height: 20px;
+  position: relative;
   filter: invert(60%);
   object-fit: contain;
 }
 
-.content-board__btn span {
-  font-size: var(--font-size-vsm);
-  color: var(--font-color-light);
+.content-board__span {
+  font-size: var(--font-size-title);
 }
 
 .content-board__related {

@@ -1,6 +1,7 @@
 :root {
   --header-height: 50px;
   --gnb-height: 30px;
+  --top-height: calc(var(--header-height) + var(--gnb-height));
 
   --font-size-title: 23px;
   --font-size-lg: 18px;
@@ -9,20 +10,11 @@
   --font-size-vsm: 12px;
 }
 
-@media screen and (max-width: 1024px) {
+@media screen and (max-width: 1080px) {
   :root {
-    --header-height: 40px;
-    --gnb-height: 23px;
-
+    --header-height: 34px;
     --font-size-title: 18px;
-    --font-size-lg: 16px;
-    --font-size-md: 12px;
-    --font-size-sm: 10px;
-    --font-size-vsm: 10px;
   }
-}
-
-@media screen and (max-width: 768px) {
 }
 
 :root[color-theme="light"] {
@@ -105,10 +97,6 @@ button {
   color: var(--font-color-light);
 }
 
-button:hover {
-  filter: brightness(0.8);
-}
-
 .btn--good {
   content: "emdfhr";
   border: 1px solid var(--main-color);
@@ -137,4 +125,8 @@ button:hover {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
+}
+
+.ck.ck-balloon-panel.ck-balloon-panel_position_border-side_right.ck-powered-by-balloon {
+  display: none;
 }

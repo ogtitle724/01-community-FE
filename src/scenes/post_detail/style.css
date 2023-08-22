@@ -8,7 +8,7 @@
 
 .post-detail__main {
   width: 100vw;
-  height: calc(100vh - 80px);
+  height: calc(100vh - var(--top-height));
   overflow-y: hidden;
   background-color: var(--color-body);
 }

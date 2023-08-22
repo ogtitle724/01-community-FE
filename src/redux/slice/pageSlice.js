@@ -5,7 +5,7 @@ export const pageSlice = createSlice({
   initialState: {
     homePageIdx: 1,
     searchPageIdx: 1,
-    category: "best",
+    category: "홈",
     scrollY: 0,
     width: window.innerWidth,
   },

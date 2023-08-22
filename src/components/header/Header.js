@@ -14,6 +14,7 @@ import Sign from "./components/sign/Sign";
 import UserBoard from "./components/user_board/UserBoard";
 import ThemeToggle from "./components/themetoggle/ThemeToggle";
 import MenuBtn from "./components/menu/menu";
+import clip from "../../asset/icons/clip.svg";
 import "./style.css";
 
 export default function Header() {
@@ -45,7 +46,11 @@ export default function Header() {
           href={process.env.REACT_APP_ROUTE_HOME}
           onClick={(e) => handleClickLogo(e)}
         >
-          클립마켓
+          {width < 1080 ? (
+            <img className="header__logo-img" src={clip} alt="logo_clip"></img>
+          ) : (
+            "클립마켓"
+          )}
         </a>
         {width > 1024 ? <SearchBar /> : ""}
         {width > 1024 ? <ThemeToggle /> : ""}

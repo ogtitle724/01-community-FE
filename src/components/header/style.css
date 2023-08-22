@@ -37,8 +37,20 @@
 }
 
 @media screen and (max-width: 1024px) {
+  .header {
+    justify-content: center;
+    align-items: center;
+  }
   .header__logo {
-    margin: 0 auto;
+    margin: 0;
+    padding-top: 3px;
+  }
+
+  .header__logo-img {
+    width: calc(var(--header-height) - 6px);
+    height: calc(var(--header-height) - 6px);
+    filter: invert(60%);
+    transform: rotateZ(36deg);
   }
 
   .header__btn-menu {

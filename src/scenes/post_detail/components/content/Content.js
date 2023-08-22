@@ -58,7 +58,7 @@ export default function ContentBoard({
         ></div>
         <div className="content-board__btn-wrapper">
           <button
-            className="content-board__btn content-board__btn-like btn--good"
+            className="content-board__btn content-board__btn-like"
             onClick={() => handleClickRecommend(1)}
           >
             <img
@@ -66,12 +66,12 @@ export default function ContentBoard({
               src={thumbsUp}
               alt="추천"
             ></img>
-            <span>
-              {postDetail.recommend_cnt ? postDetail.recommend_cnt : "0"}
-            </span>
           </button>
+          <span className="content-board__span">
+            {postDetail.recommend_cnt - postDetail.decommend_cnt}
+          </span>
           <button
-            className="content-board__btn content-board__btn-dislike btn--bad"
+            className="content-board__btn content-board__btn-dislike"
             onClick={() => handleClickRecommend(-1)}
           >
             <img
@@ -79,9 +79,6 @@ export default function ContentBoard({
               src={thumbsDown}
               alt="비추천"
             ></img>
-            <span>
-              {postDetail.decommend_cnt ? postDetail.decommend_cnt : "0"}
-            </span>
           </button>
         </div>
         <section className="content-board__related">

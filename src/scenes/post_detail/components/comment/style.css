@@ -10,7 +10,7 @@
   border-radius: 4px !important;
   border: 1px solid var(--color-whitesmoke) !important;
   background-color: var(--color-whitesmoke);
-  font-size: var(--font-size-sm);
+  font-size: 14px;
   cursor: text;
   transition: height 0.3s 0.2s !important;
 }
@@ -52,7 +52,7 @@
 
 .comment-board__form {
   margin-bottom: 10px;
-  padding-bottom: 15px;
+  padding: 15px 0;
   position: sticky;
   top: 5px;
   background-color: var(--color-body);
@@ -72,10 +72,10 @@
 .comment-board__form-reply::after {
   content: "⤷";
   position: absolute;
-  left: -5px;
-  top: -2px;
+  left: -10px;
+  top: -7px;
   z-index: 3;
-  font-size: var(--font-size-lg);
+  font-size: 26px;
   font-weight: 700;
   color: var(--main-color);
   background-color: transparent;
@@ -232,8 +232,8 @@
   content: "⤷";
   position: absolute;
   left: -10px;
-  top: 4px;
-  font-size: var(--font-size-md);
+  top: 0px;
+  font-size: 20px;
   font-weight: 700;
   color: var(--main-color);
   background-color: transparent;
@@ -249,12 +249,14 @@
   transform: translateY(-100px);
   font-size: 10px;
   line-height: 20px;
+  font-size: var(--font-size-vsm);
 }
 
 @media screen and (max-width: 1080px) {
   .comment-board {
     width: 650px;
-    min-height: 300px;
+    height: auto;
+    max-height: 96%;
     margin: 20px auto;
     position: relative;
   }
@@ -271,5 +273,11 @@
 @media screen and (max-width: 768px) {
   .comment-board {
     width: 90%;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .comment-board .ck.ck-editor__editable:not(.ck-editor__nested-editable) {
+    padding: 5px 10px;
   }
 }
