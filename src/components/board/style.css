@@ -116,9 +116,10 @@
 }
 
 .post-li__nick {
-  margin-left: 0px;
+  margin: 0px;
   position: relative;
   bottom: -1px;
+  font-size: var(--font-size-sm);
 }
 
 .post-li__date {

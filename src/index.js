@@ -13,6 +13,7 @@ import SearchResult from "./scenes/search_result/SearchResult.js";
 import MyPage from "./scenes/mypage/MyPage.js";
 import { store, persistor } from "./redux/store.js";
 import "./index.css";
+import { logout, setLoginDeadline } from "./redux/slice/signSlice.js";
 
 axios.defaults.baseURL = process.env.REACT_APP_DOMAIN;
 axios.defaults.withCredentials = true;
@@ -31,10 +32,20 @@ axios.interceptors.response.use((res) => {
 //css color-theme setting => using redux state makes an mismatch error when initial rendering
 const handleInitialSetting = () => {
   const root = document.documentElement;
-  const isDarkMode = localStorage.getItem("persist:local")
-    ? JSON.parse(localStorage.getItem("persist:local")).isDarkMode === "true"
-    : false;
+
+  //set dark mode
+  let states = store.getState();
+  let isDarkMode = states.sign.isDarkMode;
   root.setAttribute("color-theme", isDarkMode ? "dark" : "light");
+
+  //check whether the login state expired or not
+  let loginDeadline = states.sign.loginDeadline;
+  let now = new Date();
+
+  if (new Date(loginDeadline) <= now) {
+    store.dispatch(logout());
+    store.dispatch(setLoginDeadline({ deadline: null }));
+  }
 };
 
 const router = createBrowserRouter([

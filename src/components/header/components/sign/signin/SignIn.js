@@ -1,7 +1,12 @@
 import axios from "axios";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { login, logout, setUser } from "../../../../../redux/slice/signSlice";
+import {
+  login,
+  logout,
+  setLoginDeadline,
+  setUser,
+} from "../../../../../redux/slice/signSlice";
 import { blindPwd } from "../../../../../util/secure";
 import "./style.css";
 
@@ -28,9 +33,15 @@ export default function SignIn() {
 
       const userData = res.data;
 
+      // Get the current UTC date and time
+      let now = new Date();
+      let afterAWeek = new Date();
+      afterAWeek.setMinutes(now.getUTCMinutes() + 1);
+
       dispatch(login());
       dispatch(setUser({ user: userData }));
-      setTimeout(silentRenew, process.env.REACT_APP_TOKEN_REGENERATE_TIME);
+      dispatch(setLoginDeadline({ deadline: afterAWeek.toString() }));
+      /* setTimeout(silentRenew, process.env.REACT_APP_TOKEN_REGENERATE_TIME); */
     } catch (err) {
       setIsFail(true);
       setUid("");
@@ -39,7 +50,7 @@ export default function SignIn() {
     }
   };
 
-  const silentRenew = async () => {
+  /* const silentRenew = async () => {
     try {
       await axios.get(process.env.REACT_APP_PATH_LOGIN_SILENCE);
       setTimeout(silentRenew, process.env.REACT_APP_TOKEN_REGENERATE_TIME);
@@ -49,7 +60,7 @@ export default function SignIn() {
       dispatch(setUser({ user: null }));
       console.log(err);
     }
-  };
+  };*/
 
   return (
     <form className={"form-login" + (isFail ? " form-login--fail" : "")}>

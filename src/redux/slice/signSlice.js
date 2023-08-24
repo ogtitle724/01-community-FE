@@ -4,6 +4,7 @@ export const signSlice = createSlice({
   name: "sign",
   initialState: {
     isLogIn: false,
+    loginDeadline: null,
     isDarkMode: false,
     user: null,
   },
@@ -22,13 +23,19 @@ export const signSlice = createSlice({
       const { user } = action.payload;
       state.user = user;
     },
+    setLoginDeadline: (state, action) => {
+      const { deadline } = action.payload;
+      state.loginDeadline = deadline;
+    },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { login, logout, clickModeBtn, setUser } = signSlice.actions;
+export const { login, logout, clickModeBtn, setUser, setLoginDeadline } =
+  signSlice.actions;
 export const selectIsLogIn = (state) => state.sign.isLogIn;
 export const selectIsDarkMode = (state) => state.sign.isDarkMode;
 export const selectUser = (state) => state.sign.user;
+export const selectLoginDeadline = (state) => state.sign.loginDeadline;
 
 export default signSlice.reducer;

@@ -1,5 +1,10 @@
 import { useDispatch, useSelector } from "react-redux";
-import { logout, setUser, selectUser } from "../../../../redux/slice/signSlice";
+import {
+  logout,
+  setUser,
+  selectUser,
+  setLoginDeadline,
+} from "../../../../redux/slice/signSlice";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import profileImg from "../../../../asset/icons/person.svg";
@@ -17,6 +22,7 @@ export default function UserBoard() {
       delete axios.defaults.headers.common["Authorization"];
       dispatch(logout());
       dispatch(setUser({ user: null }));
+      dispatch(setLoginDeadline({ deadline: null }));
     } catch (err) {
       alert("Error:", err);
     }
@@ -39,10 +45,13 @@ export default function UserBoard() {
           <p className="user-board__nickname" onClick={handleNavigateMypage}>
             {user.nick}
           </p>
-          <p className="user-board__email">{user.email}</p>
         </div>
       </div>
-      <div className="user-board__div"></div>
+      <div className="user-board__btn-wrapper">
+        <button className="user-board__btn user-board__btn-clip"></button>
+        <button className="user-board__btn user-board__btn-alram"></button>
+        <button className="user-board__btn user-board__btn-barter"></button>
+      </div>
       <button className="user-board__btn-logout" onClick={handleClickLogOut}>
         ✖
       </button>

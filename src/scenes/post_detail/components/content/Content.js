@@ -57,29 +57,48 @@ export default function ContentBoard({
           dangerouslySetInnerHTML={{ __html: sanitize(postDetail.content) }}
         ></div>
         <div className="content-board__btn-wrapper">
-          <button
-            className="content-board__btn content-board__btn-like"
-            onClick={() => handleClickRecommend(1)}
-          >
-            <img
-              className="content-board__img--like"
-              src={thumbsUp}
-              alt="추천"
-            ></img>
-          </button>
-          <span className="content-board__span">
-            {postDetail.recommend_cnt - postDetail.decommend_cnt}
-          </span>
-          <button
-            className="content-board__btn content-board__btn-dislike"
-            onClick={() => handleClickRecommend(-1)}
-          >
-            <img
-              className="content-board__img--dislike"
-              src={thumbsDown}
-              alt="비추천"
-            ></img>
-          </button>
+          <div className="content-board__btn-like-wrapper">
+            <button
+              className="content-board__btn content-board__btn-like"
+              onClick={() => handleClickRecommend(1)}
+            >
+              <img
+                className={
+                  "content-board__img-like" +
+                  (postDetail.recommend_state === 1
+                    ? " content-board__img-like--active"
+                    : "")
+                }
+                src={thumbsUp}
+                alt="추천"
+              ></img>
+            </button>
+            <span className="content-board__span">
+              {postDetail.recommend_cnt}
+            </span>
+          </div>
+
+          <div className="content-board__divider"></div>
+          <div className="content-board__btn-dislike-wrapper">
+            <span className="content-board__span">
+              {postDetail.recommend_cnt}
+            </span>
+            <button
+              className="content-board__btn content-board__btn-dislike"
+              onClick={() => handleClickRecommend(-1)}
+            >
+              <img
+                className={
+                  "content-board__img-dislike" +
+                  (postDetail.recommend_state === -1
+                    ? " content-board__img-dislike--active"
+                    : "")
+                }
+                src={thumbsDown}
+                alt="비추천"
+              ></img>
+            </button>
+          </div>
         </div>
         <section className="content-board__related">
           <h3 className="content-board__title-related">추천 컨텐츠</h3>

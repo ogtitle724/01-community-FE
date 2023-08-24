@@ -73,7 +73,7 @@ function Post({ post, mainEle }) {
         <span className="post-li__data post-li__comment">
           {post.comment_cnt}
         </span>
-        <span className="post-li__data post-li__nick">{post.nick}</span>
+        <span className="post-li__nick">{post.nick}</span>
         <span className="post-li__data post-li__date">{timeDisplay} </span>
       </div>
     </li>

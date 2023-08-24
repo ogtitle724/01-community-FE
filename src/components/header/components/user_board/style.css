@@ -50,12 +50,16 @@
   filter: brightness(0.9);
 }
 
-.user-board__div {
-  flex-grow: 1;
-  height: 1px;
+.user-board__btn-wrapper {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
   border: 1px solid pink;
 }
 
-.user-board__div:hover {
-  height: 100%;
+.user-board__btn {
+  width: 26px;
+  height: 26px;
 }

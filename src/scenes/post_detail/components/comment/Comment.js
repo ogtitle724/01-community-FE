@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { selectIsDarkMode } from "../../../../redux/slice/signSlice";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
-import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+import ClassicEditor from "ckeditor5-custom-build/build/ckeditor";
 
 import timeConverter from "../../../../util/time_converter";
 import { changeP2Span, deleteEnter } from "../../../../util/textProcess";

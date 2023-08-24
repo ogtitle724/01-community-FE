@@ -20,10 +20,8 @@ export default function Gnb() {
 
   const handleClick = (e) => {
     e.preventDefault();
-
     const category = e.target.innerHTML;
 
-    console.log(category);
     dispatch(setCategory({ category }));
     dispatch(setScrollY({ scrollY: 0 }));
     dispatch(setPage({ nextPage: 1 }));

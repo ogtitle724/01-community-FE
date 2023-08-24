@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { CKEditor } from "@ckeditor/ckeditor5-react";
-import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import axios from "axios";
+import { CKEditor } from "@ckeditor/ckeditor5-react";
+import ClassicEditor from "ckeditor5-custom-build/build/ckeditor";
 
 import noImg from "../../asset/icons/image.svg";
 import "./style.css";
@@ -110,25 +110,39 @@ export default function WritePage() {
             placeholder: "내용을 입력하세요.",
             toolbar: {
               items: [
-                "undo",
-                "redo",
+                "heading",
+                "|",
+                "fontSize",
+                "fontFamily",
+                "fontColor",
+                "fontBackgroundColor",
+                "imageInsert",
+                "|",
                 "bold",
                 "italic",
-                "blockQuote",
-                "ckfinder",
-                "imageTextAlternative",
-                "imageUpload",
-                "heading",
-                "imageStyle:full",
-                "imageStyle:side",
-                "link",
+                "underline",
+                "strikethrough",
+                "highlight",
+                "removeFormat",
+                "|",
+                "alignment",
+                "|",
                 "numberedList",
                 "bulletedList",
-                "mediaEmbed",
+                "|",
+                "indent",
+                "outdent",
+                "|",
+                "todoList",
+                "link",
+                "blockQuote",
+                "imageUpload",
                 "insertTable",
-                "tableColumn",
-                "tableRow",
-                "mergeTableCells",
+                "mediaEmbed",
+                "|",
+                "undo",
+                "redo",
+                "CKFinder",
               ],
             },
           }}
