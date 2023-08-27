@@ -1,15 +1,33 @@
 import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { selectPage, setPage, setScrollY } from "../../redux/slice/pageSlice";
+import {
+  selectPage,
+  selectScrollY,
+  setPage,
+  setScrollY,
+} from "../../redux/slice/pageSlice";
 import timeConverter from "../../util/time_converter";
 import "./style.css";
 
 export default function Board({ posts, mainEle, title }) {
   const [isDivide, setIsDivide] = useState(false);
+  const scrollY = useSelector(selectScrollY);
   const handleChangeLayout = () => {
     setIsDivide(!isDivide);
   };
+
+  if (scrollY) {
+    mainEle.current.scrollTo({
+      top: scrollY,
+      behavior: "auto",
+    });
+  } else {
+    mainEle.current.scrollTo({
+      top: scrollY,
+      behavior: "auto",
+    });
+  }
 
   return (
     <>
@@ -18,18 +36,15 @@ export default function Board({ posts, mainEle, title }) {
         <button
           className={
             "board__btn-layout" +
-            (isDivide
-              ? " board__btn-layout--two-line"
-              : " board__btn-layout--one-line")
+            (isDivide ? " board__btn-layout--grid" : " board__btn-layout--list")
           }
           onClick={handleChangeLayout}
         ></button>
         <ul
           className={
             posts.content.length
-              ? "board__ul" +
-                (isDivide ? " board__ul--two-line" : " board__ul--one-line")
-              : " board__skeleton"
+              ? "board__ul" + (isDivide ? " board__ul--grid" : "")
+              : "board__skeleton"
           }
         >
           {posts.content.length ? (
@@ -51,30 +66,29 @@ export default function Board({ posts, mainEle, title }) {
 function Post({ post, mainEle }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const timeDisplay = timeConverter(post.wr_date);
+  const time = timeConverter(post.wr_date);
 
-  const handleClickPost = async (e) => {
-    e.preventDefault();
+  const handleClickPost = async () => {
     dispatch(setScrollY({ scrollY: mainEle.current.scrollTop }));
     navigate(process.env.REACT_APP_ROUTE_POST, { state: { postId: post.id } });
   };
 
   return (
-    <li className="post-li" onClick={(e) => handleClickPost(e)}>
-      <span className="post-li__category">
-        {post.category ? post.category : "카테고리 없음"}
-      </span>
-      <h3 className="post-li__title">{post.title}</h3>
-      <div className="post-li__data-wrapper">
-        <span className="post-li__data post-li__view">{post.view_cnt}</span>
-        <span className="post-li__data post-li__like">
-          {post.recommend_cnt}
-        </span>
-        <span className="post-li__data post-li__comment">
-          {post.comment_cnt}
-        </span>
-        <span className="post-li__nick">{post.nick}</span>
-        <span className="post-li__data post-li__date">{timeDisplay} </span>
+    <li className="board-item" onClick={handleClickPost}>
+      <span className="board-item__category">{post.category}</span>
+      <h3 className="board-item__title">{post.title}</h3>
+      <div className="board-item__data-wrapper">
+        <div className="board-item__data board-item__view">
+          <span>{post.view_cnt}</span>
+        </div>
+        <div className="board-item__data board-item__like">
+          <span>{post.recommend_cnt}</span>
+        </div>
+        <div className="board-item__data board-item__comment">
+          <span>{post.comment_cnt}</span>
+        </div>
+        <span className="board-item__nick">{post.nick}</span>
+        <span className="board-item__date">{time} </span>
       </div>
     </li>
   );

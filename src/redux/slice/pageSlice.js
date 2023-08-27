@@ -4,7 +4,6 @@ export const pageSlice = createSlice({
   name: "page",
   initialState: {
     homePageIdx: 1,
-    searchPageIdx: 1,
     category: "홈",
     scrollY: 0,
     width: window.innerWidth,
@@ -13,10 +12,6 @@ export const pageSlice = createSlice({
     setPage: (state, action) => {
       const { nextPage } = action.payload;
       state.homePageIdx = nextPage;
-    },
-    setSearchPage: (state, action) => {
-      const { nextPage } = action.payload;
-      state.searchPageIdx = nextPage;
     },
     setCategory: (state, action) => {
       const { category } = action.payload;
@@ -37,7 +32,6 @@ export const pageSlice = createSlice({
 export const { setPage, setSearchPage, setCategory, setScrollY, setWidth } =
   pageSlice.actions;
 export const selectPage = (state) => state.page.homePageIdx;
-export const selectSearchPage = (state) => state.page.searchPageIdx;
 export const selectCategory = (state) => state.page.category;
 export const selectScrollY = (state) => state.page.scrollY;
 export const selectWidth = (state) => state.page.width;

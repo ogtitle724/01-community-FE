@@ -12,6 +12,7 @@
 .header__logo {
   height: auto;
   margin-left: 20px;
+  padding-bottom: 3px;
   font-weight: 700;
   font-size: var(--font-size-title);
   white-space: nowrap;
@@ -25,15 +26,11 @@
   display: none;
 }
 
-.sign {
+.sign-pre {
   position: relative;
   display: flex;
   justify-content: flex-end;
   align-items: center;
-}
-
-.sign--mb {
-  display: none;
 }
 
 @media screen and (max-width: 1024px) {
@@ -51,20 +48,5 @@
     height: calc(var(--header-height) - 6px);
     filter: invert(60%);
     transform: rotateZ(36deg);
-  }
-
-  .header__btn-menu {
-    width: 25px;
-    height: 25px;
-    display: inline-block;
-    position: absolute;
-    right: 20px;
-    border: none;
-    background: url(../../asset/icons/menu.svg);
-    filter: invert(60%);
-  }
-
-  .sign {
-    display: none;
   }
 }

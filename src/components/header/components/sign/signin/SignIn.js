@@ -7,7 +7,7 @@ import {
   setLoginDeadline,
   setUser,
 } from "../../../../../redux/slice/signSlice";
-import { blindPwd } from "../../../../../util/secure";
+import { blindInput } from "../../../../../util/secure";
 import "./style.css";
 
 export default function SignIn() {
@@ -20,53 +20,44 @@ export default function SignIn() {
     e.preventDefault();
 
     try {
-      const res = await axios.post(
-        process.env.REACT_APP_PATH_LOGIN,
-        {
-          uid: uid,
-          pwd: pwd,
-        },
-        {
-          withCredentials: true,
-        }
-      );
+      await axios.post(process.env.REACT_APP_PATH_LOGIN, {
+        uid: uid,
+        pwd: pwd,
+      });
 
-      const userData = res.data;
-
-      // Get the current UTC date and time
       let now = new Date();
       let afterAWeek = new Date();
-      afterAWeek.setMinutes(now.getUTCMinutes() + 1);
+      afterAWeek.setDate(now.getUTCDate() + 7);
 
       dispatch(login());
-      dispatch(setUser({ user: userData }));
       dispatch(setLoginDeadline({ deadline: afterAWeek.toString() }));
-      /* setTimeout(silentRenew, process.env.REACT_APP_TOKEN_REGENERATE_TIME); */
+      setTimeout(silentRenew, process.env.REACT_APP_TOKEN_REGENERATE_TIME);
     } catch (err) {
       setIsFail(true);
+      setTimeout(() => setIsFail(false), 3000);
       setUid("");
       setPwd("");
-      setTimeout(() => setIsFail(false), 3000);
     }
   };
 
-  /* const silentRenew = async () => {
+  const silentRenew = async () => {
     try {
       await axios.get(process.env.REACT_APP_PATH_LOGIN_SILENCE);
       setTimeout(silentRenew, process.env.REACT_APP_TOKEN_REGENERATE_TIME);
-      console.log("AUTO Login executed");
+      console.log("token regenerated(silent)");
     } catch (err) {
       dispatch(logout());
       dispatch(setUser({ user: null }));
+      dispatch(setLoginDeadline({ deadline: null }));
       console.log(err);
     }
-  };*/
+  };
 
   return (
-    <form className={"form-login" + (isFail ? " form-login--fail" : "")}>
+    <form className={"signin" + (isFail ? " signin--fail" : "")}>
       <input
         value={uid}
-        className="form-login__input"
+        className="signin__input"
         name="uid"
         type="text"
         placeholder="아이디"
@@ -76,8 +67,8 @@ export default function SignIn() {
         }}
       />
       <input
-        value={blindPwd(pwd)}
-        className="form-login__input"
+        value={blindInput(pwd)}
+        className="signin__input"
         name="pwd"
         type="text"
         placeholder="비밀번호"
@@ -91,10 +82,7 @@ export default function SignIn() {
         }}
       />
 
-      <button
-        className="form-login__btn-login"
-        onClick={(e) => handleClickBtnLogIn(e)}
-      >
+      <button className="signin__btn-submit" onClick={handleClickBtnLogIn}>
         ✔
       </button>
     </form>

@@ -5,14 +5,15 @@ import SignIn from "./signin/SignIn";
 import "./style.css";
 
 export default function Sign() {
+  console.log("sign renderd");
   const [showSignUpForm, setShowSignUpForm] = useState(false);
 
   return (
-    <section className="sign-wrapper">
+    <section className="sign">
       <h3 hidden>Sign</h3>
       <SignIn />
       <button
-        className="sign__btn-signup"
+        className="sign__btn-submit"
         onClick={() => setShowSignUpForm(true)}
       >
         +

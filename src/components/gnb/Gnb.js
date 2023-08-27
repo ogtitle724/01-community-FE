@@ -1,47 +1,40 @@
-import { useNavigate } from "react-router-dom";
-import "./style.css";
+import { memo } from "react";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { setCategory, setScrollY, setPage } from "../../redux/slice/pageSlice";
+import { categories } from "../../config/config";
+import "./style.css";
 
-const category = [
-  "홈",
-  "유머",
-  "게임·스포츠",
-  "연예·방송",
-  "여행",
-  "취미",
-  "경제·금융",
-  "시사·이슈",
-];
-
-export default function Gnb() {
-  const navigate = useNavigate();
+function Gnb() {
   const dispatch = useDispatch();
-
+  const navigate = useNavigate();
   const handleClick = (e) => {
-    e.preventDefault();
     const category = e.target.innerHTML;
 
     dispatch(setCategory({ category }));
     dispatch(setScrollY({ scrollY: 0 }));
     dispatch(setPage({ nextPage: 1 }));
-    navigate(process.env.REACT_APP_ROUTE_HOME);
+
+    if (window.location.pathname !== "/")
+      navigate(process.env.REACT_APP_ROUTE_HOME);
   };
 
   return (
     <nav className="gnb">
-      {category.map((item, idx) => {
+      {categories.map((category, idx) => {
         return (
-          <a
-            key={"gnb-a_" + idx}
+          <button
+            key={"gnb-btn_" + idx}
             href="/"
-            className="gnb__a"
-            onClick={(e) => handleClick(e)}
+            className="gnb__btn"
+            onClick={handleClick}
           >
-            {item}
-          </a>
+            {category}
+          </button>
         );
       })}
     </nav>
   );
 }
+
+export default memo(Gnb);

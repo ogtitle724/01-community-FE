@@ -1,41 +1,28 @@
 import { useState, useRef, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import {
-  selectCategory,
-  selectPage,
-  selectScrollY,
-  setWidth,
-} from "../../redux/slice/pageSlice";
+import { useSelector } from "react-redux";
+import { selectCategory, selectPage } from "../../redux/slice/pageSlice";
 import axios from "axios";
 
 import Header from "../../components/header/Header";
 import Gnb from "../../components/gnb/Gnb";
 import ContentHome from "./components/content/Content_Home";
-import ContentTopic from "./components/content_topic/Content_Topic";
+import ContentTopic from "./components/content/Content_Topic";
 import WriteBtn from "../../components/write_btn/WriteBtn";
 import "./style.css";
 
 export default function Home() {
   const category = useSelector(selectCategory);
   const page = useSelector(selectPage);
-  const scrollY = useSelector(selectScrollY);
-  const dispatch = useDispatch();
   const [posts, setPosts] = useState();
   const [content, mainEle] = [useRef(), useRef()];
+  console.log("home rendered");
 
   useEffect(() => {
-    const handleResize = () => dispatch(setWidth({ width: window.innerWidth }));
     const getPosts = async () => {
-      let path;
-
-      if (category === "홈") {
-        path = process.env.REACT_APP_PATH_PAGING_BEST;
-      } else {
-        path = process.env.REACT_APP_PATH_PAGING.replace(
-          "{category}",
-          category
-        );
-      }
+      let path = process.env.REACT_APP_PATH_PAGING.replace(
+        "{category}",
+        category === "홈" ? "best" : category
+      );
 
       try {
         const res = await axios.get(path + `?page=${page - 1}&size=30`);
@@ -46,28 +33,13 @@ export default function Home() {
     };
 
     getPosts();
-    window.addEventListener("resize", handleResize);
-
-    return () => window.removeEventListener("resize", handleResize);
-  }, [category, page, dispatch]);
+  }, [category, page]);
 
   if (mainEle.current) {
     if (category === "홈") {
       content.current = <ContentHome posts={posts} mainEle={mainEle} />;
     } else {
       content.current = <ContentTopic posts={posts} mainEle={mainEle} />;
-    }
-
-    if (scrollY) {
-      mainEle.current.scrollTo({
-        top: scrollY,
-        behavior: "smooth",
-      });
-    } else {
-      mainEle.current.scrollTo({
-        top: scrollY,
-        behavior: "auto",
-      });
     }
   }
 

@@ -1,28 +1,27 @@
-import { Fragment, useRef } from "react";
 import axios from "axios";
+import { Fragment, useRef } from "react";
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
-import { selectIsDarkMode } from "../../../../redux/slice/signSlice";
+import {
+  selectIsDarkMode,
+  selectUser,
+} from "../../../../redux/slice/signSlice";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "ckeditor5-custom-build/build/ckeditor";
 
-import timeConverter from "../../../../util/time_converter";
+import { sanitize } from "../../../../util/secure";
 import { changeP2Span, deleteEnter } from "../../../../util/textProcess";
-import "./style.css";
+import timeConverter from "../../../../util/time_converter";
 import thumbsUp from "../../../../asset/icons/thumbs-up.svg";
 import thumbsDown from "../../../../asset/icons/thumbs-down.svg";
 import chatBox from "../../../../asset/icons/chatbox.svg";
 import edit from "../../../../asset/icons/edit.svg";
 import trash from "../../../../asset/icons/trash.svg";
 import close from "../../../../asset/icons/close.svg";
+import "./style.css";
 
-export default function CommentBoard({
-  postDetail,
-  user,
-  trigger,
-  setTrigger,
-  sanitize,
-}) {
+export default function CommentBoard({ postDetail, trigger, setTrigger }) {
+  console.log("comment rendered");
   const [content, setContent] = useState("");
   const [target, setTarget] = useState(null);
   const editorRef = useRef();
@@ -80,111 +79,104 @@ export default function CommentBoard({
 
   return (
     <section className="comment-board">
-      <section className="comment-board__comment-wrapper">
-        <form
-          className={
-            "comment-board__form" + (target ? " comment-board__form-reply" : "")
-          }
-        >
-          <CKEditor
-            ref={editorRef}
-            editor={ClassicEditor}
-            data=""
-            onReady={(editor) => {
+      <form className="comment-board__form">
+        {target ? (
+          <span className="comment-board__form-target">
+            {"🔗" + target.targetNick}
+          </span>
+        ) : (
+          ""
+        )}
+        <CKEditor
+          ref={editorRef}
+          editor={ClassicEditor}
+          data=""
+          onReady={(editor) => {
+            editor.setData("댓글을 입력해주세요...");
+          }}
+          onFocus={(event, editor) => {
+            if (content) {
+              editor.setData(content);
+            } else {
+              editor.setData("");
+            }
+          }}
+          onChange={(event, editor) => {
+            let data = editor.getData();
+            console.log(data);
+            if (data === "<p>댓글을 입력해주세요...</p>") {
+              setContent("");
+            } else {
+              setContent(data);
+            }
+          }}
+          onBlur={(event, editor) => {
+            if (!content) {
               editor.setData("댓글을 입력해주세요...");
-            }}
-            onFocus={(event, editor) => {
-              if (content) {
-                editor.setData(content);
-              } else {
-                editor.setData("");
-              }
-            }}
-            onChange={(event, editor) => {
-              let data = editor.getData();
-              console.log(data);
-              if (data === "<p>댓글을 입력해주세요...</p>") {
-                setContent("");
-              } else {
-                setContent(data);
-              }
-            }}
-            onBlur={(event, editor) => {
-              if (!content) {
-                editor.setData("댓글을 입력해주세요...");
-              }
-            }}
-          />
+            }
+          }}
+        />
 
-          <div className={"comment-board__btn-wrapper"}>
-            <button
-              type="button"
-              className="btn--good comment-board__btn"
-              onClick={() => handleClickBtnOk()}
-              disabled={!content}
-            >
-              ✔
-            </button>
-            <button
-              type="button"
-              className="btn--bad comment-board__btn"
-              onMouseDown={() => handleClickBtnCancel()}
-            >
-              ✖
-            </button>
-          </div>
-        </form>
-        <div className="comment-board__comment">
-          {postDetail.comments.map((comment, idxC) => {
-            return (
-              <Fragment key={"comment-" + idxC}>
-                <Comment
-                  user={user}
-                  comment={comment}
-                  parentId={comment.id}
-                  target={target}
-                  setTarget={setTarget}
-                  sanitize={sanitize}
-                  trigger={trigger}
-                  setTrigger={setTrigger}
-                  ckFocus={ckFocus}
-                />
-                {comment.replies?.length
-                  ? comment.replies.map((reply, idxR) => {
-                      return (
-                        <Comment
-                          key={"reply-" + idxR}
-                          user={user}
-                          comment={reply}
-                          parentId={comment.id}
-                          target={target}
-                          setTarget={setTarget}
-                          cName={" comment__reply"}
-                          sanitize={sanitize}
-                          trigger={trigger}
-                          setTrigger={setTrigger}
-                          ckFocus={ckFocus}
-                        />
-                      );
-                    })
-                  : ""}
-              </Fragment>
-            );
-          })}
+        <div className={"comment-board__btn-wrapper"}>
+          <button
+            type="button"
+            className="btn--good comment-board__btn"
+            onClick={() => handleClickBtnOk()}
+            disabled={!content}
+          >
+            ✔
+          </button>
+          <button
+            type="button"
+            className="btn--bad comment-board__btn"
+            onMouseDown={() => handleClickBtnCancel()}
+          >
+            ✖
+          </button>
         </div>
-      </section>
+      </form>
+      {postDetail.comments.map((comment, idxC) => {
+        return (
+          <Fragment key={"comment-" + idxC}>
+            <Comment
+              comment={comment}
+              parentId={comment.id}
+              target={target}
+              setTarget={setTarget}
+              trigger={trigger}
+              setTrigger={setTrigger}
+              ckFocus={ckFocus}
+            />
+            {comment.replies?.length
+              ? comment.replies.map((reply, idxR) => {
+                  return (
+                    <Comment
+                      key={"reply-" + idxR}
+                      comment={reply}
+                      parentId={comment.id}
+                      target={target}
+                      setTarget={setTarget}
+                      cName={" comment__reply"}
+                      trigger={trigger}
+                      setTrigger={setTrigger}
+                      ckFocus={ckFocus}
+                    />
+                  );
+                })
+              : ""}
+          </Fragment>
+        );
+      })}
     </section>
   );
 }
 
 function Comment({
-  user,
   comment,
   parentId,
   target,
   setTarget,
   cName,
-  sanitize,
   trigger,
   setTrigger,
   ckFocus,
@@ -194,6 +186,7 @@ function Comment({
   const [content, setContent] = useState("");
   const isDarkMode = useSelector(selectIsDarkMode);
   const timeDisplay = timeConverter(comment.wr_date);
+  const user = useSelector(selectUser);
 
   useEffect(() => {
     if (user && user.id === comment.user_id) {

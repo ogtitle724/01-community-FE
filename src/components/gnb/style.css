@@ -12,7 +12,7 @@
   background-color: var(--color-body);
 }
 
-.gnb__a {
+.gnb__btn {
   height: 100%;
   position: relative;
   cursor: pointer;
@@ -20,6 +20,25 @@
   font-weight: 700;
   text-align: center;
   line-height: var(--gnb-height);
+  color: var(--font-color-dark);
+}
+
+.gnb__btn:last-child {
+  width: 20px;
+  color: var(--color-red);
+  text-rendering: none;
+  visibility: hidden;
+}
+
+.gnb__btn:last-child::after {
+  content: "🛒";
+  visibility: visible;
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: var(--font-size-md);
 }
 
 @media screen and (max-width: 768px) {

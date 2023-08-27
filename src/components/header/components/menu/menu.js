@@ -13,12 +13,12 @@ export default function MenuBtn() {
 
   return (
     <>
-      <button className="menu-btn" onClick={() => setShowMenu(true)}></button>
+      <button className="btn-menu" onClick={() => setShowMenu(true)}></button>
       {showMenu && (
-        <section className="menu">
+        <section className="popup-menu">
           <h3 hidden>mobile menu</h3>
           <button
-            className="btn-close"
+            className="btn-close icon"
             onClick={() => setShowMenu(false)}
           ></button>
           <ThemeToggle />

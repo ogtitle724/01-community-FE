@@ -1,11 +1,10 @@
-import { useEffect } from "react";
+import { memo } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
   setPage,
   setCategory,
   setScrollY,
-  setWidth,
   selectWidth,
 } from "../../redux/slice/pageSlice";
 import { selectIsLogIn } from "../../redux/slice/signSlice";
@@ -17,21 +16,15 @@ import MenuBtn from "./components/menu/menu";
 import clip from "../../asset/icons/clip.svg";
 import "./style.css";
 
-export default function Header() {
+function Header() {
+  console.log("header rendered");
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const isLogIn = useSelector(selectIsLogIn);
   const width = useSelector(selectWidth);
 
-  useEffect(() => {
-    const handleResize = () => dispatch(setWidth({ width: window.innerWidth }));
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, [dispatch]);
-
   const handleClickLogo = (e) => {
     e.preventDefault();
-
     dispatch(setPage({ nextPage: 1 }));
     dispatch(setScrollY({ scrollY: 0 }));
     dispatch(setCategory({ category: "홈" }));
@@ -46,17 +39,24 @@ export default function Header() {
           href={process.env.REACT_APP_ROUTE_HOME}
           onClick={(e) => handleClickLogo(e)}
         >
-          {width < 1080 ? (
+          {width < 480 ? (
             <img className="header__logo-img" src={clip} alt="logo_clip"></img>
           ) : (
             "클립마켓"
           )}
         </a>
-        {width > 1024 ? <SearchBar /> : ""}
-        {width > 1024 ? <ThemeToggle /> : ""}
-        <div className="sign">{isLogIn ? <UserBoard /> : <Sign />}</div>
-        {width < 1024 && <MenuBtn />}
+        {width > 1024 ? (
+          <>
+            <SearchBar />
+            <ThemeToggle />
+            <div className="sign-pre">{isLogIn ? <UserBoard /> : <Sign />}</div>
+          </>
+        ) : (
+          <MenuBtn />
+        )}
       </header>
     </>
   );
 }
+
+export default memo(Header);

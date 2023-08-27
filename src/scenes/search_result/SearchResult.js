@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { useLocation } from "react-router-dom";
-import { selectSearchPage, selectScrollY } from "../../redux/slice/pageSlice";
+import { selectPage } from "../../redux/slice/pageSlice";
 import { useSelector } from "react-redux";
 import axios from "axios";
 
@@ -10,42 +10,27 @@ import Board from "../../components/board/Board";
 import "./style.css";
 
 export default function SearchResult() {
-  const page = useSelector(selectSearchPage);
-  const scrollY = useSelector(selectScrollY);
+  const page = useSelector(selectPage);
   const mainEle = useRef();
   const [postData, setPostData] = useState();
   const location = useLocation();
   const term = location.state.term;
 
-  const getSearchData = async (term, page) => {
-    try {
-      const res = await axios.get(
-        process.env.REACT_APP_PATH_SEARCH +
-          `?page=${page - 1}&size=20&searchTerm=${term}`
-      );
-      setPostData(res.data);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
   useEffect(() => {
+    const getSearchData = async (term, page) => {
+      try {
+        const res = await axios.get(
+          process.env.REACT_APP_PATH_SEARCH +
+            `?page=${page - 1}&size=20&searchTerm=${term}`
+        );
+        setPostData(res.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
     getSearchData(term, page);
   }, [term, page]);
-
-  if (mainEle.current) {
-    if (scrollY) {
-      mainEle.current.scrollTo({
-        top: scrollY,
-        behavior: "smooth",
-      });
-    } else {
-      mainEle.current.scrollTo({
-        top: scrollY,
-        behavior: "auto",
-      });
-    }
-  }
 
   return (
     <div className="search-result">
@@ -53,7 +38,7 @@ export default function SearchResult() {
       <Gnb />
       <main ref={mainEle} className="search-result__main">
         <section className="search-result__content">
-          <h3 hidden>{"'" + term + "' 관련 포스팅"}</h3>
+          <h3 hidden>{"'" + term + "' 관련 게시물"}</h3>
           <div className="board-pre">
             {postData && (
               <Board
@@ -63,7 +48,6 @@ export default function SearchResult() {
               />
             )}
           </div>
-          {/* {postData ? <Board postData={postData} /> : ""} */}
         </section>
       </main>
     </div>

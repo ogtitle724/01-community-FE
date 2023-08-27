@@ -1,20 +1,29 @@
-import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { memo, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
+import { sanitize } from "../../../../util/secure";
 import timeConverter from "../../../../util/time_converter";
-import thumbsUp from "../../../../asset/icons/thumbs-up.svg";
-import thumbsDown from "../../../../asset/icons/thumbs-down.svg";
+import thumbsUp from "../../../../asset/icons/thumbs-up-filled.svg";
+import thumbsDown from "../../../../asset/icons/thumbs-down-filled.svg";
 import "./style.css";
+import { useSelector } from "react-redux";
+import { selectUser } from "../../../../redux/slice/signSlice";
+import { useState } from "react";
 
-export default function ContentBoard({
-  postDetail,
-  user,
-  isWriter,
-  trigger,
-  setTrigger,
-  sanitize,
-}) {
+function ContentBoard({ postDetail, trigger, setTrigger }) {
+  console.log("content rendered");
+  const user = useSelector(selectUser);
   const timeDisplay = timeConverter(postDetail.wr_date);
+  const [isWriter, setIsWriter] = useState(false);
+
+  useEffect(() => {
+    if (user && postDetail.user_id === user.id) {
+      setIsWriter(true);
+    } else {
+      setIsWriter(false);
+    }
+  }, [postDetail, user]);
 
   const handleClickRecommend = async (value) => {
     if (!user) {
@@ -57,48 +66,41 @@ export default function ContentBoard({
           dangerouslySetInnerHTML={{ __html: sanitize(postDetail.content) }}
         ></div>
         <div className="content-board__btn-wrapper">
-          <div className="content-board__btn-like-wrapper">
-            <button
-              className="content-board__btn content-board__btn-like"
-              onClick={() => handleClickRecommend(1)}
-            >
-              <img
-                className={
-                  "content-board__img-like" +
-                  (postDetail.recommend_state === 1
-                    ? " content-board__img-like--active"
-                    : "")
-                }
-                src={thumbsUp}
-                alt="추천"
-              ></img>
-            </button>
+          <button
+            className="content-board__btn content-board__btn-like"
+            onClick={() => handleClickRecommend(1)}
+          >
+            <img
+              className={
+                postDetail.recommend_state === 1
+                  ? " content-board__img-like--active"
+                  : "content-board__img-like"
+              }
+              src={thumbsUp}
+              alt="추천"
+            ></img>
             <span className="content-board__span">
               {postDetail.recommend_cnt}
             </span>
-          </div>
-
+          </button>
           <div className="content-board__divider"></div>
-          <div className="content-board__btn-dislike-wrapper">
+          <button
+            className="content-board__btn content-board__btn-dislike"
+            onClick={() => handleClickRecommend(-1)}
+          >
             <span className="content-board__span">
-              {postDetail.recommend_cnt}
+              {postDetail.decommend_cnt}
             </span>
-            <button
-              className="content-board__btn content-board__btn-dislike"
-              onClick={() => handleClickRecommend(-1)}
-            >
-              <img
-                className={
-                  "content-board__img-dislike" +
-                  (postDetail.recommend_state === -1
-                    ? " content-board__img-dislike--active"
-                    : "")
-                }
-                src={thumbsDown}
-                alt="비추천"
-              ></img>
-            </button>
-          </div>
+            <img
+              className={
+                postDetail.recommend_state === -1
+                  ? " content-board__img-dislike--active"
+                  : "content-board__img-dislike"
+              }
+              src={thumbsDown}
+              alt="비추천"
+            ></img>
+          </button>
         </div>
         <section className="content-board__related">
           <h3 className="content-board__title-related">추천 컨텐츠</h3>
@@ -154,3 +156,5 @@ function UD({ postDetail }) {
     </div>
   );
 }
+
+export default memo(ContentBoard);

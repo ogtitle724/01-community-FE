@@ -1,4 +1,4 @@
-.menu-btn {
+.btn-menu {
   width: 22px;
   height: 22px;
   position: absolute;
@@ -10,7 +10,7 @@
   filter: invert(60%);
 }
 
-.menu {
+.popup-menu {
   padding: 37px 0px;
   position: absolute;
   top: 10vh;
@@ -23,27 +23,27 @@
   justify-items: center;
   column-gap: 0;
   row-gap: 18px;
-  z-index: 20;
+  z-index: 10;
   background-color: var(--color-body);
   border: 1px solid var(--main-color);
   border-radius: 4px;
   box-shadow: 0 0 0 100vh rgba(0, 0, 0, 0.6);
 }
 
-.menu .themetoggle {
+.popup-menu .themetoggle {
   justify-self: end;
 }
 
-.menu .search-bar {
+.popup-menu .search-bar {
   justify-self: start;
 }
 
-.menu .sign-wrapper {
+.popup-menu .sign {
   grid-column: 1/3;
   grid-row: 2/3;
 }
 
-.menu .user-board {
+.popup-menu .user-board {
   grid-column: 1/3;
   grid-row: 2/3;
 }

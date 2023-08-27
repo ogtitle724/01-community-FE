@@ -18,7 +18,6 @@ export default function UserBoard() {
   const handleClickLogOut = async () => {
     try {
       await axios.get(process.env.REACT_APP_PATH_LOGOUT);
-
       delete axios.defaults.headers.common["Authorization"];
       dispatch(logout());
       dispatch(setUser({ user: null }));
@@ -34,7 +33,7 @@ export default function UserBoard() {
 
   return (
     <div className="user-board">
-      <div className="user-board__detail">
+      <div className="user-board__profile">
         <img
           src={profileImg}
           alt="profile"
@@ -47,11 +46,16 @@ export default function UserBoard() {
           </p>
         </div>
       </div>
-      <div className="user-board__btn-wrapper">
-        <button className="user-board__btn user-board__btn-clip"></button>
-        <button className="user-board__btn user-board__btn-alram"></button>
-        <button className="user-board__btn user-board__btn-barter"></button>
+      <div className="divider"></div>
+      <div className="user-board__clip">
+        <i className="user-board__img-clip"></i>
+        <span>123</span>
       </div>
+      <div className="divider"></div>
+      <button className="user-board__btn-alram">
+        <div className="user-board__alram-cnt">3</div>
+      </button>
+
       <button className="user-board__btn-logout" onClick={handleClickLogOut}>
         ✖
       </button>

@@ -1,14 +1,12 @@
+import axios from "axios";
 import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import axios from "axios";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "ckeditor5-custom-build/build/ckeditor";
-
 import noImg from "../../asset/icons/image.svg";
 import "./style.css";
 
 export default function WritePage() {
-  //state for post update
   const navigate = useNavigate();
   const location = useLocation();
   const isUpdate = location.state?.isUpdate;

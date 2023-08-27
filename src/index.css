@@ -10,7 +10,7 @@
   --font-size-vsm: 12px;
 }
 
-@media screen and (max-width: 1080px) {
+@media screen and (max-width: 1024px) {
   :root {
     --header-height: 34px;
     --font-size-title: 18px;
@@ -92,9 +92,19 @@ p {
 }
 
 button {
-  z-index: 2;
   border-radius: 4px;
   color: var(--font-color-light);
+  background-color: transparent;
+  border: none;
+}
+
+.btn-close {
+  width: 22px;
+  height: 22px;
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: url(./asset/icons/close.svg);
 }
 
 .btn--good {
@@ -108,23 +118,8 @@ button {
   background-color: var(--color-orange);
 }
 
-.center-xy {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-
-.center-x {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-.center-y {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
+.icon {
+  filter: invert(70%);
 }
 
 .ck.ck-balloon-panel.ck-balloon-panel_position_border-side_right.ck-powered-by-balloon {

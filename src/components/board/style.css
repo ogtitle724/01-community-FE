@@ -21,11 +21,11 @@
   filter: invert(60%);
 }
 
-.board__btn-layout--two-line {
+.board__btn-layout--grid {
   background: url(../../asset/icons/grid.svg);
 }
 
-.board__btn-layout--one-line {
+.board__btn-layout--list {
   background: url(../../asset/icons/list.svg);
 }
 
@@ -33,12 +33,12 @@
   position: relative;
 }
 
-.board__ul--two-line {
+.board__ul--grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, 50%);
 }
 
-.board__ul--two-line::after {
+.board__ul--grid::after {
   content: "";
   width: 0px;
   height: 100%;
@@ -74,7 +74,7 @@
   font-weight: 600;
 }
 
-.post-li {
+.board-item {
   width: 100%;
   padding: 6px;
   position: relative;
@@ -83,86 +83,84 @@
   list-style: none;
 }
 
-.post-li:hover {
+.board-item:hover {
   background-color: var(--color-whitesmoke);
 }
 
-.post-li__data {
-  margin-right: 15px;
-  font-size: var(--font-size-sm);
-}
-
-.post-li__data-wrapper {
+.board-item__data-wrapper {
   display: flex;
   align-items: center;
 }
 
-.post-li__category {
+.board-item__data {
+  display: flex;
+  align-items: center;
+}
+
+.board-item__data span {
+  margin: 0 7px;
+  font-size: var(--font-size-vsm);
+}
+
+.board-item__category {
   width: fit-content;
-  padding: 3px;
+  padding: 1px 3px;
   background-color: var(--main-color);
+  border-radius: 2px;
   font-size: var(--font-size-vsm);
   text-align: center;
   color: white;
 }
 
-.post-li__title {
+.board-item__title {
   margin: 8px 0;
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
-  font-size: var(--font-size-lg);
-  font-weight: 500;
+  font-size: var(--font-size-md);
 }
 
-.post-li__nick {
-  margin: 0px;
+.board-item__nick {
+  margin-left: 5px;
   position: relative;
   bottom: -1px;
-  font-size: var(--font-size-sm);
+  font-size: var(--font-size-vsm);
 }
 
-.post-li__date {
-  margin-right: 0px;
+.board-item__date {
   position: absolute;
   right: 6px;
   bottom: 5.5px;
+  font-size: var(--font-size-vsm);
 }
 
-.post-li__view::before {
+.board-item__view::before {
   content: "";
   width: 13px;
   height: 13px;
-  margin-right: 5px;
-  position: relative;
-  top: 1.5px;
   display: inline-block;
   background: url(../../asset/icons/eye.svg);
-  filter: invert(60%);
+  filter: invert(70%);
 }
 
-.post-li__like::before {
+.board-item__like::before {
   content: "";
   width: 13px;
   height: 13px;
-  margin-right: 5px;
-  position: relative;
-  top: 1.5px;
   display: inline-block;
   background: url(../../asset/icons/thumbs-up.svg);
-  filter: invert(60%);
+  filter: invert(70%);
 }
 
-.post-li__comment::before {
+.board-item__comment::before {
   content: "";
-  width: 12px;
-  height: 12px;
-  margin-right: 5px;
-  position: relative;
-  top: 2px;
+  width: 13px;
+  height: 13px;
   display: inline-block;
+  position: relative;
+  top: 1.5px;
   background: url(../../asset/icons/chatbox.svg);
-  filter: invert(60%);
+  filter: invert(70%);
 }
 
 .board__nav {
@@ -208,10 +206,6 @@
 }
 
 @media screen and (max-width: 1024px) {
-  .board__title {
-    margin-bottom: 10px;
-  }
-
   .board__btn-layout {
     width: 20px;
     height: 20px;
@@ -222,37 +216,9 @@
     filter: invert(60%);
   }
 
-  .post-li__category {
-    padding: 2px;
-  }
-
-  .post-li__title {
-    font-weight: 600;
-  }
-
-  .post-li__data {
-    margin-right: 10px;
-  }
-
-  .post-li__date {
-    margin-right: 0px;
-  }
-
-  .post-li__view::before {
-    width: 10px;
-    height: 10px;
-    margin-right: 3px;
-  }
-
-  .post-li__like::before {
-    width: 10px;
-    height: 10px;
-    margin-right: 3px;
-  }
-
-  .post-li__comment::before {
-    width: 10px;
-    height: 10px;
+  .board-item__view::before,
+  .board-item__like::before,
+  .board-item__comment::before {
     margin-right: 3px;
   }
 
@@ -265,48 +231,13 @@
 }
 
 @media screen and (max-width: 768px) {
-  .board__title {
-    margin-bottom: 10px;
-  }
-
   .board__btn-layout {
     width: 18px;
     height: 18px;
     top: 0px;
   }
 
-  .post-li__data {
-    margin-right: 8px;
-  }
-
-  .post-li__category {
-    padding: 2px;
-  }
-
-  .post-li__title {
-    font-weight: 600;
-  }
-
-  .post-li__date {
-    margin-right: 0px;
-  }
-
-  .post-li__view::before {
-    width: 10px;
-    height: 10px;
-  }
-
-  .post-li__like::before {
-    width: 10px;
-    height: 10px;
-  }
-
-  .post-li__comment::before {
-    width: 10px;
-    height: 10px;
-  }
-
-  .board__ul--two-line .post-li__nick {
+  .board__ul--grid .board-item__nick {
     position: absolute;
     top: 10px;
     right: 5px;

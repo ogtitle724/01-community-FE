@@ -82,7 +82,6 @@
   justify-content: flex-end;
   gap: 8px;
   align-items: center;
-  z-index: 200;
   background-color: whitesmoke;
 }
 
@@ -147,7 +146,6 @@
   position: absolute;
   top: 34px;
   right: 10px;
-  z-index: 3;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;

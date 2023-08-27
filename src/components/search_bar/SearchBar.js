@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { setSearchPage } from "../../redux/slice/pageSlice";
+import { setPage } from "../../redux/slice/pageSlice";
 import "./style.css";
 
 export default function SearchBar() {
@@ -13,7 +13,7 @@ export default function SearchBar() {
     e.preventDefault();
 
     if (searchTerm) {
-      dispatch(setSearchPage({ nextPage: 1 }));
+      dispatch(setPage({ nextPage: 1 }));
       navigate(process.env.REACT_APP_ROUTE_SEARCH, {
         state: { term: searchTerm },
       });
@@ -33,10 +33,7 @@ export default function SearchBar() {
         }}
         autoComplete="off"
       />
-      <button
-        className="search-bar__btn"
-        onClick={(e) => handleOnSubmit(e)}
-      ></button>
+      <button className="search-bar__btn" onClick={handleOnSubmit}></button>
     </form>
   );
 }

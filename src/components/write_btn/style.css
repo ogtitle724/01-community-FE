@@ -1,4 +1,4 @@
-.write-btn {
+.btn-write {
   width: 50px;
   height: 50px;
   position: fixed;
@@ -7,20 +7,15 @@
   border: none;
   border-radius: 100%;
   background-color: var(--main-color);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
-  transition: 0.2s;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 }
 
-.write-btn:hover {
-  transform: scale(1.1);
-}
-
-.write-btn:active {
+.btn-write:active {
   filter: brightness(0.8);
   transform: scale(1);
 }
 
-.write-btn::before {
+.btn-write::before {
   content: "";
   position: absolute;
   top: 0;

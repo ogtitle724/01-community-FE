@@ -31,12 +31,6 @@
 .comment-board {
   width: 350px;
   height: 96%;
-  position: relative;
-}
-
-.comment-board__comment-wrapper {
-  width: 100%;
-  height: 100%;
   padding: 10px;
   position: relative;
   border: 2px solid;
@@ -46,17 +40,13 @@
   overflow-y: scroll;
 }
 
-.comment-board__comment {
-  width: 100%;
-}
-
 .comment-board__form {
   margin-bottom: 10px;
   padding: 15px 0;
   position: sticky;
   top: 5px;
   background-color: var(--color-body);
-  z-index: 3;
+  z-index: 2;
 }
 
 .comment-board__form:before {
@@ -69,16 +59,11 @@
   background-color: var(--color-body);
 }
 
-.comment-board__form-reply::after {
-  content: "⤷";
+.comment-board__form-target {
   position: absolute;
-  left: -10px;
-  top: -7px;
-  z-index: 3;
-  font-size: 26px;
-  font-weight: 700;
-  color: var(--main-color);
-  background-color: transparent;
+  top: -8px;
+  font-size: var(--font-size-sm);
+  font-weight: 600;
 }
 
 .comment-board__btn-wrapper {

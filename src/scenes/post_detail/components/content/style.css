@@ -60,24 +60,21 @@ iframe {
   margin: 0 auto;
   margin-top: 20px;
   display: flex;
-  justify-content: space-evenly;
+  justify-content: center;
   align-items: center;
+  gap: 12px;
   border-radius: 4px;
   background-color: var(--color-whitesmoke);
 }
 
-.content-board__btn-dislike-wrapper,
-.content-board__btn-like-wrapper {
-  display: flex;
-  align-items: center;
-}
 .content-board__btn {
-  width: 35px;
+  width: auto;
   height: 35px;
   position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
+  gap: 3px;
   font-size: var(--font-size-sm);
   font-weight: 600;
   cursor: pointer;
@@ -85,47 +82,42 @@ iframe {
   background-color: transparent;
 }
 
-/* .content-board__btn-like {
-  border-bottom: 2px solid var(--main-color);
-}
-
-.content-board__btn-dislike {
-  border-bottom: 2px solid var(--color-orange);
-} */
 .content-board__divider {
   width: 1px;
-  height: 80%;
-  margin: 0 10px;
+  height: 60%;
   border: 1px solid var(--color-body);
 }
 
 .content-board__img-like {
+  height: 16px;
+  position: relative;
+  filter: invert(70%);
+  object-fit: contain;
   bottom: 2px;
 }
 .content-board__img-dislike {
+  height: 16px;
+  position: relative;
+  filter: invert(70%);
+  object-fit: contain;
   bottom: -2px;
 }
 
 .content-board__img-like--active,
 .content-board__img-dislike--active {
-  filter: invert(0);
-}
-
-.content-board__btn img {
   height: 16px;
   position: relative;
-  filter: invert(60%);
+  filter: invert(0%);
   object-fit: contain;
 }
 
-.content-board__btn img {
-  filter: invert(60%);
-}
-
 .content-board__span {
+  width: 30px;
   color: var(--font-color-dark);
   font-size: var(--font-size-md);
   font-weight: 600;
+  text-align: center;
+  cursor: pointer;
 }
 
 .content-board__related {

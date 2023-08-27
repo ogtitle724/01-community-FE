@@ -13,7 +13,9 @@ import SearchResult from "./scenes/search_result/SearchResult.js";
 import MyPage from "./scenes/mypage/MyPage.js";
 import { store, persistor } from "./redux/store.js";
 import "./index.css";
-import { logout, setLoginDeadline } from "./redux/slice/signSlice.js";
+import { logout, setLoginDeadline, setUser } from "./redux/slice/signSlice.js";
+import { setWidth } from "./redux/slice/pageSlice.js";
+import { jwtDecode } from "./util/secure.js";
 
 axios.defaults.baseURL = process.env.REACT_APP_DOMAIN;
 axios.defaults.withCredentials = true;
@@ -24,6 +26,15 @@ axios.interceptors.response.use((res) => {
   if (accessToken) {
     console.log("receive access Token");
     axios.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
+
+    if (!localStorage?.getItem("persist:local").user) {
+      let payload = jwtDecode(accessToken);
+      store.dispatch(
+        setUser({
+          user: { id: payload.id, nick: payload.nick, email: payload.email },
+        })
+      );
+    }
   }
 
   return res;
@@ -44,8 +55,14 @@ const handleInitialSetting = () => {
 
   if (new Date(loginDeadline) <= now) {
     store.dispatch(logout());
+    store.dispatch(setUser({ user: null }));
     store.dispatch(setLoginDeadline({ deadline: null }));
   }
+
+  //set eventlistener for browser width
+  window.addEventListener("resize", () =>
+    store.dispatch(setWidth({ width: window.innerWidth }))
+  );
 };
 
 const router = createBrowserRouter([
