@@ -12,13 +12,11 @@ import { selectUser } from "../../../../redux/slice/signSlice";
 import { useState } from "react";
 
 function ContentBoard({ postDetail, trigger, setTrigger }) {
-  console.log("content rendered");
   const user = useSelector(selectUser);
-  const timeDisplay = timeConverter(postDetail.wr_date);
   const [isWriter, setIsWriter] = useState(false);
 
   useEffect(() => {
-    if (user && postDetail.user_id === user.id) {
+    if (user && postDetail && postDetail.user_id === user.id) {
       setIsWriter(true);
     } else {
       setIsWriter(false);
@@ -44,69 +42,73 @@ function ContentBoard({ postDetail, trigger, setTrigger }) {
 
   return (
     <section className="content-board">
-      <article className="content-board__content">
-        <h2 className="content-board__title">
-          {postDetail.title}
-          {isWriter ? <UD postDetail={postDetail} /> : ""}
-        </h2>
-        <div className="content-board__info-wrapper">
-          <span className="content-board__date">{timeDisplay}</span>
-          <div>
-            <span className="content-board__category">
-              {postDetail.category ? postDetail.category : "카테고리 없음"}
+      {postDetail && (
+        <article className="content-board__content">
+          <h2 className="content-board__title">
+            {postDetail.title}
+            {isWriter ? <UD postDetail={postDetail} /> : ""}
+          </h2>
+          <div className="content-board__info-wrapper">
+            <span className="content-board__date">
+              {timeConverter(postDetail.wr_date)}
             </span>
-            <span> | </span>
-            <span className="content-board__writer">
-              {postDetail.user_nick}
-            </span>
+            <div>
+              <span className="content-board__category">
+                {postDetail.category ? postDetail.category : "카테고리 없음"}
+              </span>
+              <span> | </span>
+              <span className="content-board__writer">
+                {postDetail.user_nick}
+              </span>
+            </div>
           </div>
-        </div>
-        <div
-          className="content-board__detail"
-          dangerouslySetInnerHTML={{ __html: sanitize(postDetail.content) }}
-        ></div>
-        <div className="content-board__btn-wrapper">
-          <button
-            className="content-board__btn content-board__btn-like"
-            onClick={() => handleClickRecommend(1)}
-          >
-            <img
-              className={
-                postDetail.recommend_state === 1
-                  ? " content-board__img-like--active"
-                  : "content-board__img-like"
-              }
-              src={thumbsUp}
-              alt="추천"
-            ></img>
-            <span className="content-board__span">
-              {postDetail.recommend_cnt}
-            </span>
-          </button>
-          <div className="content-board__divider"></div>
-          <button
-            className="content-board__btn content-board__btn-dislike"
-            onClick={() => handleClickRecommend(-1)}
-          >
-            <span className="content-board__span">
-              {postDetail.decommend_cnt}
-            </span>
-            <img
-              className={
-                postDetail.recommend_state === -1
-                  ? " content-board__img-dislike--active"
-                  : "content-board__img-dislike"
-              }
-              src={thumbsDown}
-              alt="비추천"
-            ></img>
-          </button>
-        </div>
-        <section className="content-board__related">
-          <h3 className="content-board__title-related">추천 컨텐츠</h3>
-          <div className="content-board__best"></div>
-        </section>
-      </article>
+          <div
+            className="content-board__detail"
+            dangerouslySetInnerHTML={{ __html: sanitize(postDetail.content) }}
+          ></div>
+          <div className="content-board__btn-wrapper">
+            <button
+              className="content-board__btn content-board__btn-like"
+              onClick={() => handleClickRecommend(1)}
+            >
+              <img
+                className={
+                  postDetail.recommend_state === 1
+                    ? " content-board__img-like--active"
+                    : "content-board__img-like"
+                }
+                src={thumbsUp}
+                alt="추천"
+              ></img>
+              <span className="content-board__span">
+                {postDetail.recommend_cnt}
+              </span>
+            </button>
+            <div className="content-board__divider"></div>
+            <button
+              className="content-board__btn content-board__btn-dislike"
+              onClick={() => handleClickRecommend(-1)}
+            >
+              <span className="content-board__span">
+                {postDetail.decommend_cnt}
+              </span>
+              <img
+                className={
+                  postDetail.recommend_state === -1
+                    ? " content-board__img-dislike--active"
+                    : "content-board__img-dislike"
+                }
+                src={thumbsDown}
+                alt="비추천"
+              ></img>
+            </button>
+          </div>
+          <section className="content-board__related">
+            <h3 className="content-board__title-related">추천 컨텐츠</h3>
+            <div className="content-board__best"></div>
+          </section>
+        </article>
+      )}
     </section>
   );
 }

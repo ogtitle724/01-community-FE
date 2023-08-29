@@ -70,7 +70,7 @@ function Post({ post, mainEle }) {
 
   const handleClickPost = async () => {
     dispatch(setScrollY({ scrollY: mainEle.current.scrollTop }));
-    navigate(process.env.REACT_APP_ROUTE_POST, { state: { postId: post.id } });
+    navigate(process.env.REACT_APP_ROUTE_POST + `/${post.id}`);
   };
 
   return (

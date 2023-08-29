@@ -1,5 +1,6 @@
 .content-board {
   width: 700px;
+  min-height: 517px;
   height: 100%;
   overflow-y: scroll;
 }

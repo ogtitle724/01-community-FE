@@ -7,14 +7,15 @@ import Header from "../../components/header/Header";
 import Gnb from "../../components/gnb/Gnb";
 import ContentHome from "./components/content/Content_Home";
 import ContentTopic from "./components/content/Content_Topic";
+import ContentBarter from "./components/content/Content_Barter";
 import WriteBtn from "../../components/write_btn/WriteBtn";
 import "./style.css";
 
 export default function Home() {
   const category = useSelector(selectCategory);
   const page = useSelector(selectPage);
-  const [posts, setPosts] = useState();
-  const [content, mainEle] = [useRef(), useRef()];
+  const [content, setContent] = useState(null);
+  const mainEle = useRef();
   console.log("home rendered");
 
   useEffect(() => {
@@ -26,7 +27,14 @@ export default function Home() {
 
       try {
         const res = await axios.get(path + `?page=${page - 1}&size=30`);
-        setPosts(res.data);
+
+        if (category === "홈") {
+          setContent(<ContentHome posts={res.data} mainEle={mainEle} />);
+        } else if (category === "물물교환") {
+          setContent(<ContentBarter posts={res.data} mainEle={mainEle} />);
+        } else {
+          setContent(<ContentTopic posts={res.data} mainEle={mainEle} />);
+        }
       } catch (err) {
         console.log(err);
       }
@@ -35,23 +43,13 @@ export default function Home() {
     getPosts();
   }, [category, page]);
 
-  if (mainEle.current) {
-    if (category === "홈") {
-      content.current = <ContentHome posts={posts} mainEle={mainEle} />;
-    } else {
-      content.current = <ContentTopic posts={posts} mainEle={mainEle} />;
-    }
-  }
-
   return (
     <main className="home">
       <Header />
       <Gnb />
       <section ref={mainEle} className="main">
         <div className="main-content">
-          {posts ? (
-            content.current
-          ) : (
+          {content ?? (
             <span className="main-content__alert">
               {"서버와의 통신이 불안정합니다 :("}
             </span>

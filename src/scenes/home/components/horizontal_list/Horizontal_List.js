@@ -41,19 +41,6 @@ export default function HorizontalList() {
     container.current.style.left = `${container.current.offsetLeft + degree}px`;
   };
 
-  function Card() {
-    return (
-      <article className="card">
-        <img
-          src={sampleImg}
-          className="card__img"
-          alt="img dosen't supported"
-        />
-        <h2 className="card__title">sample title</h2>
-      </article>
-    );
-  }
-
   return (
     <section className="horizon-list">
       <h1 className="horizon-list__list-title">트렌딩</h1>
@@ -65,12 +52,21 @@ export default function HorizontalList() {
         onMouseLeave={(e) => handleMouseUp(e)}
         onMouseMove={(e) => handleDrag(e)}
       >
-        {Array(10)
+        {Array(5)
           .fill("post")
           .map((post, idx) => {
             return <Card key={"card_" + idx} />;
           })}
       </div>
     </section>
+  );
+}
+
+function Card() {
+  return (
+    <article className="card">
+      <img src={sampleImg} className="card__img" alt="img dosen't supported" />
+      <h2 className="card__title">sample title</h2>
+    </article>
   );
 }

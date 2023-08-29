@@ -76,7 +76,7 @@ const router = createBrowserRouter([
     element: <WritePage />,
   },
   {
-    path: process.env.REACT_APP_ROUTE_POST,
+    path: process.env.REACT_APP_ROUTE_POST + "/:postId",
     element: <PostDetail />,
   },
   {

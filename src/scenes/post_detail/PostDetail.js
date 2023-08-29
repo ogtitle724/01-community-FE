@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import axios from "axios";
 
 import Header from "../../components/header/Header";
@@ -9,12 +9,9 @@ import CommentBoard from "./components/comment/Comment";
 import "./style.css";
 
 export default function PostDetail() {
-  console.log("post detail rendered");
-  const location = useLocation();
-  const postId = location.state.postId;
-
   const [postDetail, setPostDetail] = useState();
   const [trigger, setTrigger] = useState(false);
+  const postId = useParams().postId;
 
   useEffect(() => {
     const getPostData = async () => {
@@ -37,20 +34,17 @@ export default function PostDetail() {
       <Gnb />
       <main className="post-detail__main">
         <div className="post-detail__wrapper">
-          {postDetail && (
-            <ContentBoard
-              postDetail={postDetail}
-              trigger={trigger}
-              setTrigger={setTrigger}
-            />
-          )}
-          {postDetail && (
-            <CommentBoard
-              postDetail={postDetail}
-              trigger={trigger}
-              setTrigger={setTrigger}
-            />
-          )}
+          <ContentBoard
+            postDetail={postDetail}
+            trigger={trigger}
+            setTrigger={setTrigger}
+          />
+
+          <CommentBoard
+            postDetail={postDetail}
+            trigger={trigger}
+            setTrigger={setTrigger}
+          />
         </div>
       </main>
     </div>

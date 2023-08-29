@@ -135,38 +135,39 @@ export default function CommentBoard({ postDetail, trigger, setTrigger }) {
           </button>
         </div>
       </form>
-      {postDetail.comments.map((comment, idxC) => {
-        return (
-          <Fragment key={"comment-" + idxC}>
-            <Comment
-              comment={comment}
-              parentId={comment.id}
-              target={target}
-              setTarget={setTarget}
-              trigger={trigger}
-              setTrigger={setTrigger}
-              ckFocus={ckFocus}
-            />
-            {comment.replies?.length
-              ? comment.replies.map((reply, idxR) => {
-                  return (
-                    <Comment
-                      key={"reply-" + idxR}
-                      comment={reply}
-                      parentId={comment.id}
-                      target={target}
-                      setTarget={setTarget}
-                      cName={" comment__reply"}
-                      trigger={trigger}
-                      setTrigger={setTrigger}
-                      ckFocus={ckFocus}
-                    />
-                  );
-                })
-              : ""}
-          </Fragment>
-        );
-      })}
+      {postDetail &&
+        postDetail.comments.map((comment, idxC) => {
+          return (
+            <Fragment key={"comment-" + idxC}>
+              <Comment
+                comment={comment}
+                parentId={comment.id}
+                target={target}
+                setTarget={setTarget}
+                trigger={trigger}
+                setTrigger={setTrigger}
+                ckFocus={ckFocus}
+              />
+              {comment.replies?.length
+                ? comment.replies.map((reply, idxR) => {
+                    return (
+                      <Comment
+                        key={"reply-" + idxR}
+                        comment={reply}
+                        parentId={comment.id}
+                        target={target}
+                        setTarget={setTarget}
+                        cName={" comment__reply"}
+                        trigger={trigger}
+                        setTrigger={setTrigger}
+                        ckFocus={ckFocus}
+                      />
+                    );
+                  })
+                : ""}
+            </Fragment>
+          );
+        })}
     </section>
   );
 }
