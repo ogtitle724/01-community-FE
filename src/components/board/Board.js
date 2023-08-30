@@ -20,12 +20,12 @@ export default function Board({ posts, mainEle, title }) {
   if (scrollY) {
     mainEle.current.scrollTo({
       top: scrollY,
-      behavior: "auto",
+      behavior: "instant",
     });
   } else {
     mainEle.current.scrollTo({
       top: scrollY,
-      behavior: "auto",
+      behavior: "instant",
     });
   }
 
@@ -57,7 +57,7 @@ export default function Board({ posts, mainEle, title }) {
             </span>
           )}
         </ul>
-        <Nav posts={posts} />
+        {posts.totalPages > 1 && <Nav posts={posts} />}
       </section>
     </>
   );

@@ -2,6 +2,7 @@
   --header-height: 50px;
   --gnb-height: 30px;
   --top-height: calc(var(--header-height) + var(--gnb-height));
+  --scrollbar-width: 4px;
 
   --font-size-title: 23px;
   --font-size-lg: 18px;
@@ -20,7 +21,7 @@
 :root[color-theme="light"] {
   --font-color-light: white;
   --font-color-dark: black;
-  --main-color: rgb(94, 148, 195);
+  --main-color: rgb(38, 66, 130);
   --post-color: rgb(214, 220, 233);
   --color-orange: rgb(217, 128, 51);
   --color-green: rgb(14, 112, 113);
@@ -33,6 +34,7 @@
   --color-whitesmoke: whitesmoke;
   --color-thumb: rgb(151, 182, 209);
   --color-placeholder: grey;
+  --color-marker: rgb(38, 66, 130);
 }
 
 :root[color-theme="dark"] {
@@ -51,6 +53,7 @@
   --color-whitesmoke: rgb(82, 82, 82);
   --color-thumb: rgb(194, 127, 67);
   --color-placeholder: rgb(199, 199, 199);
+  --color-marker: rgb(217, 128, 51);
 }
 
 * {
@@ -62,7 +65,7 @@
 }
 
 *::-webkit-scrollbar {
-  width: 1px;
+  width: var(--scrollbar-width);
   height: 5px;
   background-color: var(--color-whitesmoke);
 }

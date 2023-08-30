@@ -10,15 +10,6 @@
   color: var(--font-color-dark);
 }
 
-.write-page::-webkit-scrollbar {
-  width: 1px;
-  background-color: var(--color-body);
-}
-
-.write-page::-webkit-scrollbar-thumb {
-  background-color: var(--color-body);
-}
-
 .write-page__title {
   width: 100%;
   height: 54px;

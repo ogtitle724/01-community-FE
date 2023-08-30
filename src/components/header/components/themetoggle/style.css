@@ -5,33 +5,6 @@
   gap: 8px;
 }
 
-.themetoggle__btn-wrapper {
-  width: 47px;
-  height: 26px;
-  position: relative;
-  border-radius: 12px;
-  background-color: var(--color-whitesmoke);
-}
-
-.themetoggle__btn {
-  width: 22px;
-  height: 22px;
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  border-radius: 100%;
-  background-color: white;
-  transition: 0.3s;
-}
-
-.themetoggle__btn--light {
-  left: 2px;
-}
-
-.themetoggle__btn--dark {
-  left: 22px;
-}
-
 .themetoggle__icon {
   width: 24px;
   height: 24px;
@@ -50,30 +23,6 @@
 }
 
 @media screen and (max-width: 1024px) {
-  .themetoggle__btn-wrapper {
-    width: 36px;
-    height: 23px;
-  }
-
-  .themetoggle__btn {
-    width: 20px;
-    height: 20px;
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    border-radius: 100%;
-    background-color: white;
-    transition: 0.3s;
-  }
-
-  .themetoggle__btn--light {
-    left: 2px;
-  }
-
-  .themetoggle__btn--dark {
-    left: 15px;
-  }
-
   .themetoggle__icon {
     width: 18px;
     height: 18px;

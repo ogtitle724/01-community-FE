@@ -44,10 +44,10 @@ export default function Home() {
   }, [category, page]);
 
   return (
-    <main className="home">
+    <>
       <Header />
       <Gnb />
-      <section ref={mainEle} className="main">
+      <main ref={mainEle} className="main">
         <div className="main-content">
           {content ?? (
             <span className="main-content__alert">
@@ -55,8 +55,8 @@ export default function Home() {
             </span>
           )}
         </div>
-      </section>
+      </main>
       <WriteBtn mainEle={mainEle} />
-    </main>
+    </>
   );
 }

@@ -42,7 +42,7 @@ function Header() {
           {width < 480 ? (
             <img className="header__logo-img" src={clip} alt="logo_clip"></img>
           ) : (
-            "클립마켓"
+            "CLiPmArKET"
           )}
         </a>
         {width > 1024 ? (

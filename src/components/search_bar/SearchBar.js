@@ -26,7 +26,6 @@ export default function SearchBar() {
         className="search-bar__input"
         name="searchTerm"
         type="text"
-        placeholder="검색어를 입력하세요..."
         value={searchTerm}
         onChange={(e) => {
           setsearchTerm(e.target.value);

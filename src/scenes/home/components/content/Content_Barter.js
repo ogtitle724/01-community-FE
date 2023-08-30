@@ -1,3 +1,5 @@
+import Showcase from "../../../../components/showcase/showcase";
+
 export default function ContentBarter({ posts, mainEle }) {
-  return <></>;
+  return <Showcase mainEle={mainEle} />;
 }

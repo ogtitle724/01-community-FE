@@ -28,6 +28,10 @@
   cursor: text;
 }
 
+.comment-board::-webkit-scrollbar {
+  width: 1px;
+}
+
 .comment-board {
   width: 350px;
   height: 96%;

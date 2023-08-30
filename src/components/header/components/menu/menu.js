@@ -21,9 +21,9 @@ export default function MenuBtn() {
             className="btn-close icon"
             onClick={() => setShowMenu(false)}
           ></button>
+          {isLogIn ? <UserBoard /> : <Sign />}
           <ThemeToggle />
           <SearchBar />
-          {isLogIn ? <UserBoard /> : <Sign />}
         </section>
       )}
     </>

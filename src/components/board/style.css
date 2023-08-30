@@ -59,9 +59,9 @@
 }
 
 .board__skeleton {
-  height: 70vh;
+  height: 76vh;
   border-radius: 4px;
-  background-color: var(--color-background);
+  background-color: var(--color-whitesmoke);
 }
 
 .board__notification {

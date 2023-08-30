@@ -10,7 +10,6 @@
   width: 100vw;
   height: calc(100vh - var(--header-height) - var(--gnb-height));
   overflow-y: scroll;
-  background-color: var(--color-body);
 }
 
 .search-result__content {

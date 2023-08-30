@@ -24,17 +24,8 @@ export default function ThemeToggle() {
             ? " themetoggle__icon--dark"
             : " themetoggle__icon--light")
         }
+        onClick={handleClickBtn}
       ></div>
-      <div className="themetoggle__btn-wrapper" onClick={handleClickBtn}>
-        <div
-          className={
-            "themetoggle__btn" +
-            (isDarkMode
-              ? " themetoggle__btn--dark"
-              : " themetoggle__btn--light")
-          }
-        ></div>
-      </div>
     </section>
   );
 }

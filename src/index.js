@@ -9,6 +9,7 @@ import Home from "./scenes/home/Home.js";
 import WritePage from "./scenes/write_page/WritePage.js";
 import ErrorPage from "./scenes/error_page/ErrorPage.js";
 import PostDetail from "./scenes/post_detail/PostDetail.js";
+import ItemDetail from "./scenes/item_detail/IitemDetail.js";
 import SearchResult from "./scenes/search_result/SearchResult.js";
 import MyPage from "./scenes/mypage/MyPage.js";
 import { store, persistor } from "./redux/store.js";
@@ -78,6 +79,10 @@ const router = createBrowserRouter([
   {
     path: process.env.REACT_APP_ROUTE_POST + "/:postId",
     element: <PostDetail />,
+  },
+  {
+    path: process.env.REACT_APP_ROUTE_ITEM,
+    element: <ItemDetail />,
   },
   {
     path: process.env.REACT_APP_ROUTE_SEARCH,

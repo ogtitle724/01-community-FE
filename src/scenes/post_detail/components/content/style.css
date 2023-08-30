@@ -1,3 +1,7 @@
+.content-board::-webkit-scrollbar {
+  width: 1px;
+}
+
 .content-board {
   width: 700px;
   min-height: 517px;

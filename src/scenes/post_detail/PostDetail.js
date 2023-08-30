@@ -29,7 +29,7 @@ export default function PostDetail() {
   }, [postId, trigger]);
 
   return (
-    <div className="post-detail">
+    <>
       <Header />
       <Gnb />
       <main className="post-detail__main">
@@ -47,6 +47,6 @@ export default function PostDetail() {
           />
         </div>
       </main>
-    </div>
+    </>
   );
 }

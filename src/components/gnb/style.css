@@ -1,15 +1,15 @@
 .gnb {
-  width: 100%;
+  width: 100vw;
   height: var(--gnb-height);
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
   align-content: center;
   flex-wrap: wrap;
   column-gap: 18px;
-  border-top: 1px solid var(--main-color);
-  border-bottom: 1px solid var(--main-color);
-  background-color: var(--color-body);
+  border-bottom: 1px solid var(--color-whitesmoke);
+  box-shadow: 0 0px 20px rgba(0, 0, 0, 0.05);
 }
 
 .gnb__btn {
@@ -23,14 +23,14 @@
   color: var(--font-color-dark);
 }
 
-.gnb__btn:last-child {
+.gnb__btn:nth-last-child(2) {
   width: 20px;
   color: var(--color-red);
   text-rendering: none;
   visibility: hidden;
 }
 
-.gnb__btn:last-child::after {
+.gnb__btn:nth-last-child(2)::after {
   content: "🛒";
   visibility: visible;
   display: block;
@@ -39,6 +39,15 @@
   left: 50%;
   transform: translate(-50%, -50%);
   font-size: var(--font-size-md);
+}
+
+.gnb__mark {
+  height: 2.5px;
+  position: absolute;
+  bottom: 0px;
+  border-radius: 2px 2px 0 0;
+  background-color: var(--color-marker);
+  transition: 0.3s;
 }
 
 @media screen and (max-width: 768px) {

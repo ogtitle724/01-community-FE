@@ -13,7 +13,6 @@
   flex-direction: column;
   align-items: center;
   overflow-y: scroll;
-  background-color: var(--color-body);
 }
 
 .mypage__grid-container {
