@@ -20,6 +20,8 @@ function Gnb() {
   const gnb = useRef();
   const btnFocus = useRef();
 
+  console.log("gnb rendered");
+
   useEffect(() => {
     btnFocus.current = Object.values(gnb.current.children).filter(
       (btn) => btn.innerHTML === category

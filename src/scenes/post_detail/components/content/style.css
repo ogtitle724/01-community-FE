@@ -3,17 +3,15 @@
 }
 
 .content-board {
-  width: 700px;
+  width: 650px;
   min-height: 517px;
-  height: 100%;
-  overflow-y: scroll;
+  height: auto;
+  margin: 30px auto;
 }
 
 .content-board__content {
   width: 100%;
   height: auto;
-  padding: 10px;
-  padding-right: 30px;
 }
 
 .content-board__title {
@@ -165,16 +163,6 @@ iframe {
 }
 
 @media screen and (max-width: 1080px) {
-  .content-board {
-    width: 650px;
-    height: auto;
-    margin: 10px auto;
-    overflow: auto;
-  }
-
-  .content-board__content {
-    padding: 0;
-  }
 }
 
 @media screen and (max-width: 768px) {

@@ -1,15 +1,6 @@
-.search-result {
-  min-height: 100vh;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
 .search-result__main {
   width: 100vw;
-  height: calc(100vh - var(--header-height) - var(--gnb-height));
-  overflow-y: scroll;
+  height: auto;
 }
 
 .search-result__content {

@@ -1,34 +1,13 @@
-.home {
-  min-height: 100vh;
-}
-
 .main {
-  width: 100vw;
-  padding-left: 4px;
-  height: calc(100vh - var(--header-height) - var(--gnb-height));
-  overflow-y: scroll;
-}
-
-.main::-webkit-scrollbar {
-  width: 4px;
-  background-color: var(--color-body);
-}
-
-.main::-webkit-scrollbar-thumb {
-  border-radius: 8px;
-  background-color: var(--main-color);
-}
-
-.main-content {
   width: min(1020px, 98vw);
-  min-height: 100%;
+  height: auto;
   margin: 0 auto;
-  padding: 20px 0px;
+  padding: 30px 0px;
   position: relative;
 }
 
 .main-content__alert {
-  position: absolute;
+  position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);

@@ -1,14 +1,16 @@
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
   logout,
   setUser,
   selectUser,
   setLoginDeadline,
+  selectIsLogIn,
 } from "../../../../redux/slice/signSlice";
-import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import profileImg from "../../../../asset/icons/person.svg";
 import "./style.css";
+import { useState } from "react";
 
 export default function UserBoard() {
   const dispatch = useDispatch();
@@ -31,6 +33,14 @@ export default function UserBoard() {
     navigate(process.env.REACT_APP_ROUTE_MYPAGE);
   };
 
+  const handleClickBtnWrite = () => {
+    navigate(process.env.REACT_APP_ROUTE_WRITE);
+  };
+
+  const handleClkBtnChat = () => {
+    navigate(process.env.REACT_APP_ROUTE_CHATHOUSE);
+  };
+
   return (
     <div className="user-board">
       <div className="user-board__profile">
@@ -42,7 +52,7 @@ export default function UserBoard() {
         ></img>
         <div>
           <p className="user-board__nickname" onClick={handleNavigateMypage}>
-            {user.nick}
+            {user.nick ?? "unknown"}
           </p>
         </div>
       </div>
@@ -52,10 +62,17 @@ export default function UserBoard() {
         <span>123</span>
       </div>
       <div className="divider"></div>
+      <button
+        className="user-board__btn-write"
+        onClick={handleClickBtnWrite}
+      ></button>
+      <button
+        className="user-board__btn-chat"
+        onClick={handleClkBtnChat}
+      ></button>
       <button className="user-board__btn-alram">
         <div className="user-board__alram-cnt">3</div>
       </button>
-
       <button className="user-board__btn-logout" onClick={handleClickLogOut}>
         ✖
       </button>

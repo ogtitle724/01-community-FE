@@ -33,7 +33,7 @@ export default function SearchResult() {
   }, [term, page]);
 
   return (
-    <div className="search-result">
+    <>
       <Header />
       <Gnb />
       <main ref={mainEle} className="search-result__main">
@@ -50,6 +50,6 @@ export default function SearchResult() {
           </div>
         </section>
       </main>
-    </div>
+    </>
   );
 }

@@ -1,9 +1,9 @@
 import Board from "../../../../components/board/Board";
 
-export default function ContentHome({ posts, mainEle }) {
+export default function ContentHome({ posts }) {
   return (
     <>
-      <Board posts={posts} mainEle={mainEle} title={"인기글"} />
+      <Board posts={posts} title={"인기글"} />
     </>
   );
 }

@@ -10,21 +10,22 @@ import {
 import timeConverter from "../../util/time_converter";
 import "./style.css";
 
-export default function Board({ posts, mainEle, title }) {
+export default function Board({ posts, title }) {
   const [isDivide, setIsDivide] = useState(false);
   const scrollY = useSelector(selectScrollY);
   const handleChangeLayout = () => {
     setIsDivide(!isDivide);
   };
+  console.log("board rendere");
 
   if (scrollY) {
-    mainEle.current.scrollTo({
+    window.scrollTo({
       top: scrollY,
-      behavior: "instant",
+      behavior: "smooth",
     });
   } else {
-    mainEle.current.scrollTo({
-      top: scrollY,
+    window.scrollTo({
+      top: 0,
       behavior: "instant",
     });
   }
@@ -49,7 +50,7 @@ export default function Board({ posts, mainEle, title }) {
         >
           {posts.content.length ? (
             posts.content.map((post, idx) => {
-              return <Post key={"post_" + idx} post={post} mainEle={mainEle} />;
+              return <Post key={"post_" + idx} post={post} />;
             })
           ) : (
             <span className="board__notification">
@@ -63,13 +64,13 @@ export default function Board({ posts, mainEle, title }) {
   );
 }
 
-function Post({ post, mainEle }) {
+function Post({ post }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const time = timeConverter(post.wr_date);
 
   const handleClickPost = async () => {
-    dispatch(setScrollY({ scrollY: mainEle.current.scrollTop }));
+    dispatch(setScrollY({ scrollY: window.scrollY }));
     navigate(process.env.REACT_APP_ROUTE_POST + `/${post.id}`);
   };
 

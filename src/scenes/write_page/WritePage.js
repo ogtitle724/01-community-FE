@@ -218,14 +218,17 @@ function ThumbnailDropbox({ thumbnail, setThumbnail, imgSrc, setImgSrc }) {
 
   const handleClickUploadBtn = (e) => {
     const file = e.target.files[0];
+    console.log(file);
     const reader = new FileReader();
 
     reader.addEventListener("load", (event) => {
+      console.log(event.target.result);
       setThumbnail(event.target.result);
     });
 
     if (file) {
-      reader.readAsDataURL(file);
+      let a = reader.readAsDataURL(file);
+      console.log(a);
     }
   };
 

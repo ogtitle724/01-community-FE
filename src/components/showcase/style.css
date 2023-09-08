@@ -11,6 +11,7 @@
 }
 
 .showcase__search {
+  width: 130px;
   height: 20px;
   padding-left: 5px;
   border-radius: 4px;
@@ -104,7 +105,7 @@
 }
 
 .item-card__title {
-  padding: 0 3px;
+  padding: 0 5px;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
@@ -128,7 +129,7 @@
   height: 16px;
   display: inline-block;
   background: url(../../asset/icons/heart.svg);
-  filter: invert(70%);
+  filter: invert(var(--icon-invert));
 }
 
 .item-card__i-chat {
@@ -136,27 +137,30 @@
   height: 15px;
   display: inline-block;
   background: url(../../asset/icons/chatbubble.svg);
-  filter: invert(70%);
+  filter: invert(var(--icon-invert));
 }
 
 .item-card__n-like,
 .item-card__n-chat {
-  width: 26px;
   margin-left: 2px;
+  margin-right: 10px;
   font-size: 12px;
   line-height: 12px;
+  color: rgb(171, 171, 171);
 }
 
 .item-card__time {
   position: absolute;
   right: 5px;
+  bottom: 0;
   font-size: 10px;
   line-height: 10px;
+  color: rgb(171, 171, 171);
 }
 
 .showcase__btn-to-top {
-  width: 30px;
-  height: 30px;
+  width: 55px;
+  height: 55px;
   position: fixed;
   bottom: 15px;
   left: 50%;
@@ -164,6 +168,7 @@
   border-radius: 100%;
   border: 1px solid var(--color-whitesmoke);
   background-color: var(--color-body);
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
 }
 
 .showcase__btn-to-top::before {
@@ -172,8 +177,24 @@
   height: 100%;
   display: block;
   background-image: url(../../asset/icons/up.svg);
-  background-position: center bottom 10px;
+  background-position: center top 10px;
   background-repeat: no-repeat;
   background-size: 50%;
   filter: invert(70%);
+}
+
+@media screen and (max-width: 500px) {
+  .showcase__item-wrapper {
+    grid-template-columns: repeat(auto-fill, 150px);
+  }
+
+  .item-card {
+    --item-card-width: 150px;
+  }
+
+  .item-card__time {
+    bottom: 2px;
+    right: 2px;
+    transform: scale(0.9);
+  }
 }

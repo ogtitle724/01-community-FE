@@ -1,0 +1,88 @@
+.chathouse__header {
+  width: 100vw;
+  padding: 10px 0 0 0;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  position: sticky;
+  top: 0;
+  background-color: var(--color-body);
+}
+
+.chathouse__title {
+  margin: 0 auto;
+  font-size: var(--font-size-title);
+  font-weight: 700;
+  border-bottom: 1px dashed var(--color-whitesmoke);
+  cursor: pointer;
+}
+
+.chathouse__main {
+  width: min(500px, 98vw);
+  height: calc(100vh - 130px);
+  margin: 0px auto 30px auto;
+  border-radius: 22px;
+  overflow-y: scroll;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+}
+
+.chat-entrance {
+  width: 100%;
+  padding: 5px 10px;
+  display: grid;
+  grid-template-columns: 55px 1fr;
+  grid-template-rows: 30px 36px;
+  grid-template-areas:
+    "img info"
+    "img preview";
+  align-items: center;
+  column-gap: 10px;
+  list-style: none;
+  border-bottom: 1px dashed var(--color-whitesmoke);
+  cursor: pointer;
+}
+
+.chat-entrance__img {
+  grid-area: img;
+  width: 55px;
+  height: 55px;
+  border-radius: 22px;
+  background-color: var(--color-whitesmoke);
+}
+
+.chat-entrance__info {
+  align-self: end;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  font-size: var(--font-size-sm);
+}
+
+.chat-entrance__opponent-nick {
+  cursor: pointer;
+}
+.chat-entrance__time {
+  font-size: var(--font-size-vsm);
+}
+
+.chat-entrance__preview {
+  font-size: var(--font-size-md);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: pointer;
+}
+
+/* .chathouse__btn-newchat {
+  width: min(480px, 97vw);
+  height: 46px;
+  position: fixed;
+  bottom: 14px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 22px;
+  background-color: var(--main-color);
+} */

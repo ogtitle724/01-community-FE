@@ -33,19 +33,17 @@ export default function PostDetail() {
       <Header />
       <Gnb />
       <main className="post-detail__main">
-        <div className="post-detail__wrapper">
-          <ContentBoard
-            postDetail={postDetail}
-            trigger={trigger}
-            setTrigger={setTrigger}
-          />
+        <ContentBoard
+          postDetail={postDetail}
+          trigger={trigger}
+          setTrigger={setTrigger}
+        />
 
-          <CommentBoard
-            postDetail={postDetail}
-            trigger={trigger}
-            setTrigger={setTrigger}
-          />
-        </div>
+        <CommentBoard
+          postDetail={postDetail}
+          trigger={trigger}
+          setTrigger={setTrigger}
+        />
       </main>
     </>
   );

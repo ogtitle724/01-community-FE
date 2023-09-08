@@ -33,9 +33,10 @@
 }
 
 .comment-board {
-  width: 350px;
-  height: 96%;
+  width: 650px;
+  height: auto;
   padding: 10px;
+  margin: 30px auto;
   position: relative;
   border: 2px solid;
   border-radius: 4px;
@@ -242,18 +243,6 @@
 }
 
 @media screen and (max-width: 1080px) {
-  .comment-board {
-    width: 650px;
-    height: auto;
-    max-height: 96%;
-    margin: 20px auto;
-    position: relative;
-  }
-
-  .comment-board__comment-wrapper {
-    margin: 0;
-  }
-
   .comment-board .ck.ck-editor__editable:not(.ck-editor__nested-editable) {
     min-width: 260px;
   }

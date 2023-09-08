@@ -1,26 +1,3 @@
 .post-detail__main {
   width: 100vw;
-  height: calc(100vh - var(--top-height));
-  overflow-y: hidden;
-}
-
-.post-detail__wrapper {
-  width: 1050px;
-  height: 100%;
-  margin: 0px auto;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-@media screen and (max-width: 1080px) {
-  .post-detail__main {
-    overflow-y: scroll;
-  }
-
-  .post-detail__wrapper {
-    width: 99vw;
-    display: block;
-    margin: 0 auto;
-  }
 }

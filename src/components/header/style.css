@@ -1,13 +1,14 @@
 .header {
   width: 100vw;
   height: var(--header-height);
-  position: relative;
+  position: sticky;
+  top: 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 20px;
   background-color: var(--color-body);
-  z-index: 2;
+  z-index: 3;
 }
 
 .header__logo {

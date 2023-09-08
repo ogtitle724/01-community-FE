@@ -9,14 +9,15 @@ import Home from "./scenes/home/Home.js";
 import WritePage from "./scenes/write_page/WritePage.js";
 import ErrorPage from "./scenes/error_page/ErrorPage.js";
 import PostDetail from "./scenes/post_detail/PostDetail.js";
-import ItemDetail from "./scenes/item_detail/IitemDetail.js";
+import ItemDetail from "./scenes/item_detail/ItemDetail.js";
 import SearchResult from "./scenes/search_result/SearchResult.js";
 import MyPage from "./scenes/mypage/MyPage.js";
+import ChatHouse from "./scenes/chat_house/ChatHouse.js";
+import ChatRoom from "./scenes/chat_room/ChatRoom.js";
 import { store, persistor } from "./redux/store.js";
 import "./index.css";
 import { logout, setLoginDeadline, setUser } from "./redux/slice/signSlice.js";
 import { setWidth } from "./redux/slice/pageSlice.js";
-import { jwtDecode } from "./util/secure.js";
 
 axios.defaults.baseURL = process.env.REACT_APP_DOMAIN;
 axios.defaults.withCredentials = true;
@@ -25,19 +26,8 @@ axios.interceptors.response.use((res) => {
   const accessToken = authHeader && authHeader.split(" ")[1];
 
   if (accessToken) {
-    console.log("receive access Token");
     axios.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
-
-    if (!localStorage?.getItem("persist:local").user) {
-      let payload = jwtDecode(accessToken);
-      store.dispatch(
-        setUser({
-          user: { id: payload.id, nick: payload.nick, email: payload.email },
-        })
-      );
-    }
   }
-
   return res;
 });
 
@@ -81,12 +71,20 @@ const router = createBrowserRouter([
     element: <PostDetail />,
   },
   {
-    path: process.env.REACT_APP_ROUTE_ITEM,
+    path: process.env.REACT_APP_ROUTE_ITEM + "/:itemId",
     element: <ItemDetail />,
   },
   {
     path: process.env.REACT_APP_ROUTE_SEARCH,
     element: <SearchResult />,
+  },
+  {
+    path: process.env.REACT_APP_ROUTE_CHATHOUSE,
+    element: <ChatHouse />,
+  },
+  {
+    path: process.env.REACT_APP_ROUTE_CHATROOM,
+    element: <ChatRoom />,
   },
   {
     path: process.env.REACT_APP_ROUTE_MYPAGE,

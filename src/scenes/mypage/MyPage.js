@@ -72,7 +72,7 @@ export default function MyPage() {
   };
 
   return (
-    <div className="mypage">
+    <>
       <Header />
       <Gnb />
       <main className="mypage__main">
@@ -121,7 +121,7 @@ export default function MyPage() {
           <div className="mypage__comment"></div>
         </section>
       </main>
-    </div>
+    </>
   );
 }
 

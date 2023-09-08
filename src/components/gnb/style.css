@@ -1,7 +1,8 @@
 .gnb {
   width: 100vw;
   height: var(--gnb-height);
-  position: relative;
+  position: sticky;
+  top: var(--header-height);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -10,6 +11,8 @@
   column-gap: 18px;
   border-bottom: 1px solid var(--color-whitesmoke);
   box-shadow: 0 0px 20px rgba(0, 0, 0, 0.05);
+  background-color: var(--color-body);
+  z-index: 2;
 }
 
 .gnb__btn {
@@ -25,20 +28,23 @@
 
 .gnb__btn:nth-last-child(2) {
   width: 20px;
-  color: var(--color-red);
   text-rendering: none;
   visibility: hidden;
 }
 
 .gnb__btn:nth-last-child(2)::after {
-  content: "🛒";
+  content: "";
+  width: 22px;
+  height: 22px;
   visibility: visible;
   display: block;
   position: absolute;
-  top: 50%;
+  top: 49%;
   left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: var(--font-size-md);
+  transform: translate(-50%, -50%) rotateY(180deg);
+  border-radius: 100%;
+  background: url(../../asset/icons/cart.svg);
+  filter: invert(var(--icon-invert));
 }
 
 .gnb__mark {

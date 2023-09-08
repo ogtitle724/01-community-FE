@@ -7,7 +7,7 @@ import {
   setLoginDeadline,
   setUser,
 } from "../../../../../redux/slice/signSlice";
-import { blindInput } from "../../../../../util/secure";
+import { blindInput, jwtDecode } from "../../../../../util/secure";
 import "./style.css";
 
 export default function SignIn() {
@@ -20,17 +20,23 @@ export default function SignIn() {
     e.preventDefault();
 
     try {
-      await axios.post(process.env.REACT_APP_PATH_LOGIN, {
+      const res = await axios.post(process.env.REACT_APP_PATH_LOGIN, {
         uid: uid,
         pwd: pwd,
       });
 
+      const authHeader = res.headers["authorization"];
+      const accessToken = authHeader && authHeader.split(" ")[1];
+      const payload = jwtDecode(accessToken);
+      const user = { id: payload.id, nick: payload.nick, email: payload.email };
+      console.log(payload);
       let now = new Date();
       let afterAWeek = new Date();
       afterAWeek.setDate(now.getUTCDate() + 7);
 
       dispatch(login());
       dispatch(setLoginDeadline({ deadline: afterAWeek.toString() }));
+      dispatch(setUser({ user }));
       setTimeout(silentRenew, process.env.REACT_APP_TOKEN_REGENERATE_TIME);
     } catch (err) {
       setIsFail(true);
